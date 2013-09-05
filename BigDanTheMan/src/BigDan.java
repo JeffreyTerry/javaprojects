@@ -88,12 +88,12 @@ public class BigDan extends JFrame{
 			nextPanel.setLayout(new GridLayout(3, 3, 0, 0));
 			for(int j = 0; j < 9; j++){
 				nextLabel = new JLabel("0");
-				nextLabel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+				nextLabel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
 				nextLabel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 20));
 				nextLabel.setHorizontalAlignment(JLabel.CENTER);
 				nextPanel.add(nextLabel);
 			}
-			nextPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			nextPanel.setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.BLACK));
 			contentPanel.add(nextPanel);
 		}
 		contentPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
