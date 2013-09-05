@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -11,13 +10,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 public class BigDan extends JFrame{
 	private int width;
@@ -55,7 +52,7 @@ public class BigDan extends JFrame{
 				theLabel.setFont(new Font(Font.SERIF, Font.ITALIC, 32));
 				JButton theButton = new JButton("yeah");
 				theButton.setFont(new Font(Font.SERIF, Font.PLAIN, 28));
-				theButton.setMargin(new Insets(8, 8, 8, 8));
+				theButton.setMargin(new Insets(6, 6, 6, 6));
 				theButton.addActionListener(new ActionListener(){
 					public void actionPerformed(ActionEvent e){
 						lulzDialog.setVisible(false);
