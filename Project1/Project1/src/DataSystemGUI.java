@@ -37,6 +37,7 @@ public class DataSystemGUI extends JFrame{
 		dataSystem = new DataSystem();
 		init();
 	}
+	
 	private void init(){
 		//Set up components
 		int width = 500, height = 700;
@@ -119,6 +120,9 @@ public class DataSystemGUI extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
+	/**
+	 * @param fileName The path for the file containing the magazines
+	 */
 	public void loadMagazines(String fileName){
 		dataSystem.readMagazines(fileName);
 	}
@@ -142,6 +146,9 @@ public class DataSystemGUI extends JFrame{
 		}
 		public void keyTyped(KeyEvent event){
 		}
+		/**
+		 * This method searches the data system for the proper magazines, then updates the display label with its result
+		 */
 		private void search(){
 			MagazineList titleFits = new MagazineList();
 			MagazineList publisherFits = new MagazineList();
@@ -160,12 +167,12 @@ public class DataSystemGUI extends JFrame{
 			MagazineList allResults = new MagazineList();
 			if(titleFits.size() > 0){
 				for(int i = 0; i < titleFits.size(); i++)
-					if((publisherFits.size() == 0 || publisherFits.contains(titleFits.get(i))) && (dateFits.size() == 0 || dateFits.contains(titleFits.get(i))))
+					if((inputPublisher.getText().length() == 0 || publisherFits.contains(titleFits.get(i))) && ((inputStartDate.getText().length() == 0 && inputEndDate.getText().length() == 0) || dateFits.contains(titleFits.get(i))))
 						allResults.add(titleFits.get(i));
 			}
 			else if(publisherFits.size() > 0){
 				for(int i = 0; i < publisherFits.size(); i++)
-					if(dateFits.size() == 0 || dateFits.contains(publisherFits.get(i)))
+					if((inputStartDate.getText().length() == 0 && inputEndDate.getText().length() == 0) || dateFits.contains(publisherFits.get(i)))
 						allResults.add(publisherFits.get(i));
 			}
 			else if(dateFits.size() > 0){
