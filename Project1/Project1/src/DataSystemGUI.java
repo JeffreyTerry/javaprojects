@@ -165,12 +165,12 @@ public class DataSystemGUI extends JFrame{
 				dateFits = dataSystem.getMagazinesByDate(Integer.MIN_VALUE, Integer.parseInt(inputEndDate.getText()));
 
 			MagazineList allResults = new MagazineList();
-			if(titleFits.size() > 0){
+			if(inputMagTitle.getText().length() > 0){
 				for(int i = 0; i < titleFits.size(); i++)
 					if((inputPublisher.getText().length() == 0 || publisherFits.contains(titleFits.get(i))) && ((inputStartDate.getText().length() == 0 && inputEndDate.getText().length() == 0) || dateFits.contains(titleFits.get(i))))
 						allResults.add(titleFits.get(i));
 			}
-			else if(publisherFits.size() > 0){
+			else if(inputPublisher.getText().length() > 0){
 				for(int i = 0; i < publisherFits.size(); i++)
 					if((inputStartDate.getText().length() == 0 && inputEndDate.getText().length() == 0) || dateFits.contains(publisherFits.get(i)))
 						allResults.add(publisherFits.get(i));
