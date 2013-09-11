@@ -1,7 +1,11 @@
 /**
- * 
- * @author jterry
- *
+ * Project #1
+ * CS 2334, Section 10
+ * 9/9/13
+ * <P>
+ * This class uses a DataSystemGUI to provide the user with a user-friendly virtual magazine data system.
+ * </P>
+ * @version 1.0
  */
 
 public class DataSystemDriver
@@ -11,10 +15,5 @@ public class DataSystemDriver
 		for(int i = 0; i < args.length; i++)
 			app.loadMagazines(args[i]);
 		app.open();
-	}
-	
-	public static void createMagazineList(int length){
-		for(int i = 0; i < length; i++){
-		}
 	}
 }
