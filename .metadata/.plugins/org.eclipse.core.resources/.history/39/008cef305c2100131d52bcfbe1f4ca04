@@ -1,0 +1,7 @@
+
+public class Article extends Paper
+{
+	int volume;
+	int issue;
+	
+}

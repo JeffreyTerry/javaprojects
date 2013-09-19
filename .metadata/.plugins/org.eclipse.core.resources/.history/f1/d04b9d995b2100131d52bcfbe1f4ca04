@@ -1,0 +1,8 @@
+
+public class ConferenceProceeding extends Serial
+{
+	public ConferenceProceeding(String name,ArrayList<ConferencePaper> papers)
+	{
+		super(name,papers);
+	}
+}

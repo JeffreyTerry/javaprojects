@@ -1,0 +1,9 @@
+import java.util.ArrayList;
+
+public class Journal extends Serial
+{
+	public Journal(String name, ArrayList<Article> papers) 
+	{
+		super(name,papers);	
+	}
+}

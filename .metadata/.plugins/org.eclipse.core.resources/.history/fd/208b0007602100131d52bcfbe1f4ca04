@@ -1,0 +1,10 @@
+import java.util.ArrayList;
+
+
+public class ConferenceProceeding extends Serial
+{
+	public ConferenceProceeding(String name,ArrayList<Paper> papers)
+	{
+		super(name,papers);
+	}
+}

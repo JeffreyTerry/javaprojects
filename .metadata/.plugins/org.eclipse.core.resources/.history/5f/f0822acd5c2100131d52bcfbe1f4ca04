@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+
+
+public class Serial implements Comparator<Paper>
+{
+	String name;
+	ArrayList<? extends Paper> papers;
+	
+	public Serial(String name, ArrayList<? extends Paper> papers)
+	{
+		this.name=name;
+		this.papers=papers;
+	}
+	
+	@Override
+	public int compare(Paper o1, Paper o2) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	
+	
+}

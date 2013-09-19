@@ -1,0 +1,16 @@
+public class Paper implements Comparable<Paper>
+{
+	String[] authors;
+	String title;
+	String serialTitle;
+	int[] pageNumbers;
+	String date;	//look into using Calendar or GregorianCalendar or something cooler
+	String digitalIdentifier;
+	
+	@Override
+	public int compareTo(Paper o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+}
