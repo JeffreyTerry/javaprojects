@@ -158,7 +158,6 @@ public class Serial implements Comparator<Paper>
      * This adds a Paper to the ArrayList papers
      * <P>
      * @param             paper      the Paper to be added
-     * @return            description
      * <dt><b>Conditions:</b>
      * <dd>POST -         pre papers.size()+1 = post papers.size()
      */
@@ -179,7 +178,4 @@ public class Serial implements Comparator<Paper>
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	
-	
 }
