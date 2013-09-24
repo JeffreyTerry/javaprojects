@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -28,6 +30,7 @@ public class PublicationSystemGUI extends JFrame
 	private JTextField userInput;
 
 	JComboBox sortDropdown;
+	JTextField searchTextField;
 	JComboBox searchDropdown;
 
 	private JButton defaultImportButton;
@@ -37,22 +40,28 @@ public class PublicationSystemGUI extends JFrame
 	
 	private JLabel displayLabel;
 
-	private ControlListener controlListener;
-	private ModernInputListener modernInputListener;
+	private DefaultControlListener controlListener;
+	private ModernControlListener modernControlListener;
 	private DefaultInputListener defaultInputListener;
 
 	private int height;
 	private int width;
 	
 	public PublicationSystemGUI(int width, int height){
+		if(width < 520){
+			width = 520;
+		}
+		if(height < 680){
+			height = 680;
+		}
 		this.width = width;
 		this.height = height;
 		init();
 	}
 	
 	private void init(){
-		controlListener = new ControlListener();
-		modernInputListener = new ModernInputListener();
+		controlListener = new DefaultControlListener();
+		modernControlListener = new ModernControlListener();
 		defaultInputListener = new DefaultInputListener();
 		
 		createTitlePanel();
@@ -130,36 +139,49 @@ public class PublicationSystemGUI extends JFrame
 		String[] sortOptions = {""};  //Sort panel stuff
 		JLabel sortLabel = new JLabel("Sort by ");
 		sortLabel.setPreferredSize(smallComponentDimension);
+		sortLabel.setHorizontalAlignment(JLabel.RIGHT);
 		sortDropdown = new JComboBox(sortOptions);
 		sortDropdown.setPreferredSize(smallComponentDimension);
 		JPanel sortPanel = new JPanel();
-		sortPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()*2));
+		sortPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
 		sortPanel.add(sortLabel);
 		sortPanel.add(sortDropdown);
-		JLabel searchLabel = new JLabel("Search for ");  //Search panel stuff
-		searchLabel.setPreferredSize(smallComponentDimension);
+		JLabel searchLabel1 = new JLabel("Search for ");  //Search panel stuff
+		searchLabel1.setPreferredSize(smallComponentDimension);
+		searchLabel1.setHorizontalAlignment(JLabel.RIGHT);
+		JLabel searchLabel2 = new JLabel("Search by ");  //Search panel stuff
+		searchLabel2.setPreferredSize(smallComponentDimension);
+		searchLabel2.setHorizontalAlignment(JLabel.RIGHT);
 		String[] searchOptions = {""};
 		searchDropdown = new JComboBox(searchOptions);
 		searchDropdown.setPreferredSize(smallComponentDimension);
-		JPanel searchPanel = new JPanel();
-		searchPanel.add(searchLabel);
-		searchPanel.add(searchDropdown);
-		inputPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height*2 + new FlowLayout().getVgap()*3));
+		searchTextField = new JTextField();
+		searchTextField.setPreferredSize(smallComponentDimension);
+		JPanel searchPanel1 = new JPanel();
+		JPanel searchPanel2 = new JPanel();
+		searchPanel1.add(searchLabel1);
+		searchPanel1.add(searchTextField);
+		searchPanel2.add(searchLabel2);
+		searchPanel2.add(searchDropdown);
+		searchPanel1.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
+		searchPanel2.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
 		JButton printButton = new JButton("Print to File"); //Print panel stuff
+		printButton.setPreferredSize(componentDimension);
 		JPanel printPanel = new JPanel();
 		printPanel.add(printButton);
-		printPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height*2 + new FlowLayout().getVgap()*3));
-		inputPanel.setPreferredSize(new Dimension(componentDimension.width * 2 + new FlowLayout().getHgap()*3, componentDimension.height*4 + new FlowLayout().getVgap()*3));
+		printPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
+		inputPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height*4 + new FlowLayout().getVgap()*10));
 		inputPanel.add(sortPanel);
-		inputPanel.add(searchPanel);
+		inputPanel.add(searchPanel1);
+		inputPanel.add(searchPanel2);
 		inputPanel.add(printPanel);
 
 		modernImportButton = new JButton("Import Publication");
 		modernImportButton.setPreferredSize(componentDimension);
-		modernImportButton.addActionListener(controlListener);
+		modernImportButton.addActionListener(modernControlListener);
 		modernSwitchViewButton = new JButton("Switch View");
 		modernSwitchViewButton.setPreferredSize(componentDimension);
-		modernSwitchViewButton.addActionListener(controlListener);
+		modernSwitchViewButton.addActionListener(modernControlListener);
 		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*2 + new FlowLayout().getVgap()*3));
 		controlPanel.add(modernImportButton);
 		controlPanel.add(modernSwitchViewButton);
@@ -167,7 +189,7 @@ public class PublicationSystemGUI extends JFrame
 		FlowLayout flowy = new FlowLayout();
 		flowy.setHgap(40);
 		userPanel.setLayout(flowy);
-		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, componentDimension.height*4 + new FlowLayout().getVgap()*6));
+		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, smallComponentDimension.height*4 + new FlowLayout().getVgap()*12));
 		userPanel.add(inputPanel);
 		userPanel.add(controlPanel);
 		
@@ -193,10 +215,16 @@ public class PublicationSystemGUI extends JFrame
 	}
 	
 	private void switchView(){
-		this.remove(defaultUserPanel);
-		this.add(modernUserPanel, 1);
-		this.validate();
-		//TODO
+		if(getContentPane().getComponent(1) == defaultUserPanel){
+			remove(defaultUserPanel);
+			add(modernUserPanel, 1);
+		}
+		else if(getContentPane().getComponent(1) == modernUserPanel){
+			remove(modernUserPanel);
+			add(defaultUserPanel, 1);
+		}
+		validate();
+		getContentPane().repaint();
 	}
 	
 	private void importPublication(){
@@ -207,7 +235,7 @@ public class PublicationSystemGUI extends JFrame
 		//TODO
 	}
 
-	private class ControlListener implements ActionListener{
+	private class DefaultControlListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource().equals(defaultImportButton)){
 				importPublication();
@@ -218,7 +246,7 @@ public class PublicationSystemGUI extends JFrame
 		}
 	}
 
-	private class ModernInputListener implements ActionListener{
+	private class ModernControlListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource() == modernImportButton){
 				importPublication();
