@@ -165,7 +165,6 @@ public class Serial implements Comparator<Paper>
 	{	
 		//do stuff
 	}
-
 	
 	
 	/** 
