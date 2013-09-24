@@ -168,12 +168,9 @@ public class Paper implements Comparable<Paper>
 		return "N/A";
 	}
 
-	@Override
-	public int compareTo(Paper o) {
+	public int compareTo(Paper arg0) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-
 	
 }

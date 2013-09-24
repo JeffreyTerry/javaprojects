@@ -165,6 +165,8 @@ public class Serial implements Comparator<Paper>
 	{	
 		//do stuff
 	}
+
+	
 	
 	/** 
 	 * This compares two papers to one another
@@ -173,9 +175,12 @@ public class Serial implements Comparator<Paper>
 	 * @param			  o2		the second paper to be compared
 	 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the primary author being alphanumerically before another is considered less than.
 	 */
-	@Override
-	public int compare(Paper o1, Paper o2) {
+	public int compare(Paper arg0, Paper arg1) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	/*
+	 * http://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
+	 */
 }

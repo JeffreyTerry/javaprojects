@@ -1,0 +1,18 @@
+import java.util.ArrayList;
+
+
+public class PublicationSystemDriver 
+{
+	public static void main(String args[])
+	{
+		String[] authors= {"author","author2"};
+		int[] pageNumbers = {1,2};
+		int volume = 5;
+		int issue = 2;
+		Article testA = new Article(authors, "title", "serialTitle", pageNumbers, volume, 2, "January 1992", "digital ID");
+		ArrayList<Article> articles = new ArrayList<Article>();
+		articles.add(testA);
+		Journal testJ= new Journal("name",articles);
+		System.out.println(testJ.sortByVolume());
+	}
+}
