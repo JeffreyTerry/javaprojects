@@ -58,7 +58,12 @@ public class BigDan extends JFrame{
 		pressMeBro.setPreferredSize(new Dimension(width - 2, toolbarHeight - 4));
 		pressMeBro.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent event){
-				solvePuzzle();
+				Thread puzzleSolver = new Thread(new Runnable(){
+					public void run(){
+						solvePuzzle();
+					}
+				});
+				puzzleSolver.start();
 				return;
 				/*final JDialog lulzDialog = new JDialog(thisClass, "Bro you didn't omg like wow", true);
 				JLabel theLabel = new JLabel("Cool story bro.");
@@ -149,9 +154,8 @@ public class BigDan extends JFrame{
 		updateSudokuArray();
 		ArrayList<int[]> cellsSolved = new ArrayList<int[]>();
 		int setk = -1;
-		for(int i = 0; i < cellLabels.length; i++){
-			for(int j = 0; j < cellLabels[i].length; j++){
-				System.out.println(sudokuArray[i][j]);
+		for(int i = 0; i < sudokuArray.length; i++){
+			for(int j = 0; j < sudokuArray[i].length; j++){
 				if(sudokuArray[i][j] == 0){
 					if(cellsSolved.size() != 0 && cellsSolved.get(cellsSolved.size() - 1)[0] == j && cellsSolved.get(cellsSolved.size() - 1)[1] == i){
 						setk = cellsSolved.get(cellsSolved.size() - 1)[2] + 1;
@@ -160,7 +164,7 @@ public class BigDan extends JFrame{
 					else setk = -1;
 					for(int k = setk==-1? 1:setk; k <= 9; k++){
 						//try{Thread.sleep(4);}catch(Exception e){}
-						System.out.println(i + "," + j + "," + k);
+						//System.out.println(i + "," + j + "," + k);
 						sudokuArray[i][j] = k;
 						if(solve(sudokuArray, i, j)){
 							cellsSolved.add(new int[]{i, j, k});
@@ -168,11 +172,9 @@ public class BigDan extends JFrame{
 							break;
 						}
 						else if(k == 9){
-							System.out.println("this");
-							for(int[] bro: cellsSolved)
-								System.out.println("bro: " + bro[0] + ", " + bro[1]);
-							System.out.println(cellsSolved.get(cellsSolved.size() - 1)[0]);
-							System.out.println(cellsSolved.get(cellsSolved.size() - 1)[1]);
+							//System.out.println("this");
+							//System.out.println(cellsSolved.get(cellsSolved.size() - 1)[0]);
+							//System.out.println(cellsSolved.get(cellsSolved.size() - 1)[1]);
 							i = cellsSolved.get(cellsSolved.size() - 1)[0];
 							j = cellsSolved.get(cellsSolved.size() - 1)[1];
 							sudokuArray[i][j] = 0;
