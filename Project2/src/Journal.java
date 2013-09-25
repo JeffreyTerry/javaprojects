@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 public class Journal extends Serial
 {
-	
 	/**
      * This constructor initializes name and papers for the super class Serial, but forces the user to enter only Article Papers.
      * @param             name      the name of the serial
@@ -24,70 +23,5 @@ public class Journal extends Serial
 	public Journal(String name, ArrayList<Article> papers) 
 	{
 		super(name, papers);
-		
-	}
-	
-	/*
-     * Mutator Methods
-     */
-    
-    /**
-     * This sorts papers by their volume
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not void
-     * <dd>POST -         papers is sorted by their volume
-     */
-	public void sortByVolume()
-	{
-		//do stuff
-	}
-	
-	 /**
-     * This sorts papers by their issue
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not void
-     * <dd>POST -         papers is sorted by their issue
-     */
-	public void sortByIssue()
-	{
-		//do stuff
-	}
-	
-	/**
-     * This sorts papers by their length
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not void
-     * <dd>POST -         papers is sorted by their length
-     */
-	public void sortByLength()
-	{
-		//do stuff
-	}
-	
-	/**
-     * This sorts papers by their first page
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not void
-     * <dd>POST -         papers is sorted by their first page
-     */
-	public void sortByFirstPage()
-	{
-		//do stuff
 	}
 }
