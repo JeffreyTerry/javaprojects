@@ -31,7 +31,6 @@ public class PublicationSystem {
      * Algorithm not yet implemented.<br>
      * </P>
      * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not null
      * <dd>POST -         papers is sorted by the date they were published
      */
 	public void sortByDate()
@@ -46,7 +45,6 @@ public class PublicationSystem {
      * Algorithm not yet implemented.<br>
      * </P>
      * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not null
      * <dd>POST -         papers is sorted by the type of serial they are (Journal or ConfereneProceeding)
      */
 	public void sortByType()
@@ -61,7 +59,6 @@ public class PublicationSystem {
      * Algorithm not yet implemented.<br>
      * </P>
      * <dt><b>Conditions:</b>
-     * <dd>PRE  -         papers is not null
      * <dd>POST -         papers is sorted by the digital identifier associated with it alphanumerically
      */
 	public void sortByDigitalIdentifier()
@@ -170,5 +167,20 @@ public class PublicationSystem {
     * <dd>POST -         papers is correctly printed to the file <i>fileName</i>
     */
 	public void printPublicationsToFile(String fileName){
+	}
+	
+	/**
+	 * Searches for a paper by title
+    * <P>
+    * Algorithm:<br>
+    * Algorithm not yet implemented.<br>
+    * </P>
+    * <dt><b>Conditions:</b>
+    * <dd>POST -         The correct paper is returned. A value of null is returned on failure.
+	 */
+	public Paper getPaper(String title){
+		Paper paper = null;
+		//TODO
+		return paper;
 	}
 }
