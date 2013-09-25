@@ -5,6 +5,9 @@ import org.junit.Test;
 
 public class PublicationListTest {
 
+	/*
+	 * Test papers for methods
+	 */
 	String[] authors={"Joe Bob", "Jonny AppleSeed"};
 	String title = "A grand advnture";
 	String serialTitle = "children's stuff";
@@ -30,6 +33,9 @@ public class PublicationListTest {
 	String digitalIdentifier3 = "www.thatonesite3.com";
 	Paper testPaper3 = new Paper(authors3, title3, serialTitle3, pageNumbers3, date3, digitalIdentifier3);
 
+	/**
+	 * tests the sortByDate method of publicationList
+	 */
 	@Test
 	public void testSortByDate() {
 
@@ -49,6 +55,9 @@ public class PublicationListTest {
 		assertEquals(testList, correctList);
 	}
 
+	/**
+	 * tests the sortByType method of publicationList
+	 */
 	@Test
 	public void testSortByType() {
 
@@ -79,6 +88,9 @@ public class PublicationListTest {
 		assertEquals(testList, correctList);
 	}
 
+	/**
+	 * tests the sortByDigitalIdentifier method of publicationList
+	 */
 	@Test
 	public void testSortByDigitalIdentifier() {
 
@@ -98,6 +110,9 @@ public class PublicationListTest {
 		assertEquals(testList, correctList);
 	}
 
+	/**
+	 * tests the sortBySerialTitle method of publicationList
+	 */
 	@Test
 	public void testSortBySerialTitle() {
 
@@ -117,6 +132,9 @@ public class PublicationListTest {
 		assertEquals(testList, correctList);
 	}
 
+	/**
+	 * tests the sortByPaperTitle method of publicationList
+	 */
 	@Test
 	public void testSortByPaperTitle() {
 
@@ -136,6 +154,9 @@ public class PublicationListTest {
 		assertEquals(testList, correctList);
 	}
 
+	/**
+	 * tests the sortByAuthor method of publicationList
+	 */
 	@Test
 	public void testSortByAuthor() {
 
@@ -155,6 +176,9 @@ public class PublicationListTest {
 		assertEquals(testList, correctList);
 	}
 
+	/**
+	 * tests the sortByBibliographicInfo method of publicationList
+	 */
 	@Test
 	public void testSortByBibliographicInfo() {
 		fail("Not yet implemented"); // TODO
