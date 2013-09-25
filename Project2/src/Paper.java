@@ -169,12 +169,12 @@ public class Paper implements Comparable<Paper>
 	}
 
 	/**
-	 * I need this for the comparator apparently. Honestly not sure how, but here it is just in case I need it later in implementation
+	 * Compares two papers using MLA bibliographic ordering
 	 * <P>
-	 * @param 			  arg0			a Paper I don't expect to do anything with.
+	 * @param 			  other			the second Paper to compare
 	 * @return			  0
 	 */
-	public int compareTo(Paper arg0) 
+	public int compareTo(Paper other) 
 	{
 		// TODO Auto-generated method stub
 		return 0;
