@@ -101,7 +101,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	}
 
 	/**
-    * This methods sorts papers by bibliographic info
+    * This methods sorts papers by bibliographic info according to MLA format. i.e. author name
+    * https://owl.english.purdue.edu/owl/resource/747/07/
     * <P>
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
@@ -276,10 +277,6 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return 0;
 		}
 	};
-	/*
-	 * this is a link that helped me figure out comparators. Hurrah for fruit analogies. 
-	 * http://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
-	 */
 	
 	/**
     * This methods compares two papers by the author's last name
