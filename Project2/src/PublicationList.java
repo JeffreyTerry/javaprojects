@@ -114,19 +114,6 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	}
 
 	/**
-    * This methods sorts papers by chronology
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by chronology
-    */
-	public void sortByChronology(){
-		//TODO
-	}
-
-	/**
     * This methods sorts papers by title
     * <P>
     * Algorithm:<br>

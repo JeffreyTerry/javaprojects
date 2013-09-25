@@ -119,19 +119,6 @@ public class PublicationSystem {
 	}
 
 	/**
-    * This methods sorts papers by chronology
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         Papers are sorted by chronology
-    */
-	public void sortByChronology(){
-		publicationList.sortByChronology();
-	}
-
-	/**
     * This methods sorts papers by title
     * <P>
     * Algorithm:<br>
