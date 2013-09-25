@@ -139,6 +139,161 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		//TODO
 	}
 	
+	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their author
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the primary author being alphanumerically before another is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	
+	
+	public static Comparator<Paper>  titleComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their title
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the title being alphanumerically before another is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+
+	public static Comparator<Paper>  dateComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their date of publication
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the date being before another is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+
+	
+	public static Comparator<Paper>  typeComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their type of Paper (Article/ConferencePaper)
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where an Article is considered less than a ConferencePaper.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	
+
+	public static Comparator<Paper>  diComparator = new Comparator<Paper>() 
+	{	
+		/** 
+		 * This compares two papers to one another by their digital identifier
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the digital identifier being alphanumerically before another is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	
+
+	public static Comparator<Paper>  volumeComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their volume
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where a lower numbered volume is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	
+	
+	public static Comparator<Paper>  issueComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their issue
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where a lower numbered issue is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	
+	
+	public static Comparator<Paper>  lengthComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their length
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where a shorter length is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	
+	
+	public static Comparator<Paper>  firstPageComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their first page
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the an earlier page is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			//do Stuff
+			return 0;
+		}
+	};
+	/*
+	 * this is a link that helped me figure out comparators. Hurrah for fruit analogies. 
+	 * http://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
+	 */
+	
 	/**
     * This methods compares two papers by the author's last name
     */

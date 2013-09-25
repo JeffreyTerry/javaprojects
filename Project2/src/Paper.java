@@ -168,9 +168,15 @@ public class Paper implements Comparable<Paper>
 		return "N/A";
 	}
 
-	public int compareTo(Paper arg0) {
+	/**
+	 * I need this for the comparator apparently. Honestly not sure how, but here it is just in case I need it later in implementation
+	 * <P>
+	 * @param 			  arg0			a Paper I don't expect to do anything with.
+	 * @return			  0
+	 */
+	public int compareTo(Paper arg0) 
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
 }
