@@ -3,7 +3,7 @@
  * CS 2334, Section 011
  * 9/19/2013
  * <P>
- * This class represents an Article, which is a paper that was published in a journal.
+ * This class represents an article published in a journal
  * </P>
  * @version 1.0
  */
