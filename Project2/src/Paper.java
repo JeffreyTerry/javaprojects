@@ -27,7 +27,7 @@ public class Paper implements Comparable<Paper>
 	String digitalIdentifier;
 	
 	/**
-     * This constructor initializes all of the variables specific to a paper.
+     * Initializes all of the variables specific to a paper.
      * @param             authors      			an array of the author's names for this paper. The first author should be the primary one.
      * @param             title        			the title of this paper.
      * @param			  serialTitle  			the title of the serial publishing this paper.

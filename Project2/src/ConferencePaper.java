@@ -4,7 +4,7 @@
  * CS 2334, Section 011
  * 9/19/2013
  * <P>
- * This class represents a conference paper which is a paper that was published in a conference proceeding.
+ * This class represents a conference paper published in a conference proceeding.
  * </P>
  * @version 1.0
  */
