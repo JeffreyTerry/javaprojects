@@ -276,10 +276,6 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return 0;
 		}
 	};
-	/*
-	 * this is a link that helped me figure out comparators. Hurrah for fruit analogies. 
-	 * http://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/
-	 */
 	
 	/**
     * This methods compares two papers by the author's last name
