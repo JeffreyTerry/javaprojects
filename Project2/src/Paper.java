@@ -172,11 +172,36 @@ public class Paper implements Comparable<Paper>
 	 * Compares two papers using MLA bibliographic ordering
 	 * <P>
 	 * @param 			  other			the second Paper to compare
-	 * @return			  0
+	 * @return			  -1,0, or 1
 	 */
 	public int compareTo(Paper other) 
 	{
-		// TODO Auto-generated method stub
-		return 0;
+		String[] firstAuthors = this.getAuthors();
+		String[] secondAuthors = other.getAuthors();
+		
+		int compare=0;
+		int firstLength=firstAuthors.length;
+		int secondLength=secondAuthors.length;
+		int shorterLength = firstLength;
+		if(firstLength>secondLength)
+			shorterLength=secondLength;
+		String author1;
+		String author2;
+		for(int i=0; i<shorterLength; i++)
+		{
+			author1=firstAuthors[i].split(" ")[2];
+			author2=secondAuthors[i].split(" ")[2];
+			compare=author1.compareTo(author2);
+			if(compare != 0)
+				break;
+		}
+		if(compare == 0)
+		{
+			if(firstLength>secondLength)
+				compare=1;
+			if(firstLength<secondLength)
+				compare=-1;
+		}
+		return compare;
 	}
 }

@@ -101,7 +101,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	}
 
 	/**
-    * This methods sorts papers by bibliographic info
+    * This methods sorts papers by bibliographic info according to MLA format. i.e. author name
+    * https://owl.english.purdue.edu/owl/resource/747/07/
     * <P>
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
@@ -120,7 +121,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * Algorithm not yet implemented.<br>
     * </P>
     * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by a random characteristic
+    * <dd>POST -         The order is ranomized
     */
 	public void randomSort(){
 		//TODO
@@ -137,8 +138,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			return p1.compareTo(p2);
 		}
 	};
 	
@@ -154,8 +154,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			return p1.title.compareTo(p2.title);
 		}
 	};
 
@@ -170,8 +169,105 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			String[] date1=p1.date.split(" ");
+			String[] date2=p2.date.split(" ");
+			
+			int month1=13;
+	        switch (date1[1].toLowerCase()) 
+	        {
+	            case "january":
+	            	month1=1;
+	                break;
+	            case "febuary": 
+	            	month1=2;
+	            	break;
+	            case "march": 
+	            	month1=3;
+	            	break;
+	            case "april":
+	            	month1=4;
+	            	break;
+	            case "may":
+	            	month1=5;
+	            	break;
+	            case "june":
+	            	month1=6;
+	            	break;
+	            case "july":
+	            	month1=7;
+	            	break;
+	            case "august":
+	            	month1=8;
+	            	break;
+	            case "september":
+	            	month1=9;
+	            	break;
+	            case "october":
+	            	month1=10;
+	            	break;
+	            case "november":
+	            	month1=11;
+	            	break;
+	            case "december":
+	            	month1=12;
+	            	break;
+	        }
+	        
+	        int month2=13;
+	        switch (date2[1].toLowerCase()) 
+	        {
+	            case "january":
+	            	month2=1;
+	                break;
+	            case "febuary": 
+	            	month2=2;
+	            	break;
+	            case "march": 
+	            	month2=3;
+	            	break;
+	            case "april":
+	            	month2=4;
+	            	break;
+	            case "may":
+	            	month2=5;
+	            	break;
+	            case "june":
+	            	month2=6;
+	            	break;
+	            case "july":
+	            	month2=7;
+	            	break;
+	            case "august":
+	            	month2=8;
+	            	break;
+	            case "september":
+	            	month2=9;
+	            	break;
+	            case "october":
+	            	month2=10;
+	            	break;
+	            case "november":
+	            	month2=11;
+	            	break;
+	            case "december":
+	            	month2=12;
+	            	break;
+	        }
+	        int compare=0;
+	        if(month1<month2)
+	        	compare=-1;
+	        if(month1>month2)
+	        	compare=1;
+	        int day1=Integer.parseInt(date1[2]);
+	        int day2=Integer.parseInt(date2[2]);
+	        if(compare==0)
+	        {
+	        	if(day1<day2)
+	        		compare=-1;
+	        	if(day1>day2)
+	        		compare=1;
+	        }
+			return compare;
 		}
 	};
 
@@ -187,8 +283,14 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			int paper1=1;
+			int paper2=1;
+			if(p1 instanceof Article)
+				paper1=0;
+			if(p2 instanceof Article)
+				paper2=0;
+			int compare=paper1-paper2;
+			return compare;
 		}
 	};
 	
@@ -200,12 +302,13 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 * <P>
 		 * @param 			  p1		the first paper to be compared
 		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the digital identifier being alphanumerically before another is considered less than.
+		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the digital identifier being alphanumerically before another is considered less than.
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			String di1=p1.digitalIdentifier;
+			String di2=p2.digitalIdentifier;
+			return di1.compareTo(di2);
 		}
 	};
 	
@@ -221,8 +324,26 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			Article a1;
+			Article a2;
+			int v1=-1;
+			int v2=-1;
+			if(p1 instanceof Article)
+			{
+				a1=(Article)p1;
+				v1=a1.volume;
+			}
+			if(p2 instanceof Article)
+			{
+				a2=(Article)p2;
+				v2=a2.volume;
+			}
+			int compare=0;
+			if(v1>v2)
+				compare=1;
+			else if(v1<v2)
+				compare=-1;
+			return compare;
 		}
 	};
 	
@@ -234,12 +355,30 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 * <P>
 		 * @param 			  p1		the first paper to be compared
 		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where a lower numbered issue is considered less than.
+		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where a lower numbered issue is considered less than.
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			Article a1;
+			Article a2;
+			int i1=-1;
+			int i2=-1;
+			if(p1 instanceof Article)
+			{
+				a1=(Article)p1;
+				i1=a1.issue;
+			}
+			if(p2 instanceof Article)
+			{
+				a2=(Article)p2;
+				i2=a2.issue;
+			}
+			int compare=0;
+			if(i1>i2)
+				compare=1;
+			else if(i1<i2)
+				compare=-1;
+			return compare;
 		}
 	};
 	
@@ -251,12 +390,19 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 * <P>
 		 * @param 			  p1		the first paper to be compared
 		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where a shorter length is considered less than.
+		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where a shorter length is considered less than.
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			int length1=p1.pageNumbers[2]-p1.pageNumbers[1];
+			int length2=p2.pageNumbers[2]-p2.pageNumbers[1];
+			
+			int compare=0;
+			if(length1<length2)
+				compare=-1;
+			else if(length1>length2)
+				compare=1;
+			return compare;
 		}
 	};
 	
@@ -272,8 +418,12 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			//do Stuff
-			return 0;
+			int compare=0;
+			if(p1.pageNumbers[1]<p2.pageNumbers[1])
+				compare=-1;
+			else if(p1.pageNumbers[1]>p2.pageNumbers[1])
+				compare=1;
+			return compare;
 		}
 	};
 	
@@ -282,6 +432,6 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     */
 	public int compare(Paper p1, Paper p2){
 		//TODO
-		return 0;
+		return p1.compareTo(p2);
 	}
 }
