@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 
 
@@ -28,7 +29,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
      */
 	public void sortByDate()
 	{
-		//do stuff
+		Collections.sort(this,dateComparator);
 	}
 	
 	 /**
@@ -43,7 +44,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
      */
 	public void sortByType()
 	{
-		//do stuff
+		Collections.sort(this,typeComparator);
 	}
 	
 	/**
@@ -58,7 +59,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
      */
 	public void sortByDigitalIdentifier()
 	{
-		//do stuff
+		Collections.sort(this,diComparator);
 	}
 
 	/**
@@ -70,8 +71,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * <dt><b>Conditions:</b>
     * <dd>POST -         Publications are sorted by serial title
     */
-	public void sortBySerialTitle(){
-		//TODO
+	public void sortBySerialTitle()
+	{
+		Collections.sort(this,serialTitleComparator);
 	}
 
 	/**
@@ -83,8 +85,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * <dt><b>Conditions:</b>
     * <dd>POST -         Publications are sorted by paper title
     */
-	public void sortByPaperTitle(){
-		//TODO
+	public void sortByPaperTitle()
+	{
+		Collections.sort(this,paperTitleComparator);
 	}
 
 	/**
@@ -96,8 +99,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * <dt><b>Conditions:</b>
     * <dd>POST -         Publications are sorted by author
     */
-	public void sortByAuthor(){
-		//TODO
+	public void sortByAuthor()
+	{
+		Collections.sort(this,authorComparator);
 	}
 
 	/**
@@ -110,8 +114,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * <dt><b>Conditions:</b>
     * <dd>POST -         Publications are sorted by bibliographic info
     */
-	public void sortByBibliographicInfo(){
-		//TODO
+	public void sortByBibliographicInfo()
+	{
+		Collections.sort(this,authorComparator);
 	}
 
 	/**
@@ -123,8 +128,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * <dt><b>Conditions:</b>
     * <dd>POST -         The order is ranomized
     */
-	public void randomSort(){
-		//TODO
+	public void randomSort()
+	{
+		 Collections.shuffle(this);
 	}
 	
 	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
@@ -143,7 +149,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	};
 	
 	
-	public static Comparator<Paper>  titleComparator = new Comparator<Paper>() 
+	public static Comparator<Paper>  paperTitleComparator = new Comparator<Paper>() 
 	{
 		/** 
 		 * This compares two papers to one another by their title
@@ -158,6 +164,22 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		}
 	};
 
+	
+	public static Comparator<Paper>  serialTitleComparator = new Comparator<Paper>() 
+	{
+		/** 
+		 * This compares two papers to one another by their serial title
+		 * <P>
+		 * @param 			  p1		the first paper to be compared
+		 * @param			  p2		the second paper to be compared
+		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the serial title being alphanumerically before another is considered less than.
+		 */
+		public int compare(Paper p1, Paper p2) 
+		{
+			return p1.serialTitle.compareTo(p2.serialTitle);
+		}
+	};
+	
 	public static Comparator<Paper>  dateComparator = new Comparator<Paper>() 
 	{
 		/** 
