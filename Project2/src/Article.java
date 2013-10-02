@@ -23,9 +23,9 @@ public class Article extends Paper
      * @param			  serialTitle  			the title of the journal publishing this article.
      * @param			  pageNumbers  			an array representing the first and last page numbers in the journal where this article is found.
      * @param			  date		   			the date this article was published.
-     * @param			  digitalIdentifier		a digital identifier for the article such as a URL.
      * @param 			  volume				the volume of the journal this article is found in.
      * @param 			  issue					the issue of the journal this article is found in.
+     * @param			  digitalIdentifier		a digital identifier for the article such as a URL.
      *
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized.
