@@ -6,10 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -25,6 +28,8 @@ import javax.swing.JTextField;
  */
 public class PublicationSystemGUI extends JFrame
 {
+	private PublicationSystem publicationSystem;
+	
 	private JPanel titlePanel;
 	private JPanel defaultUserPanel;
 	private JPanel modernUserPanel;
@@ -71,6 +76,8 @@ public class PublicationSystemGUI extends JFrame
 		}
 		this.width = width;
 		this.height = height;
+		
+		publicationSystem = new PublicationSystem();
 		init();
 	}
 	
@@ -151,12 +158,13 @@ public class PublicationSystemGUI extends JFrame
 		Dimension componentDimension = new Dimension(160, 32);
 		Dimension smallComponentDimension = new Dimension(80, 32);
 
-		String[] sortOptions = {""};  //Sort panel stuff
+		String[] sortOptions = {"Paper Title", "Serial Title", "Author", "Bibliography", "Date", "Digital Identifier"};  //Sort panel stuff
 		JLabel sortLabel = new JLabel("Sort by ");
 		sortLabel.setPreferredSize(smallComponentDimension);
 		sortLabel.setHorizontalAlignment(JLabel.RIGHT);
 		sortDropdown = new JComboBox(sortOptions);
 		sortDropdown.setPreferredSize(smallComponentDimension);
+		sortDropdown.addActionListener(modernControlListener);
 		JPanel sortPanel = new JPanel();
 		sortPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
 		sortPanel.add(sortLabel);
@@ -167,11 +175,13 @@ public class PublicationSystemGUI extends JFrame
 		JLabel searchLabel2 = new JLabel("Search by ");  //Search panel stuff
 		searchLabel2.setPreferredSize(smallComponentDimension);
 		searchLabel2.setHorizontalAlignment(JLabel.RIGHT);
-		String[] searchOptions = {""};
+		String[] searchOptions = {"Title"};
 		searchDropdown = new JComboBox(searchOptions);
 		searchDropdown.setPreferredSize(smallComponentDimension);
+		searchDropdown.addActionListener(modernControlListener);
 		searchTextField = new JTextField();
 		searchTextField.setPreferredSize(smallComponentDimension);
+		searchTextField.addKeyListener(modernControlListener);
 		JPanel searchPanel1 = new JPanel();
 		JPanel searchPanel2 = new JPanel();
 		searchPanel1.add(searchLabel1);
@@ -249,11 +259,90 @@ public class PublicationSystemGUI extends JFrame
 	}
 	
 	private void importPublication(){
-		//TODO
+		publicationSystem.importPublication();
+	}
+	
+	/**
+	 * Searches for text according to terms dictated by the search drop down component
+	 * @param text			The text to search for
+	 */
+	private void searchFor(String text){
+		switch(searchDropdown.getSelectedIndex()){
+		case 0:
+			performTask("PT");
+			break;
+		case 1:
+			performTask("ST");
+			break;
+		case 2:
+			performTask("AN");
+			break;
+		case 3:
+			performTask("BI");
+			break;
+		case 4:
+			performTask("CH");
+			break;
+		case 5:
+			performTask("DI");
+			break;
+		default:
+			break;
+		}
 	}
 	
 	private void performTask(String task){
-		//TODO
+		if(task.equals("BI")){  //Bibliographic sort
+			publicationSystem.sortByBibliographicInfo();
+		}
+		else if(task.equals("AN")){  //Author sort
+			publicationSystem.sortByAuthor();
+		}
+		else if(task.equals("PT")){  //Paper title sort
+			publicationSystem.sortByPaperTitle();
+		}
+		else if(task.equals("ST")){  //Serial title sort
+			publicationSystem.sortBySerialTitle();
+		}
+		else if(task.equals("CH")){  //Chronological sort
+			publicationSystem.sortByDate();
+		}
+		else if(task.equals("R")){  //Random sort
+			publicationSystem.randomSort();
+		}
+		else if(task.equals("DI")){  //
+			publicationSystem.sortByDigitalIdentifier();
+		}
+		else if(task.equals("PF")){  //Print to file
+			String fileName = "";
+			try{
+				fileName = JOptionPane.showInputDialog("Enter new file name", "Print to File");
+				publicationSystem.printPublicationsToFile(fileName);
+			}
+			catch(Exception e){e.printStackTrace();}
+			return;
+		}
+		else if(task.equals("S")){  //Search
+			String searchQuery = "";
+			try{
+				searchQuery = JOptionPane.showInputDialog("Enter title to search", "Search by Title");
+			}
+			catch(Exception e){e.printStackTrace();}
+			Paper paperFound = publicationSystem.getPaper(searchQuery);
+			if(paperFound == null){
+				JOptionPane.showMessageDialog(null, "Paper not found", "", JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				displayLabel.setText(paperFound.toString());
+				return;
+			}
+		}
+		//By default the method prints the publicationList to the screen
+		displayLabel.setText("<html>");
+		for(Paper p: publicationSystem.getPublicationList()){
+			displayLabel.setText(displayLabel.getText() + "<p>" + p.toString() + "</p>");
+		}
+		displayLabel.setText(displayLabel.getText() + "</html>");
 	}
 
 	private class DefaultControlListener implements ActionListener{
@@ -267,7 +356,7 @@ public class PublicationSystemGUI extends JFrame
 		}
 	}
 
-	private class ModernControlListener implements ActionListener{
+	private class ModernControlListener implements ActionListener, KeyListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource() == modernImportButton){
 				importPublication();
@@ -275,6 +364,13 @@ public class PublicationSystemGUI extends JFrame
 			else if(event.getSource() == modernSwitchViewButton){
 				switchView();
 			}
+		}
+		public void keyPressed(KeyEvent event){
+			searchFor(searchTextField.getText());
+		}
+		public void keyReleased(KeyEvent event){
+		}
+		public void keyTyped(KeyEvent event){
 		}
 	}
 

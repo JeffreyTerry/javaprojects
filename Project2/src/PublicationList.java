@@ -190,85 +190,81 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			String[] date2=p2.getDate().split(" ");
 			
 			int month1=13;
-	        switch (date1[0].toLowerCase()) 
-	        {
-	            case "january":
-	            	month1=1;
-	                break;
-	            case "febuary": 
-	            	month1=2;
-	            	break;
-	            case "march": 
-	            	month1=3;
-	            	break;
-	            case "april":
-	            	month1=4;
-	            	break;
-	            case "may":
-	            	month1=5;
-	            	break;
-	            case "june":
-	            	month1=6;
-	            	break;
-	            case "july":
-	            	month1=7;
-	            	break;
-	            case "august":
-	            	month1=8;
-	            	break;
-	            case "september":
-	            	month1=9;
-	            	break;
-	            case "october":
-	            	month1=10;
-	            	break;
-	            case "november":
-	            	month1=11;
-	            	break;
-	            case "december":
-	            	month1=12;
-	            	break;
+	        String toSwitch = date1[1].toLowerCase();
+	        if(toSwitch.equals("january")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("february")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("march")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("april")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("may")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("june")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("july")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("august")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("september")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("october")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("november")){
+            	month1=1;
+	        }
+	        else if(toSwitch.equals("december")){
+            	month1=1;
 	        }
 	        
 	        int month2=13;
-	        switch (date2[0].toLowerCase()) 
-	        {
-	            case "january":
-	            	month2=1;
-	                break;
-	            case "febuary": 
-	            	month2=2;
-	            	break;
-	            case "march": 
-	            	month2=3;
-	            	break;
-	            case "april":
-	            	month2=4;
-	            	break;
-	            case "may":
-	            	month2=5;
-	            	break;
-	            case "june":
-	            	month2=6;
-	            	break;
-	            case "july":
-	            	month2=7;
-	            	break;
-	            case "august":
-	            	month2=8;
-	            	break;
-	            case "september":
-	            	month2=9;
-	            	break;
-	            case "october":
-	            	month2=10;
-	            	break;
-	            case "november":
-	            	month2=11;
-	            	break;
-	            case "december":
-	            	month2=12;
-	            	break;
+	        toSwitch = date2[1].toLowerCase();
+	        if(toSwitch.equals("january")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("february")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("march")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("april")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("may")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("june")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("july")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("august")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("september")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("october")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("november")){
+            	month2=1;
+	        }
+	        else if(toSwitch.equals("december")){
+            	month2=1;
 	        }
 	        int compare=0;
 	        if(month1<month2)
