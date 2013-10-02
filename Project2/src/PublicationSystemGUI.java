@@ -328,7 +328,7 @@ public class PublicationSystemGUI extends JFrame
 				searchQuery = JOptionPane.showInputDialog("Enter title to search", "Search by Title");
 			}
 			catch(Exception e){e.printStackTrace();}
-			Paper paperFound = publicationSystem.getPaper(searchQuery);
+			Paper paperFound = publicationSystem.getPaperLinear(searchQuery);
 			if(paperFound == null){
 				JOptionPane.showMessageDialog(null, "Paper not found", "", JOptionPane.ERROR_MESSAGE);
 			}
