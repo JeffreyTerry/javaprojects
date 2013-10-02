@@ -18,6 +18,11 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
      */
     
 	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Sorts papers by the date they were published
      * <P>
      * Algorithm:<br>
