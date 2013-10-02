@@ -38,20 +38,6 @@ public class PublicationSystem {
 		publicationList.sortByDate();
 	}
 	
-	 /**
-     * This sorts papers by the type of serial they are (Journal or ConfereneProceeding)
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>POST -         papers is sorted by the type of serial they are (Journal or ConfereneProceeding)
-     */
-	public void sortByType()
-	{
-		publicationList.sortByType();
-	}
-	
 	/**
      * This sorts papers by the digital identifier associated with it alphanumerically
      * <P>

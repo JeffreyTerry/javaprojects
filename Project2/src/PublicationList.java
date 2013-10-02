@@ -36,22 +36,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	{
 		Collections.sort(this,dateComparator);
 	}
-	
-	 /**
-     * Sorts papers by the type of serial they are (Journal or ConfereneProceeding)
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         PublicationList is not empty
-     * <dd>POST -         PublicationList is sorted by the type of serial they are (Journal or ConfereneProceeding)
-     */
-	public void sortByType()
-	{
-		Collections.sort(this,typeComparator);
-	}
-	
+
 	/**
      * Sorts papers by the digital identifier associated with it alphanumerically
      * <P>
@@ -161,11 +146,16 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 * <P>
 		 * @param 			  p1		the first paper to be compared
 		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the title being alphanumerically before another is considered less than.
+		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the title being alphanumerically before another is considered less than.
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			return p1.title.compareTo(p2.title);
+			int compare=0;
+			if(p1.getTitle().compareTo(p2.getTitle())>0)
+				compare=1;
+			if(p1.getTitle().compareTo(p2.getTitle())<0)
+				compare=-1;
+			return compare;
 		}
 	};
 
@@ -181,7 +171,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			return p1.serialTitle.compareTo(p2.serialTitle);
+			return p1.getSerialTitle().compareTo(p2.getSerialTitle());
 		}
 	};
 	
@@ -196,11 +186,11 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			String[] date1=p1.date.split(" ");
-			String[] date2=p2.date.split(" ");
+			String[] date1=p1.getDate().split(" ");
+			String[] date2=p2.getDate().split(" ");
 			
 			int month1=13;
-	        switch (date1[1].toLowerCase()) 
+	        switch (date1[0].toLowerCase()) 
 	        {
 	            case "january":
 	            	month1=1;
@@ -241,7 +231,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	        }
 	        
 	        int month2=13;
-	        switch (date2[1].toLowerCase()) 
+	        switch (date2[0].toLowerCase()) 
 	        {
 	            case "january":
 	            	month2=1;
@@ -285,8 +275,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	        	compare=-1;
 	        if(month1>month2)
 	        	compare=1;
-	        int day1=Integer.parseInt(date1[2]);
-	        int day2=Integer.parseInt(date2[2]);
+	        int day1=Integer.parseInt(date1[1]);
+	        int day2=Integer.parseInt(date2[1]);
 	        if(compare==0)
 	        {
 	        	if(day1<day2)
@@ -294,29 +284,6 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	        	if(day1>day2)
 	        		compare=1;
 	        }
-			return compare;
-		}
-	};
-
-	
-	public static Comparator<Paper>  typeComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their type of Paper (Article/ConferencePaper)
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where an Article is considered less than a ConferencePaper.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			int paper1=1;
-			int paper2=1;
-			if(p1 instanceof Article)
-				paper1=0;
-			if(p2 instanceof Article)
-				paper2=0;
-			int compare=paper1-paper2;
 			return compare;
 		}
 	};
@@ -333,8 +300,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			String di1=p1.digitalIdentifier;
-			String di2=p2.digitalIdentifier;
+			String di1=p1.getDigitalIdentifier();
+			String di2=p2.getDigitalIdentifier();
 			return di1.compareTo(di2);
 		}
 	};
@@ -358,12 +325,12 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			if(p1 instanceof Article)
 			{
 				a1=(Article)p1;
-				v1=a1.volume;
+				v1=a1.getVolume();
 			}
 			if(p2 instanceof Article)
 			{
 				a2=(Article)p2;
-				v2=a2.volume;
+				v2=a2.getVolume();
 			}
 			int compare=0;
 			if(v1>v2)
@@ -393,12 +360,12 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			if(p1 instanceof Article)
 			{
 				a1=(Article)p1;
-				i1=a1.issue;
+				i1=a1.getIssue();
 			}
 			if(p2 instanceof Article)
 			{
 				a2=(Article)p2;
-				i2=a2.issue;
+				i2=a2.getIssue();
 			}
 			int compare=0;
 			if(i1>i2)
@@ -421,8 +388,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			int length1=p1.pageNumbers[2]-p1.pageNumbers[1];
-			int length2=p2.pageNumbers[2]-p2.pageNumbers[1];
+			int length1=p1.getPageNumbers()[2]-p1.getPageNumbers()[1];
+			int length2=p2.getPageNumbers()[2]-p2.getPageNumbers()[1];
 			
 			int compare=0;
 			if(length1<length2)
@@ -446,9 +413,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		public int compare(Paper p1, Paper p2) 
 		{
 			int compare=0;
-			if(p1.pageNumbers[1]<p2.pageNumbers[1])
+			if(p1.getPageNumbers()[1]<p2.getPageNumbers()[1])
 				compare=-1;
-			else if(p1.pageNumbers[1]>p2.pageNumbers[1])
+			else if(p1.getPageNumbers()[1]>p2.getPageNumbers()[1])
 				compare=1;
 			return compare;
 		}

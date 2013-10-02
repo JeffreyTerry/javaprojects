@@ -14,17 +14,17 @@ public class Paper implements Comparable<Paper>
 	/* Instance Variables */
     
     /** The authors of the paper */ 	
-	String[] authors;
+	private String[] authors;
 	/** The title of the paper */
-	String title;
+	private String title;
 	/** The title of the serial that published the paper */
-	String serialTitle;
+	private String serialTitle;
 	/** The first and last page number in the serial where this paper is found */
-	int[] pageNumbers;
+	private int[] pageNumbers;
 	/** The date the paper was published */
-	String date;	//look into using Calendar or GregorianCalendar or something cooler
+	private String date;	//look into using Calendar or GregorianCalendar or something cooler
 	/** A digital identifier such as a URL for the paper */
-	String digitalIdentifier;
+	private String digitalIdentifier;
 	
 	/**
      * Initializes all of the variables specific to a paper.
@@ -187,13 +187,14 @@ public class Paper implements Comparable<Paper>
 			shorterLength=secondLength;
 		String author1;
 		String author2;
-		for(int i=0; i<shorterLength; i++)
+		
+		int i=0;
+		while(compare == 0 && i<shorterLength)
 		{
-			author1=firstAuthors[i].split(" ")[2];
-			author2=secondAuthors[i].split(" ")[2];
+			author1=firstAuthors[i].split(" ")[1];
+			author2=secondAuthors[i].split(" ")[1];
 			compare=author1.compareTo(author2);
-			if(compare != 0)
-				break;
+			i++;
 		}
 		if(compare == 0)
 		{

@@ -21,6 +21,7 @@ public class PaperTest {
 	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 	Paper testPaper3 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 	
+	@Test
 	public void testComparable() {
 		Assert.assertEquals(1, testPaper1.compareTo(testPaper2));
 		Assert.assertEquals(-1, testPaper2.compareTo(testPaper1));

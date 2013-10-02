@@ -12,9 +12,9 @@ public class Article extends Paper
 	/* Instance Variables */
     
     /** The volume the paper is found in */ 
-	int volume;
+	private int volume;
 	/** The issue the paper is found in */
-	int issue;
+	private int issue;
 	
 	/**
      * This constructor initializes all of the variables specific to an Article.
