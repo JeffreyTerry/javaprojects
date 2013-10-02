@@ -453,7 +453,6 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * This methods compares two papers by the author's last name
     */
 	public int compare(Paper p1, Paper p2){
-		//TODO
 		return p1.compareTo(p2);
 	}
 }
