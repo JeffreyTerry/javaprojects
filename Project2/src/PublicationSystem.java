@@ -203,6 +203,7 @@ public class PublicationSystem {
 					publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
 				}
 			}
+			fileReader.close();
 		}
 		catch(IOException e){e.printStackTrace();}
 	}
