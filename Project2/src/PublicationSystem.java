@@ -47,20 +47,6 @@ public class PublicationSystem {
 		publicationList.sortByDate();
 	}
 	
-	 /**
-     * This sorts papers by the type of serial they are (Journal or ConfereneProceeding)
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>POST -         papers is sorted by the type of serial they are (Journal or ConfereneProceeding)
-     */
-	public void sortByType()
-	{
-		publicationList.sortByType();
-	}
-	
 	/**
      * This sorts papers by the digital identifier associated with it alphanumerically
      * <P>
@@ -236,11 +222,71 @@ public class PublicationSystem {
     * Algorithm not yet implemented.<br>
     * </P>
     * <dt><b>Conditions:</b>
+    * <dd>PRE  -		 publicationList is sorted
     * <dd>POST -         The correct paper is returned. A value of null is returned on failure.
 	 */
-	public Paper getPaper(String title){
-		Paper paper = null;
-		//TODO
-		return paper;
+	public Paper getPaperBinary(String title){
+		int currentIndex;
+		int finalIndex=-1;
+		int lower=0;
+		int higher=publicationList.size()-1;
+		while(finalIndex==-1)
+		{
+			currentIndex=(higher+lower)/2;
+			if(publicationList.get(currentIndex).getTitle().compareTo(title)==0)
+				finalIndex=currentIndex;
+			else if(publicationList.get(currentIndex).getTitle().compareTo(title)>0)
+				higher=currentIndex;
+			else
+				lower=currentIndex;
+		}
+		return publicationList.get(finalIndex);
 	}
+	
+	public Paper getPaperLinear(String title){
+		int index=0;
+		int finalIndex=-1;
+		while(finalIndex==-1 && index<publicationList.size())
+		{
+			if(publicationList.get(index).getTitle().equals(title))
+				finalIndex=index;
+			index++;
+		}
+		return publicationList.get(finalIndex);
+	}
+	public int getSearchComparisonsBI(String title)
+	{
+		int count=0;
+		int currentIndex;
+		int finalIndex=-1;
+		int lower=0;
+		int higher=publicationList.size()-1;
+		while(finalIndex==-1)
+		{
+			count++;
+			currentIndex=(higher+lower)/2;
+			if(publicationList.get(currentIndex).getTitle().compareTo(title)==0)
+				finalIndex=currentIndex;
+			else if(publicationList.get(currentIndex).getTitle().compareTo(title)>0)
+				higher=currentIndex;
+			else
+				lower=currentIndex;
+		}
+		return count;
+	}
+	public int getSearchComparisonsLI(String title)
+	{
+		int count=0;
+		int index=0;
+		int finalIndex=-1;
+		while(finalIndex==-1 && index<publicationList.size())
+		{
+			count++;
+			if(publicationList.get(index).getTitle().equals(title))
+				finalIndex=index;
+			index++;
+		}
+		return count++;
+	}
+	
 }
