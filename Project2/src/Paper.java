@@ -191,8 +191,8 @@ public class Paper implements Comparable<Paper>
 		int i=0;
 		while(compare == 0 && i<shorterLength)
 		{
-			author1=firstAuthors[i].split(" ")[1];
-			author2=secondAuthors[i].split(" ")[1];
+			author1=firstAuthors[i].split(" ")[0];
+			author2=secondAuthors[i].split(" ")[0];
 			compare=author1.compareTo(author2);
 			i++;
 		}

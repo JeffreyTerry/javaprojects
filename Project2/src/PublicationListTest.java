@@ -8,7 +8,7 @@ public class PublicationListTest {
 	/*
 	 * Test papers for methods
 	 */
-	String[] authors={"Joe BBob", "Jonny AppleSeed"};
+	String[] authors={"BBob, Joe", "AppleSeed, Jonny"};
 	String title = "c";
 	String serialTitle = "children's stuff";
 	int[] pageNumbers = {1,100};
@@ -17,7 +17,7 @@ public class PublicationListTest {
 	Paper testPaper1 = new Paper(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 
 
-	String[] authors2={"Joe ABob", "Jonny BAppleSeed"};
+	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
 	String title2 = "a";
 	String serialTitle2 = "Achildren's stuff";
 	int[] pageNumbers2 = {2,150};
@@ -25,7 +25,7 @@ public class PublicationListTest {
 	String digitalIdentifier2 = "www.thatonesite2.com";
 	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 
-	String[] authors3={"AJoe CBob", "AJonny AppleSeed"};
+	String[] authors3={"CBob, ABob", "AppleSeed, AJonny"};
 	String title3 = "b";
 	String serialTitle3 = "cAhildren's stuff";
 	int[] pageNumbers3 = {3,50};
