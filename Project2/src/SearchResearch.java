@@ -4,6 +4,7 @@ public class SearchResearch {
 	{
 		//PublicationSystem system = new PublicationSystem();
 		//system.importPublication();
+		
 		System.out.println("Title	|		1.			2.			3.			4.			5.");
 		System.out.println("Order");
 		System.out.println("-------			---------		---------		---------		---------		---------");

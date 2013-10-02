@@ -152,7 +152,7 @@ public class PublicationSystem {
     * <dd>PRE  -		 publicationList is sorted
     * <dd>POST -         The correct paper is returned. A value of null is returned on failure.
 	 */
-	public Paper getPaper(String title){
+	public Paper getPaperBinary(String title){
 		int currentIndex;
 		int finalIndex=-1;
 		int lower=0;
@@ -166,6 +166,18 @@ public class PublicationSystem {
 				higher=currentIndex;
 			else
 				lower=currentIndex;
+		}
+		return publicationList.get(finalIndex);
+	}
+	
+	public Paper getPaperLinear(String title){
+		int index=0;
+		int finalIndex=-1;
+		while(finalIndex==-1 && index<publicationList.size())
+		{
+			if(publicationList.get(index).getTitle().equals(title))
+				finalIndex=index;
+			index++;
 		}
 		return publicationList.get(finalIndex);
 	}
@@ -188,6 +200,20 @@ public class PublicationSystem {
 				lower=currentIndex;
 		}
 		return count;
+	}
+	public int getSearchComparisonsLI(String title)
+	{
+		int count=0;
+		int index=0;
+		int finalIndex=-1;
+		while(finalIndex==-1 && index<publicationList.size())
+		{
+			count++;
+			if(publicationList.get(index).getTitle().equals(title))
+				finalIndex=index;
+			index++;
+		}
+		return count++;
 	}
 	
 }
