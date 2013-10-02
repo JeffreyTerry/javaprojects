@@ -169,7 +169,7 @@ public class PublicationSystem {
 		}
 		return publicationList.get(finalIndex);
 	}
-	public int getSearchComparisonsBI()
+	public int getSearchComparisonsBI(String title)
 	{
 		int count=0;
 		int currentIndex;
