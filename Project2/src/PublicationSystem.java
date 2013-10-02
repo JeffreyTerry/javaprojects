@@ -149,11 +149,45 @@ public class PublicationSystem {
     * Algorithm not yet implemented.<br>
     * </P>
     * <dt><b>Conditions:</b>
+    * <dd>PRE  -		 publicationList is sorted
     * <dd>POST -         The correct paper is returned. A value of null is returned on failure.
 	 */
 	public Paper getPaper(String title){
-		Paper paper = null;
-		//TODO
-		return paper;
+		int currentIndex;
+		int finalIndex=-1;
+		int lower=0;
+		int higher=publicationList.size()-1;
+		while(finalIndex==-1)
+		{
+			currentIndex=(higher+lower)/2;
+			if(publicationList.get(currentIndex).getTitle().compareTo(title)==0)
+				finalIndex=currentIndex;
+			else if(publicationList.get(currentIndex).getTitle().compareTo(title)>0)
+				higher=currentIndex;
+			else
+				lower=currentIndex;
+		}
+		return publicationList.get(finalIndex);
 	}
+	public int getSearchComparisonsBI()
+	{
+		int count=0;
+		int currentIndex;
+		int finalIndex=-1;
+		int lower=0;
+		int higher=publicationList.size()-1;
+		while(finalIndex==-1)
+		{
+			count++;
+			currentIndex=(higher+lower)/2;
+			if(publicationList.get(currentIndex).getTitle().compareTo(title)==0)
+				finalIndex=currentIndex;
+			else if(publicationList.get(currentIndex).getTitle().compareTo(title)>0)
+				higher=currentIndex;
+			else
+				lower=currentIndex;
+		}
+		return count;
+	}
+	
 }
