@@ -255,20 +255,21 @@ public class PublicationSystem {
 	 */
 	public Paper getPaperBinary(String title){
 		int currentIndex;
-		int finalIndex=-1;
 		int lower=0;
 		int higher=publicationList.size()-1;
-		while(finalIndex==-1)
+		while(true)
 		{
 			currentIndex=(higher+lower)/2;
 			if(publicationList.get(currentIndex).getTitle().compareTo(title)==0)
-				finalIndex=currentIndex;
+				return publicationList.get(currentIndex);
 			else if(publicationList.get(currentIndex).getTitle().compareTo(title)>0)
 				higher=currentIndex;
 			else
 				lower=currentIndex;
+			if(higher - lower == 1 && publicationList.get(currentIndex).getTitle().compareTo(title)!=0){
+				return null;
+			}
 		}
-		return publicationList.get(finalIndex);
 	}
 	
 	/**
@@ -301,22 +302,24 @@ public class PublicationSystem {
 	public int getSearchComparisonsBI(String title)
 	{
 		int count=0;
+
 		int currentIndex;
-		int finalIndex=-1;
 		int lower=0;
 		int higher=publicationList.size()-1;
-		while(finalIndex==-1)
+		while(true)
 		{
 			count++;
 			currentIndex=(higher+lower)/2;
 			if(publicationList.get(currentIndex).getTitle().compareTo(title)==0)
-				finalIndex=currentIndex;
+				return count;
 			else if(publicationList.get(currentIndex).getTitle().compareTo(title)>0)
 				higher=currentIndex;
 			else
 				lower=currentIndex;
+			if(higher - lower == 1 && publicationList.get(currentIndex).getTitle().compareTo(title)!=0){
+				return count;
+			}
 		}
-		return count;
 	}
 
 	/**
@@ -329,15 +332,14 @@ public class PublicationSystem {
 	{
 		int count=0;
 		int index=0;
-		int finalIndex=-1;
-		while(finalIndex==-1 && index<publicationList.size())
+		for(int i = 0; i < publicationList.size(); i++)
 		{
 			count++;
-			if(publicationList.get(index).getTitle().equals(title))
-				finalIndex=index;
-			index++;
+			if(publicationList.get(i).getTitle().equals(title)){
+				return count;
+			}
 		}
-		return count++;
+		return count;
 	}
 	
 }
