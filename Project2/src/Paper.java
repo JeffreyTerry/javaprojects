@@ -204,4 +204,8 @@ public class Paper implements Comparable<Paper>
 		}
 		return compare;
 	}
+	public String toString()
+	{
+		return this.getTitle();
+	}
 }
