@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -240,12 +242,17 @@ public class PublicationSystem {
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter(fileName));
 		
+		ArrayList<String> lines = new ArrayList<String>();
+		String[] lilLines;
 		for(Paper p: publicationList)
 		{
-			writer.write(p.toString());
-			writer.write("<br /");
-			writer.write("<br /");
-			writer.write("<br /");
+			lilLines = p.toString().split("<br />");
+			for(String lilLine: lilLines){
+				lines.add(lilLine);
+			}
+		}
+		for(String line: lines){
+			writer.write(line);
 		}
 		writer.close();
 	}
