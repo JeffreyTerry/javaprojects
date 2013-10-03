@@ -380,7 +380,10 @@ public class PublicationSystemGUI extends JFrame
 			}
 		}
 		public void keyPressed(KeyEvent event){
-			sortPublications();
+			Paper paperFound = publicationSystem.getPaperLinear(searchTextField.getText());
+			if(paperFound != null){
+				displayLabel.setText(paperFound.toString());
+			}
 		}
 		public void keyReleased(KeyEvent event){
 		}
