@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
@@ -141,7 +139,8 @@ public class PublicationSystem {
 	}
 	
 	private void readPaper(BufferedReader fileReader) throws IOException{
-		if(fileReader.readLine().equals("Conference Paper")){
+		String bro = fileReader.readLine();
+		if(bro.equals("Conference Paper")){
 			String authorString = fileReader.readLine();
 			String[] authorNames = authorString.split("; ");
 			String[] authorList = new String[authorNames.length];
@@ -171,7 +170,7 @@ public class PublicationSystem {
 			else{
 				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, ""));
 			}
-			if(fileReader.readLine() == ""){
+			if(fileReader.readLine().equals("")){
 				readPaper(fileReader);
 			}
 		}
@@ -190,7 +189,7 @@ public class PublicationSystem {
 			int[] pageNumbers = new int[2];
 			String[] locInfo = fileReader.readLine().split(":");
 			String[] pages = locInfo[1].split("-");
-			String[] journalInfo = locInfo[1].split("(");
+			String[] journalInfo = locInfo[0].split("\\(");
 			int volume = Integer.parseInt(journalInfo[0]);
 			int issue = Integer.parseInt(journalInfo[1].substring(0,1));
 			pageNumbers[0] = Integer.parseInt(pages[0]);

@@ -127,6 +127,7 @@ public class PublicationSystemGUI extends JFrame
 		userPrompt.setPreferredSize(componentDimension);
 		userInput.setPreferredSize(componentDimension);
 		userInput.addKeyListener(defaultInputListener);
+		userInput.addActionListener(defaultInputListener);
 		inputPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*2 + new FlowLayout().getVgap()*3));
 		inputPanel.add(userPrompt);
 		inputPanel.add(userInput);
@@ -340,7 +341,7 @@ public class PublicationSystemGUI extends JFrame
 		//By default the method prints the publicationList to the screen
 		displayLabel.setText("<html>");
 		for(Paper p: publicationSystem.getPublicationList()){
-			displayLabel.setText(displayLabel.getText() + "<p>" + p.toString() + "</p>");
+			displayLabel.setText(displayLabel.getText() + "<p>" + p.toString() + "</p><br />");
 		}
 		displayLabel.setText(displayLabel.getText() + "</html>");
 	}
@@ -374,11 +375,16 @@ public class PublicationSystemGUI extends JFrame
 		}
 	}
 
-	private class DefaultInputListener extends KeyAdapter{
+	private class DefaultInputListener extends KeyAdapter implements ActionListener{
 		public void keyPressed(KeyEvent event){
 			if(event.getSource() == userInput){
-				performTask(userInput.getText().toUpperCase());
+				if(!userInput.getText().equalsIgnoreCase("s")){
+					performTask(userInput.getText().toUpperCase());
+				}
 			}
+		}
+		public void actionPerformed(ActionEvent e){
+			performTask(userInput.getText().toUpperCase());
 		}
 	}
 }

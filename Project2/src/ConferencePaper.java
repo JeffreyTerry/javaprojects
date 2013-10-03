@@ -30,7 +30,7 @@ public class ConferencePaper extends Paper
 	public String toString()
 	{
 		String print;
-		print="Journal Article";
+		print="Conference Paper";
 		print+="<br />";
 		for(String s:this.getAuthors())
 			print+=s + "; ";
@@ -43,6 +43,7 @@ public class ConferencePaper extends Paper
 		print+=Integer.toString(this.getPageNumbers()[0])+"-"+Integer.toString(this.getPageNumbers()[1]);
 		print+="<br />";
 		print+=this.getDate();
+		print+="<br />";
 		if(!this.getDigitalIdentifier().equals("N/A"))
 			print+=this.getDigitalIdentifier();
 		return print;

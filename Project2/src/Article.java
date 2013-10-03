@@ -99,6 +99,7 @@ public class Article extends Paper
 		print+=":"+Integer.toString(this.getPageNumbers()[0])+"-"+Integer.toString(this.getPageNumbers()[1]);
 		print+="<br />";
 		print+=this.getDate();
+		print+="<br />";
 		if(!this.getDigitalIdentifier().equals("N/A"))
 			print+=this.getDigitalIdentifier();
 		return print;
