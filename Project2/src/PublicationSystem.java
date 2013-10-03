@@ -131,15 +131,13 @@ public class PublicationSystem {
 	 */
 	public void importPublication(){
 		String fileName = "";
-		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-		System.out.println("What is the name of your file?");
 		try{
-			fileName = inputReader.readLine();
+			fileName = JOptionPane.showInputDialog("What is the file name?");
 			BufferedReader fileReader = new BufferedReader(new FileReader(new File(fileName)));
 			readPaper(fileReader);
 			fileReader.close();
 		}
-		catch(IOException e){e.printStackTrace();}
+		catch(Exception e){e.printStackTrace();}
 	}
 	
 	private void readPaper(BufferedReader fileReader) throws IOException{
@@ -164,9 +162,17 @@ public class PublicationSystem {
 			String digId = fileReader.readLine();
 			if(digId != null){
 				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
+				System.out.println("digId: " + digId);
+				if(digId.equals("")){
+					readPaper(fileReader);
+					return;
+				}
 			}
 			else{
 				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, ""));
+			}
+			if(fileReader.readLine() == ""){
+				readPaper(fileReader);
 			}
 		}
 		else{
@@ -193,12 +199,16 @@ public class PublicationSystem {
 			String digId = fileReader.readLine();
 			if(digId != null){
 				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
-			}
-			else if(digId != ""){
-				publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
+				if(digId.equals("")){
+					readPaper(fileReader);
+					return;
+				}
 			}
 			else{
-				
+				publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
+			}
+			if(fileReader.readLine() == ""){
+				readPaper(fileReader);
 			}
 		}
 	}
