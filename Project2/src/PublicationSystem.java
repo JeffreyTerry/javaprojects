@@ -126,6 +126,9 @@ public class PublicationSystem {
 		publicationList.randomSort();
 	}
 	
+	/**
+	 * Imports a publication from a file given by the user
+	 */
 	public void importPublication(){
 		String fileName = "";
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
@@ -133,65 +136,71 @@ public class PublicationSystem {
 		try{
 			fileName = inputReader.readLine();
 			BufferedReader fileReader = new BufferedReader(new FileReader(new File(fileName)));
-			
-			if(fileReader.readLine().equals("Conference Paper")){
-				String authorString = fileReader.readLine();
-				String[] authorNames = authorString.split("; ");
-				String[] authorList = new String[authorNames.length];
-				String lf[];
-				for(int i = 0; i < authorNames.length; i++){
-					lf = authorNames[i].split(", ");
-					authorList[0] = lf[0];
-					authorList[0] = lf[1];
-				}
-				String paperTitle = fileReader.readLine();
-				String serialTitle = fileReader.readLine();
-				int[] pageNumbers = new int[2];
-				String pagesLine = fileReader.readLine();
-				String[] pages = pagesLine.split("-");
-				pageNumbers[0] = Integer.parseInt(pages[0]);
-				pageNumbers[1] = Integer.parseInt(pages[1]);
-				String date = fileReader.readLine();
-				String digId = fileReader.readLine();
-				if(digId != null){
-					publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
-				}
-				else{
-					publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, ""));
-				}
-			}
-			else{
-				String authorString = fileReader.readLine();
-				String[] authorNames = authorString.split("; ");
-				String[] authorList = new String[authorNames.length];
-				String lf[];
-				for(int i = 0; i < authorNames.length; i++){
-					lf = authorNames[i].split(", ");
-					authorList[0] = lf[0];
-					authorList[0] = lf[1];
-				}
-				String paperTitle = fileReader.readLine();
-				String serialTitle = fileReader.readLine();
-				int[] pageNumbers = new int[2];
-				String[] locInfo = fileReader.readLine().split(":");
-				String[] pages = locInfo[1].split("-");
-				String[] journalInfo = locInfo[1].split("(");
-				int volume = Integer.parseInt(journalInfo[0]);
-				int issue = Integer.parseInt(journalInfo[1].substring(0,1));
-				pageNumbers[0] = Integer.parseInt(pages[0]);
-				pageNumbers[1] = Integer.parseInt(pages[1]);
-				String date = fileReader.readLine();
-				String digId = fileReader.readLine();
-				if(digId != null){
-					publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
-				}
-				else{
-					publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
-				}
-			}
+			readPaper(fileReader);
 			fileReader.close();
 		}
 		catch(IOException e){e.printStackTrace();}
+	}
+	
+	private void readPaper(BufferedReader fileReader) throws IOException{
+		if(fileReader.readLine().equals("Conference Paper")){
+			String authorString = fileReader.readLine();
+			String[] authorNames = authorString.split("; ");
+			String[] authorList = new String[authorNames.length];
+			String lf[];
+			for(int i = 0; i < authorNames.length; i++){
+				lf = authorNames[i].split(", ");
+				authorList[0] = lf[0];
+				authorList[0] = lf[1];
+			}
+			String paperTitle = fileReader.readLine();
+			String serialTitle = fileReader.readLine();
+			int[] pageNumbers = new int[2];
+			String pagesLine = fileReader.readLine();
+			String[] pages = pagesLine.split("-");
+			pageNumbers[0] = Integer.parseInt(pages[0]);
+			pageNumbers[1] = Integer.parseInt(pages[1]);
+			String date = fileReader.readLine();
+			String digId = fileReader.readLine();
+			if(digId != null){
+				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
+			}
+			else{
+				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, ""));
+			}
+		}
+		else{
+			String authorString = fileReader.readLine();
+			String[] authorNames = authorString.split("; ");
+			String[] authorList = new String[authorNames.length];
+			String lf[];
+			for(int i = 0; i < authorNames.length; i++){
+				lf = authorNames[i].split(", ");
+				authorList[0] = lf[0];
+				authorList[0] = lf[1];
+			}
+			String paperTitle = fileReader.readLine();
+			String serialTitle = fileReader.readLine();
+			int[] pageNumbers = new int[2];
+			String[] locInfo = fileReader.readLine().split(":");
+			String[] pages = locInfo[1].split("-");
+			String[] journalInfo = locInfo[1].split("(");
+			int volume = Integer.parseInt(journalInfo[0]);
+			int issue = Integer.parseInt(journalInfo[1].substring(0,1));
+			pageNumbers[0] = Integer.parseInt(pages[0]);
+			pageNumbers[1] = Integer.parseInt(pages[1]);
+			String date = fileReader.readLine();
+			String digId = fileReader.readLine();
+			if(digId != null){
+				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
+			}
+			else if(digId != ""){
+				publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
+			}
+			else{
+				
+			}
+		}
 	}
 	
 	/*
