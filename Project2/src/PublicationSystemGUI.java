@@ -272,7 +272,6 @@ public class PublicationSystemGUI extends JFrame
 	
 	/**
 	 * Sorts according to terms dictated by the sort drop down component
-	 * @param text			The text to search for
 	 */
 	private void sortPublications(){
 		switch(searchDropdown.getSelectedIndex()){
