@@ -80,4 +80,27 @@ public class Article extends Paper
 	{
 		return issue;
 	}
+	
+	public String toString()
+	{
+		String print;
+		print="Journal Article";
+		print+="<br />";
+		for(String s:this.getAuthors())
+			print+=s + "; ";
+		print=print.substring(0, print.length()-2);
+		print+="<br />";
+		print+=this.getTitle();
+		print+="<br />";
+		print+=this.getSerialTitle();
+		print+="<br />";
+		print+=Integer.toString(volume);
+		print+="("+Integer.toString(issue)+")";
+		print+=":"+Integer.toString(this.getPageNumbers()[0])+"-"+Integer.toString(this.getPageNumbers()[1]);
+		print+="<br />";
+		print+=this.getDate();
+		if(!this.getDigitalIdentifier().equals("N/A"))
+			print+=this.getDigitalIdentifier();
+		return print;
+	}
 }
