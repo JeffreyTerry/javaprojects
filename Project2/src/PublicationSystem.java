@@ -298,7 +298,6 @@ public class PublicationSystem {
      * <dt><b>Conditions:</b>
      * <dd>PRE -         papers is sorted by their title
      */
-	
 	public int getSearchComparisonsBI(String title)
 	{
 		int count=0;
