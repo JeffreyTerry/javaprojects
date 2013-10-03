@@ -1,0 +1,49 @@
+1.	Use keyboard input to get information from the user. 
+
+There is a GUI with a command line style prompt and a modern view option, both of which rely on KeyListener/KeyAdapter classes to get and process information from the user.
+
+2.	Use text file I/O to read and write text files.
+The importPublication and printPublicationsToFile methods in the PublicationSystem class implement this functionality.
+
+3.	Create classes to store data on various types of scholarly publications, including 
+journals, conference proceedings, and the papers published in each. Note that you 
+should create any additional classes (abstract and/or concrete) and/or interfaces you 
+deem necessary to arrive at a good design.
+
+We chose to create a system to deal with a list of publications. We called this system PublicationSystem. It is the class that handles the sorting and searching of the publications. We wanted to put our publications into an ArrayList, but wanted additional methods to call on this ArrayList than are in the class, so we created PublicationList as an extension of ArrayList. This allowed us to add additional sort methods to help with sorting. We used a class Paper to define what articles and conference papers had in common and then made Article and ConferencePaper extend Paper. This allowed us to use the same methods on ConferencePaper and Article variables, however we could also add the additional fields and methods for Article variables.
+
+4.	 Implement both the Comparable and Comparator interfaces to compare one scholarly 
+paper to another.
+
+We implemented Comparable in PublicationList and Comparator in Paper. We chose to do this because there are many many ways we want to sort Papers that are in a PublicationList, but to compare two papers we generally only need to compare their last names. Putting Comparator in Paper also put it in Article and ConferencePaper as well as the compareTo method in Paper.
+
+5.	Use a List to store, retrieve, and display data related to scholarly papers as described 
+below.
+
+The PublicationList class represents a list of Paper objects. It is able to store, retrieve, and display the necessary data. 
+
+The only variable we can use a binary search for is the title. A precondition for a binary search is that a list is sorted. While every variable sort but random has a variable that is sorted for, the list has to be sorted for the variable you are looking for.
+
+
+Title	|	1.		2.			3.			4.		5.
+Order
+-------		---------		---------			---------			---------		---------
+BI		3		3			2			3		3
+AN
+		6		1			7			2		8
+PT
+		3		2			3			4		4
+ST
+		3		9			4			10		5
+Ch
+		8		4			9			5		10
+R
+		10		8			7			5		3
+
+
+6.	Use the sort() and binarySearch() methods from the Collections class to sort and 
+search for data related to the description below.
+
+For sort() we implemented Comparator in our PublicationList class so that we could sort any field in paper we chose to. We then extended ArrayList so that we could use the ArrayList methods including sort(). We then wrote our sort methods using Collections.sort(this,Comparator)
+
+We did not use the Collections.binarySearch() method in our program because we had already written our own. It looks in the middle of a list for a title, then looks in the appropriate half of the list for it, then in half again in the appropriate directions until it finds the title it is looking for.
