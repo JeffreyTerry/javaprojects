@@ -53,6 +53,7 @@ public class PublicationSystemGUI extends JFrame
 	private JButton defaultSwitchViewButton;
 	private JButton modernImportButton;
 	private JButton modernSwitchViewButton;
+	private JButton printButton;
 	
 	private JLabel displayLabel;
 
@@ -196,8 +197,9 @@ public class PublicationSystemGUI extends JFrame
 		searchPanel2.add(searchDropdown);
 		searchPanel1.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
 		searchPanel2.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
-		JButton printButton = new JButton("Print to File"); //Print panel stuff
+		printButton = new JButton("Print to File"); //Print panel stuff
 		printButton.setPreferredSize(componentDimension);
+		printButton.addActionListener(modernControlListener);
 		JPanel printPanel = new JPanel();
 		printPanel.add(printButton);
 		printPanel.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
@@ -269,10 +271,10 @@ public class PublicationSystemGUI extends JFrame
 	}
 	
 	/**
-	 * Searches for text according to terms dictated by the search drop down component
+	 * Sorts according to terms dictated by the sort drop down component
 	 * @param text			The text to search for
 	 */
-	private void searchFor(String text){
+	private void sortPublications(){
 		switch(searchDropdown.getSelectedIndex()){
 		case 0:
 			performTask("PT");
@@ -370,9 +372,15 @@ public class PublicationSystemGUI extends JFrame
 			else if(event.getSource() == modernSwitchViewButton){
 				switchView();
 			}
+			else if(event.getSource() == sortDropdown){
+				sortPublications();
+			}
+			else if(event.getSource() == printButton){
+				performTask("PF");
+			}
 		}
 		public void keyPressed(KeyEvent event){
-			searchFor(searchTextField.getText());
+			sortPublications();
 		}
 		public void keyReleased(KeyEvent event){
 		}

@@ -143,14 +143,7 @@ public class PublicationSystem {
 		String bro = fileReader.readLine();
 		if(bro.equals("Conference Paper")){
 			String authorString = fileReader.readLine();
-			String[] authorNames = authorString.split("; ");
-			String[] authorList = new String[authorNames.length];
-			String lf[];
-			for(int i = 0; i < authorNames.length; i++){
-				lf = authorNames[i].split(", ");
-				authorList[0] = lf[0];
-				authorList[0] = lf[1];
-			}
+			String[] authorList = authorString.split("; ");
 			String paperTitle = fileReader.readLine();
 			String serialTitle = fileReader.readLine();
 			int[] pageNumbers = new int[2];
@@ -162,7 +155,6 @@ public class PublicationSystem {
 			String digId = fileReader.readLine();
 			if(digId != null){
 				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
-				System.out.println("digId: " + digId);
 				if(digId.equals("")){
 					readPaper(fileReader);
 					return;
@@ -177,14 +169,7 @@ public class PublicationSystem {
 		}
 		else{
 			String authorString = fileReader.readLine();
-			String[] authorNames = authorString.split("; ");
-			String[] authorList = new String[authorNames.length];
-			String lf[];
-			for(int i = 0; i < authorNames.length; i++){
-				lf = authorNames[i].split(", ");
-				authorList[0] = lf[0];
-				authorList[0] = lf[1];
-			}
+			String[] authorList = authorString.split("; ");
 			String paperTitle = fileReader.readLine();
 			String serialTitle = fileReader.readLine();
 			int[] pageNumbers = new int[2];
@@ -276,15 +261,15 @@ public class PublicationSystem {
 	
 	public Paper getPaperLinear(String title){
 		int index=0;
-		int finalIndex=-1;
-		while(finalIndex==-1 && index<publicationList.size())
+		for(int i = 0; i < publicationList.size(); i++)
 		{
-			if(publicationList.get(index).getTitle().equals(title))
-				finalIndex=index;
-			index++;
+			if(publicationList.get(i).getTitle().equals(title)){
+				return publicationList.get(i);
+			}
 		}
-		return publicationList.get(finalIndex);
+		return null;
 	}
+	
 	public int getSearchComparisonsBI(String title)
 	{
 		int count=0;
@@ -305,6 +290,7 @@ public class PublicationSystem {
 		}
 		return count;
 	}
+	
 	public int getSearchComparisonsLI(String title)
 	{
 		int count=0;
