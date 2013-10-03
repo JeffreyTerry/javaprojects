@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -202,6 +204,10 @@ public class PublicationSystem {
 	 * Accessor Methods
 	 */
 	
+	/**
+	 * returns the publicationList
+     * <P>
+	 */
 	public PublicationList getPublicationList(){
 		return publicationList;
 	}
@@ -221,12 +227,17 @@ public class PublicationSystem {
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter(fileName));
 		
+		ArrayList<String> lines = new ArrayList<String>();
+		String[] lilLines;
 		for(Paper p: publicationList)
 		{
-			writer.write(p.toString());
-			writer.write("<br /");
-			writer.write("<br /");
-			writer.write("<br /");
+			lilLines = p.toString().split("<br />");
+			for(String lilLine: lilLines){
+				lines.add(lilLine);
+			}
+		}
+		for(String line: lines){
+			writer.write(line);
 		}
 		writer.close();
 	}
@@ -237,6 +248,7 @@ public class PublicationSystem {
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
+    * @return a Paper with the title given
     * <dt><b>Conditions:</b>
     * <dd>PRE  -		 publicationList is sorted
     * <dd>POST -         The correct paper is returned. A value of null is returned on failure.
@@ -259,6 +271,14 @@ public class PublicationSystem {
 		return publicationList.get(finalIndex);
 	}
 	
+	/**
+     * This searches publicationList linearly
+     * <P>
+     * Algorithm:<br>
+     * For loop.<br>
+     * @return a Paper with the given title
+     * </P>
+     */
 	public Paper getPaperLinear(String title){
 		int index=0;
 		for(int i = 0; i < publicationList.size(); i++)
@@ -269,7 +289,18 @@ public class PublicationSystem {
 		}
 		return null;
 	}
+<<<<<<< HEAD
 	
+=======
+	/**
+     * Returns how many comparisons must be performed to find a title searching using a binary search.
+     * <P>
+     * </P>
+     * @return the number of comparisons performed
+     * <dt><b>Conditions:</b>
+     * <dd>PRE -         papers is sorted by their title
+     */
+>>>>>>> javaprojects/master
 	public int getSearchComparisonsBI(String title)
 	{
 		int count=0;
@@ -290,7 +321,13 @@ public class PublicationSystem {
 		}
 		return count;
 	}
-	
+
+	/**
+     * Returns how many comparisons must be performed to find a title searching using a linear search.
+     * <P>
+     * @return the number of comparisons performed
+     * </P>
+     */
 	public int getSearchComparisonsLI(String title)
 	{
 		int count=0;
