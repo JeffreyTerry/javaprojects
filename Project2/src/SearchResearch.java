@@ -3,7 +3,7 @@ public class SearchResearch {
 	public static void main(String[] args)
 	{
 		PublicationSystem system = new PublicationSystem();
-		//system.importPublication();
+		system.importPublication();
 		String[] titles={"title1","title2","title3","title4","title5"};
 		System.out.println("Title	|		1.			2.			3.			4.			5.");
 		System.out.println("Order");
