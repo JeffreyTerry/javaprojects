@@ -289,7 +289,7 @@ public class PublicationSystem {
 		}
 		return null;
 	}
-	
+
 	/**
      * Returns how many comparisons must be performed to find a title searching using a binary search.
      * <P>
