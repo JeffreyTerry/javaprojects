@@ -1,8 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-
 import javax.swing.JOptionPane;
 
 /**
@@ -229,8 +230,20 @@ public class PublicationSystem {
     * <dt><b>Conditions:</b>
     * <dd>PRE  -         papers is not null
     * <dd>POST -         papers is correctly printed to the file <i>fileName</i>
+	 * @throws IOException 
     */
-	public void printPublicationsToFile(String fileName){
+	public void printPublicationsToFile(String fileName) throws IOException{
+		BufferedWriter writer = null;
+		writer = new BufferedWriter(new FileWriter(fileName));
+		
+		for(Paper p: publicationList)
+		{
+			writer.write(p.toString());
+			writer.write("<br /");
+			writer.write("<br /");
+			writer.write("<br /");
+		}
+		writer.close();
 	}
 	
 	/**
