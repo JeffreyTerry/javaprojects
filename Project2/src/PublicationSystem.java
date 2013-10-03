@@ -289,9 +289,7 @@ public class PublicationSystem {
 		}
 		return null;
 	}
-<<<<<<< HEAD
 	
-=======
 	/**
      * Returns how many comparisons must be performed to find a title searching using a binary search.
      * <P>
@@ -300,7 +298,6 @@ public class PublicationSystem {
      * <dt><b>Conditions:</b>
      * <dd>PRE -         papers is sorted by their title
      */
->>>>>>> javaprojects/master
 	public int getSearchComparisonsBI(String title)
 	{
 		int count=0;
