@@ -384,8 +384,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			int length1=p1.getPageNumbers()[1]-p1.getPageNumbers()[0];
-			int length2=p2.getPageNumbers()[1]-p2.getPageNumbers()[0];
+			int length1=Integer.parseInt(p1.getPageNumbers()[1])-Integer.parseInt(p1.getPageNumbers()[0]);
+			int length2=Integer.parseInt(p2.getPageNumbers()[1])-Integer.parseInt(p2.getPageNumbers()[0]);
 			
 			int compare=0;
 			if(length1<length2)
@@ -408,12 +408,13 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			int compare=0;
-			if(p1.getPageNumbers()[1]<p2.getPageNumbers()[1])
-				compare=-1;
-			else if(p1.getPageNumbers()[1]>p2.getPageNumbers()[1])
-				compare=1;
-			return compare;
+			if(Integer.parseInt(p1.getPageNumbers()[1]) < Integer.parseInt(p2.getPageNumbers()[1])){
+				return -1;
+			}
+			else if(Integer.parseInt(p1.getPageNumbers()[1]) > Integer.parseInt(p2.getPageNumbers()[1])){
+				return 1;
+			}
+			return 0;
 		}
 	};
 	

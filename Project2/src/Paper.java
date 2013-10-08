@@ -19,7 +19,7 @@ public class Paper implements Comparable<Paper>
 	/** The title of the serial that published the paper */
 	private String serialTitle;
 	/** The first and last page number in the serial where this paper is found */
-	private int[] pageNumbers;
+	private String[] pageNumbers;
 	/** The date the paper was published */
 	private String date;	//look into using Calendar or GregorianCalendar or something cooler
 	/** A digital identifier such as a URL for the paper */
@@ -37,7 +37,7 @@ public class Paper implements Comparable<Paper>
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized.
      */
-	public Paper(String[] authors, String title, String serialTitle, int[] pageNumbers, String date, String digitalIdentifier)
+	public Paper(String[] authors, String title, String serialTitle, String[] pageNumbers, String date, String digitalIdentifier)
 	{
 		this.authors=authors;
 		this.title=title;
@@ -58,7 +58,7 @@ public class Paper implements Comparable<Paper>
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized except digitalIdentifier
      */
-	public Paper(String[] authors, String title, String serialTitle, int[] pageNumbers, String date)
+	public Paper(String[] authors, String title, String serialTitle, String[] pageNumbers, String date)
 	{
 		this.authors=authors;
 		this.title=title;
@@ -114,7 +114,7 @@ public class Paper implements Comparable<Paper>
      * <dt><b>Conditions:</b>
      * <dd>PRE  -         pageNumbers is not void
      */
-	public int[] getPageNumbers()
+	public String[] getPageNumbers()
 	{
 		return pageNumbers;
 	}
@@ -126,7 +126,7 @@ public class Paper implements Comparable<Paper>
      * <dt><b>Conditions:</b>
      * <dd>PRE  -         pageNumbers is not void
      */
-	public int getFirstPage()
+	public String getFirstPage()
 	{
 		return pageNumbers[1];
 	}
@@ -138,7 +138,7 @@ public class Paper implements Comparable<Paper>
      * <dt><b>Conditions:</b>
      * <dd>PRE  -         pageNumbers is not void
      */
-	public int getLastPage()
+	public String getLastPage()
 	{
 		return pageNumbers[2];
 	}

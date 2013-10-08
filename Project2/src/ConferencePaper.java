@@ -23,7 +23,7 @@ public class ConferencePaper extends Paper
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized.
      */
-	public ConferencePaper(String[] authors, String title, String serialTitle, int[] pageNumbers, String date, String digitalIdentifier)
+	public ConferencePaper(String[] authors, String title, String serialTitle, String[] pageNumbers, String date, String digitalIdentifier)
 	{
 		super(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 	}
@@ -40,7 +40,7 @@ public class ConferencePaper extends Paper
 		print+="<br />";
 		print+=this.getSerialTitle();
 		print+="<br />";
-		print+=Integer.toString(this.getPageNumbers()[0])+"-"+Integer.toString(this.getPageNumbers()[1]);
+		print+=getPageNumbers()[0]+"-"+getPageNumbers()[1];
 		print+="<br />";
 		print+=this.getDate();
 		print+="<br />";

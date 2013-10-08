@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -51,11 +52,14 @@ public class PublicationSystemGUI extends JFrame
 
 	private JButton defaultImportButton;
 	private JButton defaultSwitchViewButton;
+	private JButton defaultToggleGraphButton;
 	private JButton modernImportButton;
 	private JButton modernSwitchViewButton;
+	private JButton modernToggleGraphButton;
 	private JButton printButton;
 	
 	private JLabel displayLabel;
+	private JPanel dataGrapher;
 
 	private DefaultControlListener controlListener;
 	private ModernControlListener modernControlListener;
@@ -96,6 +100,7 @@ public class PublicationSystemGUI extends JFrame
 		createDefaultUserPanel();
 		createModernUserPanel();
 		createPublicationDisplayPanel();
+		createDataGrapher();
 		
 		FlowLayout flowy = new FlowLayout();
 		flowy.setAlignment(FlowLayout.LEADING);
@@ -107,7 +112,7 @@ public class PublicationSystemGUI extends JFrame
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(width, height);
 		setLocationRelativeTo(null);
-
+		setResizable(false);
 	}
 	
 	private void createTitlePanel(){
@@ -144,14 +149,18 @@ public class PublicationSystemGUI extends JFrame
 		defaultSwitchViewButton = new JButton("Switch View");
 		defaultSwitchViewButton.setPreferredSize(componentDimension);
 		defaultSwitchViewButton.addActionListener(controlListener);
-		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*2 + new FlowLayout().getVgap()*3));
+		defaultToggleGraphButton = new JButton("Show Graph");
+		defaultToggleGraphButton.setPreferredSize(componentDimension);
+		defaultToggleGraphButton.addActionListener(controlListener);
+		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*3 + new FlowLayout().getVgap()*4));
 		controlPanel.add(defaultImportButton);
+		controlPanel.add(defaultToggleGraphButton);
 		controlPanel.add(defaultSwitchViewButton);
 
 		FlowLayout flowy = new FlowLayout();
 		flowy.setHgap(40);
 		userPanel.setLayout(flowy);
-		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, componentDimension.height*2 + new FlowLayout().getVgap()*6));
+		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, componentDimension.height*3 + new FlowLayout().getVgap()*7));
 		userPanel.add(inputPanel);
 		userPanel.add(controlPanel);
 
@@ -188,7 +197,7 @@ public class PublicationSystemGUI extends JFrame
 		searchDropdown.addActionListener(modernControlListener);
 		searchTextField = new JTextField();
 		searchTextField.setPreferredSize(smallComponentDimension);
-		searchTextField.addKeyListener(modernControlListener);
+		searchTextField.addActionListener(modernControlListener);
 		JPanel searchPanel1 = new JPanel();
 		JPanel searchPanel2 = new JPanel();
 		searchPanel1.add(searchLabel1);
@@ -215,8 +224,12 @@ public class PublicationSystemGUI extends JFrame
 		modernSwitchViewButton = new JButton("Switch View");
 		modernSwitchViewButton.setPreferredSize(componentDimension);
 		modernSwitchViewButton.addActionListener(modernControlListener);
-		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*2 + new FlowLayout().getVgap()*3));
+		modernToggleGraphButton = new JButton("Show Graph");
+		modernToggleGraphButton.setPreferredSize(componentDimension);
+		modernToggleGraphButton.addActionListener(modernControlListener);
+		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*3 + new FlowLayout().getVgap()*4));
 		controlPanel.add(modernImportButton);
+		controlPanel.add(modernToggleGraphButton);
 		controlPanel.add(modernSwitchViewButton);
 		
 		FlowLayout flowy = new FlowLayout();
@@ -238,6 +251,11 @@ public class PublicationSystemGUI extends JFrame
 		displayPanel.add(pane, BorderLayout.CENTER);
 		publicationDisplayPanel = displayPanel;
 	}
+	
+	private void createDataGrapher(){
+		dataGrapher = new PublicationDataGrapher(width - new FlowLayout().getHgap()*2, 400);
+		dataGrapher.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, 400));
+	}
 
 	/**
     * Makes the GUI visible to the user/
@@ -251,6 +269,23 @@ public class PublicationSystemGUI extends JFrame
     */
 	public void close(){
 		setVisible(false);
+	}
+	
+	private void toggleGraph(){
+		if(defaultToggleGraphButton.getText().equals("Show Graph")){
+			defaultToggleGraphButton.setText("Show List");
+			modernToggleGraphButton.setText("Show List");
+			remove(publicationDisplayPanel);
+			add(dataGrapher);
+		}
+		else{
+			defaultToggleGraphButton.setText("Show Graph");
+			modernToggleGraphButton.setText("Show Graph");
+			remove(dataGrapher);
+			add(publicationDisplayPanel);
+		}
+		validate();
+		getContentPane().repaint();
 	}
 	
 	private void switchView(){
@@ -337,19 +372,36 @@ public class PublicationSystemGUI extends JFrame
 			catch(Exception e){e.printStackTrace();}
 			Paper paperFound = publicationSystem.getPaperLinear(searchQuery);
 			if(paperFound == null){
-				JOptionPane.showMessageDialog(null, "Paper not found", "", JOptionPane.ERROR_MESSAGE);
+				ArrayList<Paper> papersFound = publicationSystem.getPapers(searchQuery);
+				if(papersFound.size() == 0){
+					JOptionPane.showMessageDialog(null, "No paper found matching the given title", "", JOptionPane.ERROR_MESSAGE);
+				}
+				else{
+					String forLabel = "<html>";
+					for(Paper p: papersFound){
+						forLabel += "<p>" + p.toString() + "</p><br />";
+					}
+					forLabel += "</html>";
+					displayLabel.setText(forLabel);
+				}
 			}
 			else{
 				displayLabel.setText(paperFound.toString());
 				return;
 			}
 		}
-		//By default the method prints the publicationList to the screen
-		displayLabel.setText("<html>");
-		for(Paper p: publicationSystem.getPublicationList()){
-			displayLabel.setText(displayLabel.getText() + "<p>" + p.toString() + "</p><br />");
+		else if(task.equals("G")){
+			toggleGraph();
 		}
-		displayLabel.setText(displayLabel.getText() + "</html>");
+		//By default the method prints the publicationList to the screen
+		if(publicationSystem.getPublicationList().size() < 100){
+			String forLabel = "<html>";
+			for(Paper p: publicationSystem.getPublicationList()){
+				forLabel += "<p>" + p.toString() + "</p><br />";
+			}
+			forLabel += "</html>";
+			displayLabel.setText(forLabel);
+		}
 	}
 
 	private class DefaultControlListener implements ActionListener{
@@ -360,10 +412,13 @@ public class PublicationSystemGUI extends JFrame
 			else if(event.getSource().equals(defaultSwitchViewButton)){
 				switchView();
 			}
+			else if(event.getSource().equals(defaultToggleGraphButton)){
+				toggleGraph();
+			}
 		}
 	}
 
-	private class ModernControlListener implements ActionListener, KeyListener{
+	private class ModernControlListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource() == modernImportButton){
 				importPublication();
@@ -377,23 +432,37 @@ public class PublicationSystemGUI extends JFrame
 			else if(event.getSource() == printButton){
 				performTask("PF");
 			}
-		}
-		public void keyPressed(KeyEvent event){
-			Paper paperFound = publicationSystem.getPaperLinear(searchTextField.getText());
-			if(paperFound != null){
-				displayLabel.setText(paperFound.toString());
+			else if(event.getSource() == modernToggleGraphButton){
+				toggleGraph();
 			}
-		}
-		public void keyReleased(KeyEvent event){
-		}
-		public void keyTyped(KeyEvent event){
+			else if(event.getSource() == searchTextField){
+				Paper paperFound = publicationSystem.getPaperLinear(searchTextField.getText());
+				if(paperFound == null){
+					ArrayList<Paper> papersFound = publicationSystem.getPapers(searchTextField.getText());
+					if(papersFound.size() == 0){
+						JOptionPane.showMessageDialog(null, "No papers found matching the given title", "", JOptionPane.ERROR_MESSAGE);
+					}
+					else{
+						String forLabel = "<html>";
+						for(Paper p: papersFound){
+							forLabel += "<p>" + p.toString() + "</p><br />";
+						}
+						forLabel += "</html>";
+						displayLabel.setText(forLabel);
+					}
+				}
+				else{
+					displayLabel.setText(paperFound.toString());
+					return;
+				}
+			}
 		}
 	}
 
 	private class DefaultInputListener extends KeyAdapter implements ActionListener{
-		public void keyPressed(KeyEvent event){
+		public void keyReleased(KeyEvent event){
 			if(event.getSource() == userInput){
-				if(!userInput.getText().equalsIgnoreCase("s")){
+				if(!userInput.getText().equalsIgnoreCase("s") && !userInput.getText().equalsIgnoreCase("pf")){
 					performTask(userInput.getText().toUpperCase());
 				}
 			}

@@ -148,11 +148,15 @@ public class PublicationSystem {
 			String[] authorList = authorString.split("; ");
 			String paperTitle = fileReader.readLine();
 			String serialTitle = fileReader.readLine();
-			int[] pageNumbers = new int[2];
+			String[] pageNumbers = new String[2];
 			String pagesLine = fileReader.readLine();
 			String[] pages = pagesLine.split("-");
-			pageNumbers[0] = Integer.parseInt(pages[0]);
-			pageNumbers[1] = Integer.parseInt(pages[1]);
+			for(int i = 0; i < Math.min(pages.length, pageNumbers.length); i++){
+				pageNumbers[i] = pages[i];
+			}
+			if(pages.length < 2){
+				pageNumbers[1] = "";
+			}
 			String date = fileReader.readLine();
 			String digId = fileReader.readLine();
 			if(digId != null){
@@ -174,18 +178,22 @@ public class PublicationSystem {
 			String[] authorList = authorString.split("; ");
 			String paperTitle = fileReader.readLine();
 			String serialTitle = fileReader.readLine();
-			int[] pageNumbers = new int[2];
+			String[] pageNumbers = new String[2];
 			String[] locInfo = fileReader.readLine().split(":");
 			String[] pages = locInfo[1].split("-");
 			String[] journalInfo = locInfo[0].split("\\(");
 			int volume = Integer.parseInt(journalInfo[0]);
 			int issue = Integer.parseInt(journalInfo[1].substring(0,1));
-			pageNumbers[0] = Integer.parseInt(pages[0]);
-			pageNumbers[1] = Integer.parseInt(pages[1]);
+			for(int i = 0; i < pages.length; i++){
+				pageNumbers[i] = pages[i];
+			}
+			if(pages.length < 2){
+				pageNumbers[1] = "";
+			}
 			String date = fileReader.readLine();
 			String digId = fileReader.readLine();
 			if(digId != null){
-				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
+				publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, digId));
 				if(digId.equals("")){
 					readPaper(fileReader);
 					return;
@@ -281,14 +289,32 @@ public class PublicationSystem {
      * </P>
      */
 	public Paper getPaperLinear(String title){
-		int index=0;
 		for(int i = 0; i < publicationList.size(); i++)
 		{
-			if(publicationList.get(i).getTitle().equals(title)){
+			if(publicationList.get(i).getTitle().equalsIgnoreCase(title)){
 				return publicationList.get(i);
 			}
 		}
 		return null;
+	}
+
+	/**
+     * This searches publicationList linearly
+     * <P>
+     * Algorithm:<br>
+     * For loop.<br>
+     * @return A list of Papers containing the given title
+     * </P>
+     */
+	public ArrayList<Paper> getPapers(String title){
+		ArrayList<Paper> papers = new ArrayList<Paper>(); 
+		for(int i = 0; i < publicationList.size(); i++)
+		{
+			if(publicationList.get(i).getTitle().toLowerCase().contains(title.toLowerCase())){
+				papers.add(publicationList.get(i));
+			}
+		}
+		return papers;
 	}
 
 	/**

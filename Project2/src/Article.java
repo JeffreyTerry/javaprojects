@@ -30,7 +30,7 @@ public class Article extends Paper
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized.
      */
-	public Article(String[] authors, String title, String serialTitle, int[] pageNumbers,int volume, int issue, String date, String digitalIdentifier)
+	public Article(String[] authors, String title, String serialTitle, String[] pageNumbers,int volume, int issue, String date, String digitalIdentifier)
 	{
 		super(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 		this.volume=volume;
@@ -50,7 +50,7 @@ public class Article extends Paper
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized except digitalIdentifier.
      */
-	public Article(String[] authors, String title, String serialTitle, int[] pageNumbers,int volume, int issue, String date)
+	public Article(String[] authors, String title, String serialTitle, String[] pageNumbers,int volume, int issue, String date)
 	{
 		super(authors, title, serialTitle, pageNumbers, date);
 		this.volume=volume;
@@ -94,9 +94,9 @@ public class Article extends Paper
 		print+="<br />";
 		print+=this.getSerialTitle();
 		print+="<br />";
-		print+=Integer.toString(volume);
-		print+="("+Integer.toString(issue)+")";
-		print+=":"+Integer.toString(this.getPageNumbers()[0])+"-"+Integer.toString(this.getPageNumbers()[1]);
+		print+=volume;
+		print+="("+issue+")";
+		print+=":"+getPageNumbers()[0]+"-"+getPageNumbers()[1];
 		print+="<br />";
 		print+=this.getDate();
 		print+="<br />";

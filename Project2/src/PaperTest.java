@@ -6,7 +6,7 @@ public class PaperTest {
 	String[] authors={"Bob, Joe", "AppleSeed, Jonny"};
 	String title = "A grand advnture";
 	String serialTitle = "children's stuff";
-	int[] pageNumbers = {1,100};
+	String[] pageNumbers = {"1","100"};
 	String date = "September 1994";
 	String digitalIdentifier = "www.thatonesite.com";
 	Paper testPaper1 = new Paper(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);

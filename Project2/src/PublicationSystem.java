@@ -148,11 +148,11 @@ public class PublicationSystem {
 			String[] authorList = authorString.split("; ");
 			String paperTitle = fileReader.readLine();
 			String serialTitle = fileReader.readLine();
-			int[] pageNumbers = new int[2];
+			String[] pageNumbers = new String[2];
 			String pagesLine = fileReader.readLine();
 			String[] pages = pagesLine.split("-");
-			pageNumbers[0] = Integer.parseInt(pages[0]);
-			pageNumbers[1] = Integer.parseInt(pages[1]);
+			pageNumbers[0] = pages[0];
+			pageNumbers[1] = pages[1];
 			String date = fileReader.readLine();
 			String digId = fileReader.readLine();
 			if(digId != null){
@@ -174,18 +174,18 @@ public class PublicationSystem {
 			String[] authorList = authorString.split("; ");
 			String paperTitle = fileReader.readLine();
 			String serialTitle = fileReader.readLine();
-			int[] pageNumbers = new int[2];
+			String[] pageNumbers = new String[2];
 			String[] locInfo = fileReader.readLine().split(":");
 			String[] pages = locInfo[1].split("-");
 			String[] journalInfo = locInfo[0].split("\\(");
 			int volume = Integer.parseInt(journalInfo[0]);
 			int issue = Integer.parseInt(journalInfo[1].substring(0,1));
-			pageNumbers[0] = Integer.parseInt(pages[0]);
-			pageNumbers[1] = Integer.parseInt(pages[1]);
+			pageNumbers[0] = pages[0];
+			pageNumbers[1] = pages[1];
 			String date = fileReader.readLine();
 			String digId = fileReader.readLine();
 			if(digId != null){
-				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
+				publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, digId));
 				if(digId.equals("")){
 					readPaper(fileReader);
 					return;
