@@ -368,4 +368,7 @@ public class PublicationSystem {
 		return count;
 	}
 	
+	public Author getAuthor(String auth){ //TODO
+		return null;
+	}
 }

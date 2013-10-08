@@ -59,7 +59,8 @@ public class PublicationSystemGUI extends JFrame
 	private JButton printButton;
 	
 	private JLabel displayLabel;
-	private JPanel dataGrapher;
+	private PublicationDataGrapher dataGrapher;
+	private JTextField graphInputField;
 
 	private DefaultControlListener controlListener;
 	private ModernControlListener modernControlListener;
@@ -253,7 +254,16 @@ public class PublicationSystemGUI extends JFrame
 	}
 	
 	private void createDataGrapher(){
-		dataGrapher = new PublicationDataGrapher(width - new FlowLayout().getHgap()*2, 400);
+		Dimension componentDimension = new Dimension(160, 32);
+		graphInputField = new JTextField();
+		graphInputField.setPreferredSize(componentDimension);
+		graphInputField.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				dataGrapher.setAuthor(publicationSystem.getAuthor(graphInputField.getText()));
+				dataGrapher.repaint();
+			}
+		});
+		dataGrapher = new PublicationDataGrapher(width - new FlowLayout().getHgap()*2, 400, graphInputField);
 		dataGrapher.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, 400));
 	}
 
