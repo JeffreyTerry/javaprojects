@@ -2,14 +2,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-
 public class PublicationListTest {
 
-	/*
-	 * Test papers for methods
-	 */
-	String[] authors={"BBob, Joe", "AppleSeed, Jonny"};
-	String title = "c";
+	PublicationList testingList = new PublicationList();
+	PublicationList correctList = new PublicationList();
+	
+	String[] authors={"Bob, Joe", "AppleSeed, Jonny"};
+	String title = "AB grand advnture";
 	String serialTitle = "children's stuff";
 	String[] pageNumbers = {"1","100"};
 	String date = "September 1994";
@@ -18,152 +17,117 @@ public class PublicationListTest {
 
 
 	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
-	String title2 = "a";
+	String title2 = "AA Agrand advnture";
 	String serialTitle2 = "Achildren's stuff";
 	String[] pageNumbers2 = {"2","150"};
 	String date2 = "July 1990";
 	String digitalIdentifier2 = "www.thatonesite2.com";
 	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
-
-	String[] authors3={"CBob, ABob", "AppleSeed, AJonny"};
-	String title3 = "b";
-	String serialTitle3 = "cAhildren's stuff";
-	String[] pageNumbers3 = {"3","50"};
-	String date3 = "January 1989";
+	
+	String[] authors3={"ABCob, Joe", "BACppleSeed, Jonny"};
+	String title3 = "AAC Agrand advnture";
+	String serialTitle3 = "ACchildren's stuff";
+	String[] pageNumbers3 = {"5","10"};
+	String date3 = "June 1994";
 	String digitalIdentifier3 = "www.thatonesite3.com";
 	Paper testPaper3 = new Paper(authors3, title3, serialTitle3, pageNumbers3, date3, digitalIdentifier3);
-
-	/**
-	 * tests the sortByDate method of publicationList
-	 */
+	
 	@Test
 	public void testSortByDate() {
+		testingList.add(testPaper1);
+		testingList.add(testPaper2);
+		testingList.add(testPaper3);
+		
+		testingList.sortByDate();
 
-		PublicationList testList = new PublicationList();
-
-		testList.add(testPaper1);
-		testList.add(testPaper2);
-		testList.add(testPaper3);
-
-		testList.sortByDate();
-
-		PublicationList correctList = new PublicationList();
-		correctList.add(testPaper3);
 		correctList.add(testPaper2);
+		correctList.add(testPaper3);
 		correctList.add(testPaper1);
-
-		assertEquals(testList, correctList);
+		
+		assertEquals(testingList,correctList);
 	}
 
-
-	/**
-	 * tests the sortByDigitalIdentifier method of publicationList
-	 */
 	@Test
 	public void testSortByDigitalIdentifier() {
-
-		PublicationList testList = new PublicationList();
-
-		testList.add(testPaper1);
-		testList.add(testPaper2);
-		testList.add(testPaper3);
-
-		testList.sortByDigitalIdentifier();
-
-		PublicationList correctList = new PublicationList();
+		testingList.add(testPaper1);
+		testingList.add(testPaper2);
+		testingList.add(testPaper3);
+		
+		testingList.sortByDigitalIdentifier();
+		
 		correctList.add(testPaper1);
 		correctList.add(testPaper2);
 		correctList.add(testPaper3);
-
-		assertEquals(testList, correctList);
+		
+		assertEquals(testingList,correctList);
 	}
 
-	/**
-	 * tests the sortBySerialTitle method of publicationList
-	 */
 	@Test
 	public void testSortBySerialTitle() {
+	testingList.add(testPaper1);
+	testingList.add(testPaper2);
+	testingList.add(testPaper3);
 
-		PublicationList testList = new PublicationList();
+	testingList.sortBySerialTitle();
 
+	correctList.add(testPaper3);
+	correctList.add(testPaper2);
+	correctList.add(testPaper1);
 
-		testList.add(testPaper1);
-		testList.add(testPaper2);
-		testList.add(testPaper3);
+	assertEquals(testingList,correctList);
+}
 
-		testList.sortBySerialTitle();
-
-		PublicationList correctList = new PublicationList();
-		correctList.add(testPaper2);
-		correctList.add(testPaper3);
-		correctList.add(testPaper1);
-
-		assertEquals(testList, correctList);
-	}
-
-	/**
-	 * tests the sortByPaperTitle method of publicationList
-	 */
 	@Test
 	public void testSortByPaperTitle() {
-
-		PublicationList testList = new PublicationList();
-
-		testList.add(testPaper1);
-		testList.add(testPaper2);
-		testList.add(testPaper3);
-
-		testList.sortByPaperTitle();
-
-		PublicationList correctList = new PublicationList();
+		testingList.add(testPaper1);
+		testingList.add(testPaper2);
+		testingList.add(testPaper3);
+		
+		testingList.sortByPaperTitle();
+		for(Paper p: testingList)
+		{
+			System.out.println(p.getTitle());
+		}
 		correctList.add(testPaper2);
 		correctList.add(testPaper3);
 		correctList.add(testPaper1);
-
-		assertEquals(testList, correctList);
+		
+		assertEquals(testingList,correctList);
 	}
 
-	/**
-	 * tests the sortByAuthor method of publicationList
-	 */
 	@Test
 	public void testSortByAuthor() {
-
-		PublicationList testList = new PublicationList();
-
-		testList.add(testPaper1);
-		testList.add(testPaper2);
-		testList.add(testPaper3);
-
-		testList.sortByAuthor();
-
-		PublicationList correctList = new PublicationList();
+		testingList.add(testPaper1);
+		testingList.add(testPaper2);
+		testingList.add(testPaper3);
+		
+		testingList.sortByAuthor();
+		
+		correctList.add(testPaper3);
 		correctList.add(testPaper2);
 		correctList.add(testPaper1);
-		correctList.add(testPaper3);
-
-		assertEquals(testList, correctList);
+		
+		assertEquals(testingList,correctList);
 	}
 
-	/**
-	 * tests the sortByBibliographicInfo method of publicationList
-	 */
 	@Test
-	public void testSortByBibliographicInfo() 
-	{
-		PublicationList testList = new PublicationList();
-
-		testList.add(testPaper1);
-		testList.add(testPaper2);
-		testList.add(testPaper3);
-
-		testList.sortByBibliographicInfo();
-
-		PublicationList correctList = new PublicationList();
+	public void testSortByBibliographicInfo() {
+		testingList.add(testPaper1);
+		testingList.add(testPaper2);
+		testingList.add(testPaper3);
+		
+		testingList.sortByBibliographicInfo();
+		
+		correctList.add(testPaper3);
 		correctList.add(testPaper2);
 		correctList.add(testPaper1);
-		correctList.add(testPaper3);
-
-		assertEquals(testList, correctList);
+		
+		assertEquals(testingList,correctList);
 	}
+
+	@Test
+	public void testCompare() {
+		assertTrue(testPaper1.compareTo(testPaper2)==1);
+	}
+
 }

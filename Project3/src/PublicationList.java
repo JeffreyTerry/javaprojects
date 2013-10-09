@@ -122,7 +122,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	{
 		 Collections.shuffle(this);
 	}
-	
+
 	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -130,15 +130,15 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 * <P>
 		 * @param 			  p1		the first paper to be compared
 		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the primary author being alphanumerically before another is considered less than.
+		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the primary author being alphanumerically before another is considered less than.
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
 			return p1.compareTo(p2);
 		}
 	};
-	
-	
+
+
 	public static Comparator<Paper>  paperTitleComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -159,7 +159,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		}
 	};
 
-	
+
 	public static Comparator<Paper>  serialTitleComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -174,7 +174,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return p1.getSerialTitle().compareTo(p2.getSerialTitle());
 		}
 	};
-	
+
 	public static Comparator<Paper>  dateComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -188,102 +188,107 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		{
 			String[] date1=p1.getDate().split(" ");
 			String[] date2=p2.getDate().split(" ");
+			int compare=0;
 			
-			int month1=13;
-	        String toSwitch = date1[1].toLowerCase();
-	        if(toSwitch.equals("january")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("february")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("march")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("april")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("may")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("june")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("july")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("august")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("september")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("october")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("november")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("december")){
-            	month1=1;
-	        }
-	        
-	        int month2=13;
-	        toSwitch = date2[1].toLowerCase();
-	        if(toSwitch.equals("january")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("february")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("march")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("april")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("may")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("june")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("july")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("august")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("september")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("october")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("november")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("december")){
-            	month2=1;
-	        }
-	        int compare=0;
-	        if(month1<month2)
-	        	compare=-1;
-	        if(month1>month2)
-	        	compare=1;
-	        int day1=Integer.parseInt(date1[1]);
-	        int day2=Integer.parseInt(date2[1]);
+			int year1=Integer.parseInt(date1[1]);
+	        int year2=Integer.parseInt(date2[1]);
 	        if(compare==0)
 	        {
-	        	if(day1<day2)
+	        	if(year1<year2)
 	        		compare=-1;
-	        	if(day1>day2)
+	        	if(year1>year2)
 	        		compare=1;
 	        }
+	        if(compare==0)
+	        {
+	        	int month1=13;
+		        String toSwitch = date1[0].toLowerCase();
+		        if(toSwitch.equals("january")){
+	            	month1=1;
+		        }
+		        else if(toSwitch.equals("february")){
+	            	month1=2;
+		        }
+		        else if(toSwitch.equals("march")){
+	            	month1=3;
+		        }
+		        else if(toSwitch.equals("april")){
+	            	month1=4;
+		        }
+		        else if(toSwitch.equals("may")){
+	            	month1=5;
+		        }
+		        else if(toSwitch.equals("june")){
+	            	month1=6;
+		        }
+		        else if(toSwitch.equals("july")){
+	            	month1=7;
+		        }
+		        else if(toSwitch.equals("august")){
+	            	month1=8;
+		        }
+		        else if(toSwitch.equals("september")){
+	            	month1=9;
+		        }
+		        else if(toSwitch.equals("october")){
+	            	month1=10;
+		        }
+		        else if(toSwitch.equals("november")){
+	            	month1=11;
+		        }
+		        else if(toSwitch.equals("december")){
+	            	month1=12;
+		        }
+
+		        int month2=13;
+		        toSwitch = date2[0].toLowerCase();
+		        if(toSwitch.equals("january")){
+	            	month2=1;
+		        }
+		        else if(toSwitch.equals("february")){
+	            	month2=2;
+		        }
+		        else if(toSwitch.equals("march")){
+	            	month2=3;
+		        }
+		        else if(toSwitch.equals("april")){
+	            	month2=4;
+		        }
+		        else if(toSwitch.equals("may")){
+	            	month2=5;
+		        }
+		        else if(toSwitch.equals("june")){
+	            	month2=6;
+		        }
+		        else if(toSwitch.equals("july")){
+	            	month2=7;
+		        }
+		        else if(toSwitch.equals("august")){
+	            	month2=8;
+		        }
+		        else if(toSwitch.equals("september")){
+	            	month2=9;
+		        }
+		        else if(toSwitch.equals("october")){
+	            	month2=10;
+		        }
+		        else if(toSwitch.equals("november")){
+	            	month2=11;
+		        }
+		        else if(toSwitch.equals("december")){
+	            	month2=12;
+		        }
+		        
+		        if(month1<month2)
+		        	compare=-1;
+		        if(month1>month2)
+		        	compare=1;
+	        }
+			
 			return compare;
 		}
 	};
-	
+
 
 	public static Comparator<Paper>  diComparator = new Comparator<Paper>() 
 	{	
@@ -301,7 +306,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return di1.compareTo(di2);
 		}
 	};
-	
+
 
 	public static Comparator<Paper>  volumeComparator = new Comparator<Paper>() 
 	{
@@ -336,8 +341,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return compare;
 		}
 	};
-	
-	
+
+
 	public static Comparator<Paper>  issueComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -371,8 +376,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return compare;
 		}
 	};
-	
-	
+
+
 	public static Comparator<Paper>  lengthComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -386,7 +391,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		{
 			int length1=Integer.parseInt(p1.getPageNumbers()[1])-Integer.parseInt(p1.getPageNumbers()[0]);
 			int length2=Integer.parseInt(p2.getPageNumbers()[1])-Integer.parseInt(p2.getPageNumbers()[0]);
-			
+
 			int compare=0;
 			if(length1<length2)
 				compare=-1;
@@ -395,8 +400,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return compare;
 		}
 	};
-	
-	
+
+
 	public static Comparator<Paper>  firstPageComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -417,7 +422,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 			return 0;
 		}
 	};
-	
+
 	/**
     * This methods compares two papers by the author's last name
     */
