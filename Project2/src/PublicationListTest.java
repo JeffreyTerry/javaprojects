@@ -1,427 +1,169 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import static org.junit.Assert.*;
+
+import org.junit.Test;
 
 
-/**
- * Project #2
- * CS 2334, Section 011
- * 9/24/2013
- * <P>
- * This class represents a list of publications.
- * </P>
- * @version 1.0
- */
-public class PublicationList extends ArrayList<Paper> implements Comparator<Paper>{
+public class PublicationListTest {
+
 	/*
-     * Mutator Methods
-     */
-    
-	 /**
-	 * 
+	 * Test papers for methods
 	 */
-	private static final long serialVersionUID = 1L;
+	String[] authors={"BBob, Joe", "AppleSeed, Jonny"};
+	String title = "c";
+	String serialTitle = "children's stuff";
+	int[] pageNumbers = {1,100};
+	String date = "September 1994";
+	String digitalIdentifier = "www.thatonesite.com";
+	Paper testPaper1 = new Paper(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
+
+
+	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
+	String title2 = "a";
+	String serialTitle2 = "Achildren's stuff";
+	int[] pageNumbers2 = {2,150};
+	String date2 = "July 1990";
+	String digitalIdentifier2 = "www.thatonesite2.com";
+	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
+
+	String[] authors3={"CBob, ABob", "AppleSeed, AJonny"};
+	String title3 = "b";
+	String serialTitle3 = "cAhildren's stuff";
+	int[] pageNumbers3 = {3,50};
+	String date3 = "January 1989";
+	String digitalIdentifier3 = "www.thatonesite3.com";
+	Paper testPaper3 = new Paper(authors3, title3, serialTitle3, pageNumbers3, date3, digitalIdentifier3);
 
 	/**
-     * Sorts papers by the date they were published
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         PublicationList is not empty
-     * <dd>POST -         PublicationList is sorted by the date they were published
-     */
-	public void sortByDate()
-	{
-		Collections.sort(this,dateComparator);
+	 * tests the sortByDate method of publicationList
+	 */
+	@Test
+	public void testSortByDate() {
+
+		PublicationList testList = new PublicationList();
+
+		testList.add(testPaper1);
+		testList.add(testPaper2);
+		testList.add(testPaper3);
+
+		testList.sortByDate();
+
+		PublicationList correctList = new PublicationList();
+		correctList.add(testPaper3);
+		correctList.add(testPaper2);
+		correctList.add(testPaper1);
+
+		assertEquals(testList, correctList);
+	}
+
+
+	/**
+	 * tests the sortByDigitalIdentifier method of publicationList
+	 */
+	@Test
+	public void testSortByDigitalIdentifier() {
+
+		PublicationList testList = new PublicationList();
+
+		testList.add(testPaper1);
+		testList.add(testPaper2);
+		testList.add(testPaper3);
+
+		testList.sortByDigitalIdentifier();
+
+		PublicationList correctList = new PublicationList();
+		correctList.add(testPaper1);
+		correctList.add(testPaper2);
+		correctList.add(testPaper3);
+
+		assertEquals(testList, correctList);
 	}
 
 	/**
-     * Sorts papers by the digital identifier associated with it alphanumerically
-     * <P>
-     * Algorithm:<br>
-     * Algorithm not yet implemented.<br>
-     * </P>
-     * <dt><b>Conditions:</b>
-     * <dd>PRE  -         PublicationList is not empty
-     * <dd>POST -         PublicationList is sorted by the digital identifier associated with it alphanumerically
-     */
-	public void sortByDigitalIdentifier()
-	{
-		Collections.sort(this,diComparator);
+	 * tests the sortBySerialTitle method of publicationList
+	 */
+	@Test
+	public void testSortBySerialTitle() {
+
+		PublicationList testList = new PublicationList();
+
+
+		testList.add(testPaper1);
+		testList.add(testPaper2);
+		testList.add(testPaper3);
+
+		testList.sortBySerialTitle();
+
+		PublicationList correctList = new PublicationList();
+		correctList.add(testPaper2);
+		correctList.add(testPaper3);
+		correctList.add(testPaper1);
+
+		assertEquals(testList, correctList);
 	}
 
 	/**
-    * This methods sorts papers by serial title
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by serial title
-    */
-	public void sortBySerialTitle()
-	{
-		Collections.sort(this,serialTitleComparator);
+	 * tests the sortByPaperTitle method of publicationList
+	 */
+	@Test
+	public void testSortByPaperTitle() {
+
+		PublicationList testList = new PublicationList();
+
+		testList.add(testPaper1);
+		testList.add(testPaper2);
+		testList.add(testPaper3);
+
+		testList.sortByPaperTitle();
+
+		PublicationList correctList = new PublicationList();
+		correctList.add(testPaper2);
+		correctList.add(testPaper3);
+		correctList.add(testPaper1);
+
+		assertEquals(testList, correctList);
 	}
 
 	/**
-    * This methods sorts papers by paper title
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by paper title
-    */
-	public void sortByPaperTitle()
-	{
-		Collections.sort(this,paperTitleComparator);
+	 * tests the sortByAuthor method of publicationList
+	 */
+	@Test
+	public void testSortByAuthor() {
+
+		PublicationList testList = new PublicationList();
+
+		testList.add(testPaper1);
+		testList.add(testPaper2);
+		testList.add(testPaper3);
+
+		testList.sortByAuthor();
+
+		PublicationList correctList = new PublicationList();
+		correctList.add(testPaper2);
+		correctList.add(testPaper1);
+		correctList.add(testPaper3);
+
+		assertEquals(testList, correctList);
 	}
 
 	/**
-    * This methods sorts papers by author
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by author
-    */
-	public void sortByAuthor()
+	 * tests the sortByBibliographicInfo method of publicationList
+	 */
+	@Test
+	public void testSortByBibliographicInfo() 
 	{
-		Collections.sort(this,authorComparator);
-	}
+		PublicationList testList = new PublicationList();
 
-	/**
-    * This methods sorts papers by bibliographic info according to MLA format. i.e. author name
-    * https://owl.english.purdue.edu/owl/resource/747/07/
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by bibliographic info
-    */
-	public void sortByBibliographicInfo()
-	{
-		Collections.sort(this,authorComparator);
-	}
+		testList.add(testPaper1);
+		testList.add(testPaper2);
+		testList.add(testPaper3);
 
-	/**
-    * This methods sorts papers by title
-    * <P>
-    * Algorithm:<br>
-    * Algorithm not yet implemented.<br>
-    * </P>
-    * <dt><b>Conditions:</b>
-    * <dd>POST -         The order is ranomized
-    */
-	public void randomSort()
-	{
-		 Collections.shuffle(this);
-	}
-	
-	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their author
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the primary author being alphanumerically before another is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			return p1.compareTo(p2);
-		}
-	};
-	
-	
-	public static Comparator<Paper>  paperTitleComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their title
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the title being alphanumerically before another is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			int compare=0;
-			if(p1.getTitle().compareTo(p2.getTitle())>0)
-				compare=1;
-			if(p1.getTitle().compareTo(p2.getTitle())<0)
-				compare=-1;
-			return compare;
-		}
-	};
+		testList.sortByBibliographicInfo();
 
-	
-	public static Comparator<Paper>  serialTitleComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their serial title
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the serial title being alphanumerically before another is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			return p1.getSerialTitle().compareTo(p2.getSerialTitle());
-		}
-	};
-	
-	public static Comparator<Paper>  dateComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their date of publication
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the date being before another is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			String[] date1=p1.getDate().split(" ");
-			String[] date2=p2.getDate().split(" ");
-			
-			int month1=13;
-	        String toSwitch = date1[1].toLowerCase();
-	        if(toSwitch.equals("january")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("february")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("march")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("april")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("may")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("june")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("july")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("august")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("september")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("october")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("november")){
-            	month1=1;
-	        }
-	        else if(toSwitch.equals("december")){
-            	month1=1;
-	        }
-	        
-	        int month2=13;
-	        toSwitch = date2[1].toLowerCase();
-	        if(toSwitch.equals("january")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("february")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("march")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("april")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("may")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("june")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("july")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("august")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("september")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("october")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("november")){
-            	month2=1;
-	        }
-	        else if(toSwitch.equals("december")){
-            	month2=1;
-	        }
-	        int compare=0;
-	        if(month1<month2)
-	        	compare=-1;
-	        if(month1>month2)
-	        	compare=1;
-	        int day1=Integer.parseInt(date1[1]);
-	        int day2=Integer.parseInt(date2[1]);
-	        if(compare==0)
-	        {
-	        	if(day1<day2)
-	        		compare=-1;
-	        	if(day1>day2)
-	        		compare=1;
-	        }
-			return compare;
-		}
-	};
-	
+		PublicationList correctList = new PublicationList();
+		correctList.add(testPaper2);
+		correctList.add(testPaper1);
+		correctList.add(testPaper3);
 
-	public static Comparator<Paper>  diComparator = new Comparator<Paper>() 
-	{	
-		/** 
-		 * This compares two papers to one another by their digital identifier
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the digital identifier being alphanumerically before another is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			String di1=p1.getDigitalIdentifier();
-			String di2=p2.getDigitalIdentifier();
-			return di1.compareTo(di2);
-		}
-	};
-	
-
-	public static Comparator<Paper>  volumeComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their volume
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where a lower numbered volume is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			Article a1;
-			Article a2;
-			int v1=-1;
-			int v2=-1;
-			if(p1 instanceof Article)
-			{
-				a1=(Article)p1;
-				v1=a1.getVolume();
-			}
-			if(p2 instanceof Article)
-			{
-				a2=(Article)p2;
-				v2=a2.getVolume();
-			}
-			int compare=0;
-			if(v1>v2)
-				compare=1;
-			else if(v1<v2)
-				compare=-1;
-			return compare;
-		}
-	};
-	
-	
-	public static Comparator<Paper>  issueComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their issue
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where a lower numbered issue is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			Article a1;
-			Article a2;
-			int i1=-1;
-			int i2=-1;
-			if(p1 instanceof Article)
-			{
-				a1=(Article)p1;
-				i1=a1.getIssue();
-			}
-			if(p2 instanceof Article)
-			{
-				a2=(Article)p2;
-				i2=a2.getIssue();
-			}
-			int compare=0;
-			if(i1>i2)
-				compare=1;
-			else if(i1<i2)
-				compare=-1;
-			return compare;
-		}
-	};
-	
-	
-	public static Comparator<Paper>  lengthComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their length
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where a shorter length is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			int length1=Integer.parseInt(p1.getPageNumbers()[1])-Integer.parseInt(p1.getPageNumbers()[0]);
-			int length2=Integer.parseInt(p2.getPageNumbers()[1])-Integer.parseInt(p2.getPageNumbers()[0]);
-			
-			int compare=0;
-			if(length1<length2)
-				compare=-1;
-			else if(length1>length2)
-				compare=1;
-			return compare;
-		}
-	};
-	
-	
-	public static Comparator<Paper>  firstPageComparator = new Comparator<Paper>() 
-	{
-		/** 
-		 * This compares two papers to one another by their first page
-		 * <P>
-		 * @param 			  p1		the first paper to be compared
-		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the o1 is less than, equal to, or greater than o2. Where the an earlier page is considered less than.
-		 */
-		public int compare(Paper p1, Paper p2) 
-		{
-			if(Integer.parseInt(p1.getPageNumbers()[1]) < Integer.parseInt(p2.getPageNumbers()[1])){
-				return -1;
-			}
-			else if(Integer.parseInt(p1.getPageNumbers()[1]) > Integer.parseInt(p2.getPageNumbers()[1])){
-				return 1;
-			}
-			return 0;
-		}
-	};
-	
-	/**
-    * This methods compares two papers by the author's last name
-    */
-	public int compare(Paper p1, Paper p2){
-		return p1.compareTo(p2);
+		assertEquals(testList, correctList);
 	}
 }

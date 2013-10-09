@@ -40,6 +40,7 @@ public class PublicationDataGrapher extends JPanel{
 		typeSelector = new JComboBox(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
+				graphType = typeSelector.getSelectedIndex() - 1;
 				repaint();
 			}
 		});
@@ -74,25 +75,34 @@ public class PublicationDataGrapher extends JPanel{
 			ArrayList<ConferencePaper> conPaps = author.getConferencePapers();
 			ArrayList<Article> jourArts = author.getJournalArticles();
 			int tempVal = 0;
+			String nextDate = "";
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
 				for(int i = 0; i < conPaps.size(); i++){  //TODO TEST THIS ALGORITHM
-					if(!dateMap.containsKey(conPaps.get(i).getDate())){
-						dateMap.put(conPaps.get(i).getDate(), 1);
+					nextDate = conPaps.get(i).getDate();
+					if(nextDate.split(" ").length > 1){
+						nextDate = nextDate.split(" ")[1];
+					}
+					if(!dateMap.containsKey(nextDate)){
+						dateMap.put(nextDate, 1);
 					}
 					else{
-						tempVal = dateMap.get(conPaps.get(i).getDate());
-						dateMap.put(conPaps.get(i).getDate(), tempVal + 1);
+						tempVal = dateMap.get(nextDate);
+						dateMap.put(nextDate, tempVal + 1);
 					}
 				}
 			}
 			if(graphType != CONFERENCE_PAPERS_PER_YEAR){
 				for(int i = 0; i < jourArts.size(); i++){
-					if(!dateMap.containsKey(jourArts.get(i).getDate())){
-						dateMap.put(jourArts.get(i).getDate(), 1);
+					nextDate = jourArts.get(i).getDate();
+					if(nextDate.split(" ").length > 1){
+						nextDate = nextDate.split(" ")[1];
+					}
+					if(!dateMap.containsKey(nextDate)){
+						dateMap.put(nextDate, 1);
 					}
 					else{
-						tempVal = dateMap.get(jourArts.get(i).getDate());
-						dateMap.put(jourArts.get(i).getDate(), tempVal + 1);
+						tempVal = dateMap.get(nextDate);
+						dateMap.put(nextDate, tempVal + 1);
 					}
 				}
 			}
@@ -107,11 +117,13 @@ public class PublicationDataGrapher extends JPanel{
 					maxDate = keys.get(i);
 				}
 			}
-			int[] values = new int[Integer.parseInt(maxDate) - Integer.parseInt(minDate)];
-			String[] labels = new String[Integer.parseInt(maxDate) - Integer.parseInt(minDate)];
+			int[] values;
+			String[] labels;
 			int min = Integer.parseInt(minDate);
 			int max = Integer.parseInt(maxDate);
-			for(int i = min; i < max; i++){
+			values = new int[max - min + 1];
+			labels = new String[max - min + 1];
+			for(int i = min; i <= max; i++){
 				if(dateMap.get(""+i) == null){
 					values[i - min] = 0;
 				}
@@ -160,9 +172,9 @@ public class PublicationDataGrapher extends JPanel{
 					maxCoauthors = keys.get(i);
 				}
 			}
-			int[] values = new int[maxCoauthors - minCoauthors];
-			String[] labels = new String[maxCoauthors - minCoauthors];
-			for(int i = minCoauthors; i < maxCoauthors; i++){
+			int[] values = new int[maxCoauthors - minCoauthors + 1];
+			String[] labels = new String[maxCoauthors - minCoauthors + 1];
+			for(int i = minCoauthors; i <= maxCoauthors; i++){
 				if(coauthorMap.get(i) == null){
 					values[i - minCoauthors] = 0;
 				}
@@ -179,12 +191,13 @@ public class PublicationDataGrapher extends JPanel{
 	private void drawDecor(Graphics g){
 		int yTopOffset = 80;  //Should be the same as below
 		int yBottomOffset = 28;  //Should be the same as below
+		int xMargin = 28;  //Should be the same as below
 		Font titleFont = new Font(Font.SANS_SERIF, Font.PLAIN, 24);
 		FontMetrics titleStick = g.getFontMetrics(titleFont);
 		g.setColor(Color.DARK_GRAY);
 		g.setFont(titleFont);
 
-		g.drawLine(28, height - yBottomOffset, width - 28, height - yBottomOffset);
+		g.drawLine(xMargin, height - yBottomOffset, width - xMargin, height - yBottomOffset);
 		g.drawString(typeSelector.getSelectedItem().toString(), (width - titleStick.stringWidth(typeSelector.getSelectedItem().toString()))/2, yTopOffset - 10);
 	}
 
@@ -193,10 +206,18 @@ public class PublicationDataGrapher extends JPanel{
 	}
 
 	private void drawBars(int[] values, String[] labels, Color[] colors, Graphics g){
+		for(int i = 0; i < values.length; i++){
+			System.out.print(labels[i]+": "+values[i]+", ");
+		}
+		System.out.println();
+		Font labelFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+		FontMetrics labelStick = g.getFontMetrics(labelFont);
+		g.setFont(labelFont);
 		int yTopOffset = 80;  //Should be the same as above
 		int yBottomOffset = 28;  //Should be the same as above
+		int xMargin = 28;  //Should be the same as above
 		int xPadding = 4 + 5/values.length;
-		int columnWidth = (width - ((values.length + 1) * xPadding)) / values.length;
+		int columnWidth = (width - ((values.length + 1) * xPadding) - xMargin * 2) / values.length;
 		int maxValue = 0;
 		for(int i = 0; i < values.length; i++){
 			if(values[i] > maxValue){
@@ -206,7 +227,10 @@ public class PublicationDataGrapher extends JPanel{
 		int singleValueHeight = (height - yTopOffset - yBottomOffset - 10) / maxValue; // the (-10) is for padding within the graph
 		for(int i = 0; i < values.length; i++){
 			g.setColor(colors[i % colors.length]);
-			g.fillRect(28 + (i + 1) * xPadding + i * columnWidth, height - yBottomOffset - values[i]*singleValueHeight, columnWidth, values[i]*singleValueHeight);
+			g.fillRect(xMargin + (i + 1) * xPadding + i * columnWidth, height - yBottomOffset - values[i]*singleValueHeight, columnWidth, values[i]*singleValueHeight);
+			g.setColor(Color.BLACK);
+			g.drawString(labels[i], xMargin + (i + 1) * xPadding + i * columnWidth + (columnWidth - labelStick.stringWidth(labels[i]))/2, height - yBottomOffset + labelStick.getHeight());
+			g.drawString(""+values[i], xMargin + (i + 1) * xPadding + i * columnWidth + (columnWidth - labelStick.stringWidth(""+values[i]))/2, height - yBottomOffset - values[i]*singleValueHeight - 4);
 		}
 	}
 	
