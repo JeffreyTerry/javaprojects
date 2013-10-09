@@ -22,12 +22,16 @@ public class PublicationSystem {
 	
 	/**A list of all publications in the system*/
 	private PublicationList publicationList;
+	
+	/**A map of author names to authors*/
+	private AuthorMap authorMap;
 
 	/**
      * Creates a publication system with no publications
      */
 	public PublicationSystem(){
 		publicationList = new PublicationList();
+		authorMap = new AuthorMap();
 	}
 	
 	/*
@@ -138,7 +142,10 @@ public class PublicationSystem {
 			readPaper(fileReader);
 			fileReader.close();
 		}
-		catch(Exception e){e.printStackTrace();}
+		catch(Exception e){
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "Error", "", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void readPaper(BufferedReader fileReader) throws IOException{
@@ -160,7 +167,19 @@ public class PublicationSystem {
 			String date = fileReader.readLine();
 			String digId = fileReader.readLine();
 			if(digId != null){
-				publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId));
+				ConferencePaper next = new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId);
+				Author auth;
+				publicationList.add(next);
+				for(int i = 0; i < authorList.length; i++){
+					if(authorMap.containsKey(authorList[i])){
+						authorMap.get(authorList[i]).addConferenceProceeding(next);
+					}
+					else{
+						auth = new Author(authorList[i]);
+						auth.addConferenceProceeding(next);
+						authorMap.put(authorList[i], auth);
+					}
+				}
 				if(digId.equals("")){
 					readPaper(fileReader);
 					return;
@@ -193,7 +212,19 @@ public class PublicationSystem {
 			String date = fileReader.readLine();
 			String digId = fileReader.readLine();
 			if(digId != null){
-				publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, digId));
+				Article next = new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, digId);
+				Author auth;
+				publicationList.add(next);
+				for(int i = 0; i < authorList.length; i++){
+					if(authorMap.containsKey(authorList[i])){
+						authorMap.get(authorList[i]).addJournalArticle(next);
+					}
+					else{
+						auth = new Author(authorList[i]);
+						auth.addJournalArticle(next);
+						authorMap.put(authorList[i], auth);
+					}
+				}
 				if(digId.equals("")){
 					readPaper(fileReader);
 					return;
@@ -357,7 +388,6 @@ public class PublicationSystem {
 	public int getSearchComparisonsLI(String title)
 	{
 		int count=0;
-		int index=0;
 		for(int i = 0; i < publicationList.size(); i++)
 		{
 			count++;
@@ -369,6 +399,6 @@ public class PublicationSystem {
 	}
 	
 	public Author getAuthor(String auth){ //TODO
-		return null;
+		return authorMap.get(auth);
 	}
 }

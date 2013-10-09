@@ -200,13 +200,13 @@ public class PublicationDataGrapher extends JPanel{
 		int maxValue = 0;
 		for(int i = 0; i < values.length; i++){
 			if(values[i] > maxValue){
-				maxValue = i;
+				maxValue = values[i];
 			}
 		}
 		int singleValueHeight = (height - yTopOffset - yBottomOffset - 10) / maxValue; // the (-10) is for padding within the graph
 		for(int i = 0; i < values.length; i++){
 			g.setColor(colors[i % colors.length]);
-			g.fillRect((i + 1) * xPadding + i * columnWidth, height - yBottomOffset - values[i]*singleValueHeight, columnWidth, values[i]*singleValueHeight);
+			g.fillRect(28 + (i + 1) * xPadding + i * columnWidth, height - yBottomOffset - values[i]*singleValueHeight, columnWidth, values[i]*singleValueHeight);
 		}
 	}
 	
