@@ -15,7 +15,7 @@ public class PaperTest {
 	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
 	String title2 = "AA Agrand advnture";
 	String serialTitle2 = "Achildren's stuff";
-	int[] pageNumbers2 = {2,150};
+	String[] pageNumbers2 = {"2","150"};
 	String date2 = "July 1990";
 	String digitalIdentifier2 = "www.thatonesite2.com";
 	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
