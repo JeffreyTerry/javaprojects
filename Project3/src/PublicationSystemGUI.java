@@ -19,13 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 /**
- * Project #2
+ * Project #3
  * CS 2334, Section 011
- * 9/19/2013
+ * 10/9/2013
  * <P>
  * This class represents a GUI which allows users to use publication systems.
  * </P>
- * @version 1.0
+ * @version 2.0
  */
 public class PublicationSystemGUI extends JFrame
 {

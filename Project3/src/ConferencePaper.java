@@ -1,12 +1,12 @@
 
 /**
- * Project #2
+ * Project #3
  * CS 2334, Section 011
- * 9/19/2013
+ * 10/9/2013
  * <P>
  * This class represents a conference paper published in a conference proceeding.
  * </P>
- * @version 1.0
+ * @version 2.0
  */
 
 public class ConferencePaper extends Paper

@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
- * Project #2
+ * Project #3
  * CS 2334, Section 011
- * 9/24/2013
+ * 10/9/2013
  * <P>
  * This class represents a publication system, which allows for importing, printing, sorting, and searching of lists of publications.
  * </P>
- * @version 1.0
+ * @version 2.0
  */
 public class PublicationSystem {
 	/* Instance Variables */

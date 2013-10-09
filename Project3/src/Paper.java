@@ -1,11 +1,11 @@
 /**
- * Project #2
+ * Project #3
  * CS 2334, Section 011
- * 9/19/2013
+ * 10/9/2013
  * <P>
  * This class represents a paper. It has fields that represent its authors, title, the title of its serial publication, page numbers, date pubished, and a didgital identifier.
  * </P>
- * @version 1.0
+ * @version 2.0
  */
 
 public class Paper implements Comparable<Paper>
