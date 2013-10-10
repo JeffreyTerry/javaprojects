@@ -157,6 +157,7 @@ public class PublicationSystem {
 			String serialTitle = fileReader.readLine();
 			String[] pageNumbers = new String[2];
 			String pagesLine = fileReader.readLine();
+			//TODO I don't think that pages will always be marked by a -.
 			String[] pages = pagesLine.split("-");
 			for(int i = 0; i < Math.min(pages.length, pageNumbers.length); i++){
 				pageNumbers[i] = pages[i];

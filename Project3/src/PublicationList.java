@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,7 +13,7 @@ import java.util.Comparator;
  * </P>
  * @version 2.0
  */
-public class PublicationList extends ArrayList<Paper> implements Comparator<Paper>{
+public class PublicationList extends ArrayList<Paper> implements Comparator<Paper>, Serializable{
 	/*
      * Mutator Methods
      */

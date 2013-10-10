@@ -18,6 +18,10 @@ public class Author{
 	public ArrayList<Article> getJournalArticles(){
 		return journalArticles;
 	}
+	
+	public String getname(){
+		return name;
+	}
 
 	public void addConferenceProceeding(ConferencePaper art){
 		conferencePapers.add(art);
