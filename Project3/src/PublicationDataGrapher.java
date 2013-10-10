@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
 public class PublicationDataGrapher extends JPanel{
@@ -21,7 +22,7 @@ public class PublicationDataGrapher extends JPanel{
 	public static final int PUBLICATIONS_PER_YEAR = 1;
 	public static final int CONFERENCE_PAPERS_PER_YEAR = 2;
 	public static final int JOURNAL_ARTICLES_PER_YEAR = 3;
-	public static final int NUMBER_OF_COAUTHORSHIPS = 4;
+	public static final int NUMBER_OF_COAUTHORS = 4;
 	
 	private int width;
 	private int height;
@@ -29,14 +30,14 @@ public class PublicationDataGrapher extends JPanel{
 	private Author author;
 	private JComboBox typeSelector;
 
-	public PublicationDataGrapher(int width, int height, JTextField authorSelector){
+	public PublicationDataGrapher(int width, int height, JSpinner authorSelector){
 		this.width = width;
 		this.height = height;
 		
 		//This stuff creates the control panel stuff
 		add(new JLabel("Author"));
 		add(authorSelector);
-		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthorships"};
+		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthors"};
 		typeSelector = new JComboBox(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -47,7 +48,7 @@ public class PublicationDataGrapher extends JPanel{
 		add(typeSelector);
 	}
 	
-	public PublicationDataGrapher(int width, int height, JTextField authorSelector, Author author){
+	public PublicationDataGrapher(int width, int height, JSpinner authorSelector, Author author){
 		this(width, height, authorSelector);
 		this.author = author;
 	}
@@ -55,7 +56,8 @@ public class PublicationDataGrapher extends JPanel{
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		setBackground(new Color(218, 223, 245));
-		
+
+		System.out.println("bro");
 		drawBarGraph(g);
 		drawDecor(g);
 	}
@@ -134,7 +136,7 @@ public class PublicationDataGrapher extends JPanel{
 			}
 			drawBars(values, labels, g);
 		}
-		else if(graphType == NUMBER_OF_COAUTHORSHIPS){
+		else if(graphType == NUMBER_OF_COAUTHORS){
 			HashMap<Integer, Integer> coauthorMap = new HashMap<Integer, Integer>();
 			ArrayList<ConferencePaper> conPaps = author.getConferencePapers();
 			ArrayList<Article> jourArts = author.getJournalArticles();
@@ -206,10 +208,6 @@ public class PublicationDataGrapher extends JPanel{
 	}
 
 	private void drawBars(int[] values, String[] labels, Color[] colors, Graphics g){
-		for(int i = 0; i < values.length; i++){
-			System.out.print(labels[i]+": "+values[i]+", ");
-		}
-		System.out.println();
 		Font labelFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 		FontMetrics labelStick = g.getFontMetrics(labelFont);
 		g.setFont(labelFont);

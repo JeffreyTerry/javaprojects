@@ -8,6 +8,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,7 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerListModel;
+import javax.swing.SpinnerModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Project #3
@@ -60,7 +66,7 @@ public class PublicationSystemGUI extends JFrame
 	
 	private JLabel displayLabel;
 	private PublicationDataGrapher dataGrapher;
-	private JTextField graphInputField;
+	private JSpinner graphInputField;
 
 	private DefaultControlListener controlListener;
 	private ModernControlListener modernControlListener;
@@ -255,11 +261,15 @@ public class PublicationSystemGUI extends JFrame
 	
 	private void createDataGrapher(){
 		Dimension componentDimension = new Dimension(160, 32);
-		graphInputField = new JTextField();
+		graphInputField = new JSpinner();
+		ArrayList<String> noAuthors = new ArrayList<String>();
+		noAuthors.add("None");
+		SpinnerModel model = new SpinnerListModel(noAuthors);
+		graphInputField.setModel(model);
 		graphInputField.setPreferredSize(componentDimension);
-		graphInputField.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				dataGrapher.setAuthor(publicationSystem.getAuthor(graphInputField.getText()));
+		graphInputField.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e){
+				dataGrapher.setAuthor(publicationSystem.findAuthor(graphInputField.getModel().getValue().toString()));
 				dataGrapher.repaint();
 			}
 		});
@@ -313,6 +323,12 @@ public class PublicationSystemGUI extends JFrame
 	
 	private void importPublication(){
 		publicationSystem.importPublication();
+		
+		//Update the graphInputField's model
+		ArrayList<String> authorNames = new ArrayList<String>(publicationSystem.getAuthorMap().keySet());
+		Collections.sort(authorNames);
+		SpinnerModel model = new SpinnerListModel(authorNames);
+		graphInputField.setModel(model);
 	}
 	
 	/**
@@ -404,14 +420,12 @@ public class PublicationSystemGUI extends JFrame
 			toggleGraph();
 		}
 		//By default the method prints the publicationList to the screen
-		if(publicationSystem.getPublicationList().size() < 100){
-			String forLabel = "<html>";
-			for(Paper p: publicationSystem.getPublicationList()){
-				forLabel += "<p>" + p.toString() + "</p><br />";
-			}
-			forLabel += "</html>";
-			displayLabel.setText(forLabel);
+		String forLabel = "<html>";
+		for(Paper p: publicationSystem.getPublicationList()){
+			forLabel += "<p>" + p.toString() + "</p><br />";
 		}
+		forLabel += "</html>";
+		displayLabel.setText(forLabel);
 	}
 
 	private class DefaultControlListener implements ActionListener{
