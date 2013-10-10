@@ -398,8 +398,12 @@ public class PublicationSystem {
 		}
 		return count;
 	}
-	
-	public Author getAuthor(String auth){ //TODO
+
+	public Author findAuthor(String auth){
 		return authorMap.get(auth);
+	}
+	
+	public AuthorMap getAuthorMap(){
+		return authorMap;
 	}
 }

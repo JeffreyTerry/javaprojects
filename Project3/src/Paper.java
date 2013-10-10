@@ -128,7 +128,7 @@ public class Paper implements Comparable<Paper>
      */
 	public String getFirstPage()
 	{
-		return pageNumbers[1];
+		return pageNumbers[0];
 	}
 	
 	/**
@@ -140,7 +140,7 @@ public class Paper implements Comparable<Paper>
      */
 	public String getLastPage()
 	{
-		return pageNumbers[2];
+		return pageNumbers[1];
 	}
 	
 	/**
@@ -192,9 +192,12 @@ public class Paper implements Comparable<Paper>
 		{
 			author1=firstAuthors[i].split(" ")[0];
 			author2=secondAuthors[i].split(" ")[0];
+			System.out.println(author1);
+			System.out.println(author2);
 			compare=author1.compareTo(author2);
 			i++;
 		}
+		System.out.println(compare);
 		if(compare == 0)
 		{
 			if(firstLength>secondLength)
