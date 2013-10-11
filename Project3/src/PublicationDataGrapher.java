@@ -7,13 +7,10 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 
 public class PublicationDataGrapher extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -33,6 +30,7 @@ public class PublicationDataGrapher extends JPanel{
 	public PublicationDataGrapher(int width, int height, JSpinner authorSelector){
 		this.width = width;
 		this.height = height;
+		graphType = -1;
 		
 		//This stuff creates the control panel stuff
 		add(new JLabel("Author"));
@@ -57,7 +55,6 @@ public class PublicationDataGrapher extends JPanel{
 		super.paintComponent(g);
 		setBackground(new Color(218, 223, 245));
 
-		System.out.println("bro");
 		drawBarGraph(g);
 		drawDecor(g);
 	}
@@ -123,6 +120,11 @@ public class PublicationDataGrapher extends JPanel{
 			String[] labels;
 			int min = Integer.parseInt(minDate);
 			int max = Integer.parseInt(maxDate);
+			if(min > max){
+				int temp = min;
+				min = max;
+				max = temp;
+			}
 			values = new int[max - min + 1];
 			labels = new String[max - min + 1];
 			for(int i = min; i <= max; i++){
@@ -214,9 +216,9 @@ public class PublicationDataGrapher extends JPanel{
 		int yTopOffset = 80;  //Should be the same as above
 		int yBottomOffset = 28;  //Should be the same as above
 		int xMargin = 28;  //Should be the same as above
-		int xPadding = 4 + 5/values.length;
+		int xPadding = 5 + (int)(400/Math.pow(values.length + 1, 2));
 		int columnWidth = (width - ((values.length + 1) * xPadding) - xMargin * 2) / values.length;
-		int maxValue = 0;
+		int maxValue = 1;
 		for(int i = 0; i < values.length; i++){
 			if(values[i] > maxValue){
 				maxValue = values[i];
