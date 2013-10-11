@@ -465,6 +465,7 @@ public class PublicationSystemGUI extends JFrame
 					}
 					forLabel += "</html>";
 					displayLabel.setText(forLabel);
+					return;
 				}
 			}
 			else{

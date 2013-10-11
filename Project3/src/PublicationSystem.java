@@ -318,6 +318,12 @@ public class PublicationSystem implements Serializable {
 	 * @throws IOException 
     */
 	public void printPublicationsToFile(String fileName) throws IOException{
+		if(fileName == null){
+			return;
+		}
+		if(fileName.length() < 4 || !fileName.substring(fileName.length() - 4).equals(".txt")){
+			fileName += ".txt";
+		}
 		BufferedWriter writer = null;
 		writer = new BufferedWriter(new FileWriter(fileName));
 		
@@ -329,9 +335,11 @@ public class PublicationSystem implements Serializable {
 			for(String lilLine: lilLines){
 				lines.add(lilLine);
 			}
+			lines.add("");
 		}
 		for(String line: lines){
 			writer.write(line);
+			writer.newLine();
 		}
 		writer.close();
 	}

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Project #3
  * CS 2334, Section 011
@@ -8,11 +10,15 @@
  * @version 2.0
  */
 
-public class Paper implements Comparable<Paper>
+public class Paper implements Comparable<Paper>, Serializable
 {
 	/* Instance Variables */
     
-    /** The authors of the paper */ 	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** The authors of the paper */ 	
 	private String[] authors;
 	/** The title of the paper */
 	private String title;

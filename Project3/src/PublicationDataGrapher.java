@@ -76,7 +76,7 @@ public class PublicationDataGrapher extends JPanel{
 			int tempVal = 0;
 			String nextDate = "";
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
-				for(int i = 0; i < conPaps.size(); i++){  //TODO TEST THIS ALGORITHM
+				for(int i = 0; i < conPaps.size(); i++){
 					nextDate = conPaps.get(i).getDate();
 					if(nextDate.split(" ").length > 1){
 						nextDate = nextDate.split(" ")[1];
@@ -108,6 +108,9 @@ public class PublicationDataGrapher extends JPanel{
 			ArrayList<String> keys = new ArrayList<String>(dateMap.keySet());
 			String minDate = "9999";
 			String maxDate = "0000";
+			if(keys.size() == 0){
+				return;
+			}
 			for(int i = 0; i < keys.size(); i++){
 				if(keys.get(i).compareTo(minDate) < 0){
 					minDate = keys.get(i);
@@ -118,8 +121,15 @@ public class PublicationDataGrapher extends JPanel{
 			}
 			int[] values;
 			String[] labels;
-			int min = Integer.parseInt(minDate);
-			int max = Integer.parseInt(maxDate);
+			int min = 0;
+			int max = 0;
+			try{
+				min = Integer.parseInt(minDate);
+				max = Integer.parseInt(maxDate);
+			}
+			catch(NumberFormatException e){
+				return;
+			}
 			if(min > max){
 				int temp = min;
 				min = max;
@@ -144,7 +154,7 @@ public class PublicationDataGrapher extends JPanel{
 			ArrayList<Article> jourArts = author.getJournalArticles();
 			int tempVal = 0;
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
-				for(int i = 0; i < conPaps.size(); i++){  //TODO TEST THIS ALGORITHM
+				for(int i = 0; i < conPaps.size(); i++){
 					if(!coauthorMap.containsKey(conPaps.get(i).getAuthors().length - 1)){
 						coauthorMap.put(conPaps.get(i).getAuthors().length - 1, 1);
 					}
@@ -210,6 +220,9 @@ public class PublicationDataGrapher extends JPanel{
 	}
 
 	private void drawBars(int[] values, String[] labels, Color[] colors, Graphics g){
+		if(values.length == 0){
+			return;
+		}
 		Font labelFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 		FontMetrics labelStick = g.getFontMetrics(labelFont);
 		g.setFont(labelFont);
