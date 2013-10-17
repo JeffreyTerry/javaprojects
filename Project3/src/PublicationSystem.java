@@ -142,7 +142,6 @@ public class PublicationSystem implements Serializable {
 		publicationList.randomSort();
 	}
 
-	//findMe
 	public void dontSort()
 	{
 		publicationList.dontSort();
@@ -167,7 +166,6 @@ public class PublicationSystem implements Serializable {
 				publicationList = newSys.getPublicationList();
 				authorMap = newSys.getAuthorMap();
 				objectReader.close();
-				//findMe
 				return;
 			}
 			catch(Exception e){}
@@ -176,7 +174,6 @@ public class PublicationSystem implements Serializable {
 			fileReader.close();
 		}
 		catch(Exception e){
-			//Changes
 			JOptionPane.showMessageDialog(null, "There was an error while reading your file. \nImport failed.", "", JOptionPane.ERROR_MESSAGE);
 			int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
 			if(choice == 0)
@@ -245,7 +242,6 @@ public class PublicationSystem implements Serializable {
 					}
 					if(digId.equals("")){
 						readPaper(fileReader);
-						//findMe
 						return;
 					}
 				}
@@ -291,7 +287,6 @@ public class PublicationSystem implements Serializable {
 					}
 					if(digId.equals("")){
 						readPaper(fileReader);
-						//findMe
 						return;
 					}
 				}
@@ -305,7 +300,6 @@ public class PublicationSystem implements Serializable {
 		}
 		catch(NullPointerException e){
 			JOptionPane.showMessageDialog(null, "Error processing paper", "", JOptionPane.ERROR_MESSAGE);
-			//Changes
 			int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
 			if(choice == 0)
 				e.printStackTrace();

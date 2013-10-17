@@ -359,7 +359,6 @@ public class PublicationSystemGUI extends JFrame
 			SpinnerModel model = new SpinnerListModel(authorNames);
 			graphInputField.setModel(model);
 		}
-		//findMe
 		performTask("N");
 	}
 	
@@ -452,7 +451,6 @@ public class PublicationSystemGUI extends JFrame
 		else if(task.equals("R")){  //Random sort
 			publicationSystem.randomSort();
 		}
-		//findMe
 		else if(task.equals("N")){  //Nothing
 			publicationSystem.dontSort();
 		}
@@ -465,8 +463,12 @@ public class PublicationSystemGUI extends JFrame
 				fileName = JOptionPane.showInputDialog("Enter new file name", "Print to File");
 				publicationSystem.printPublicationsToFile(fileName);
 			}
-			catch(Exception e){e.printStackTrace();}
-			//findMe
+			catch(Exception e){
+				JOptionPane.showMessageDialog(null, "There was an error printing to the file", "", JOptionPane.ERROR_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
+				if(choice==0)
+					e.printStackTrace();
+				}
 			return;
 		}
 		else if(task.equals("S")){  //Search
@@ -474,7 +476,12 @@ public class PublicationSystemGUI extends JFrame
 			try{
 				searchQuery = JOptionPane.showInputDialog("Enter title to search", "Search by Title");
 			}
-			catch(Exception e){e.printStackTrace();}
+			catch(Exception e){
+				JOptionPane.showMessageDialog(null, "There was an error in the search", "", JOptionPane.ERROR_MESSAGE);
+				int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
+				if(choice == 0)
+					e.printStackTrace();
+			}
 			Paper paperFound = publicationSystem.getPaperLinear(searchQuery);
 			if(paperFound == null){
 				ArrayList<Paper> papersFound = publicationSystem.getPapers(searchQuery);
