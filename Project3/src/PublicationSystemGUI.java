@@ -52,9 +52,9 @@ public class PublicationSystemGUI extends JFrame
 	private JLabel userPrompt;
 	private JTextField userInput;
 
-	private JComboBox sortDropdown;
+	private JComboBox<String> sortDropdown;
 	private JTextField searchTextField;
-	private JComboBox searchDropdown;
+	private JComboBox<String> searchDropdown;
 
 	private JButton defaultImportButton;
 	private JButton defaultExportButton;
@@ -209,7 +209,7 @@ public class PublicationSystemGUI extends JFrame
 		JLabel sortLabel = new JLabel("Sort by ");
 		sortLabel.setPreferredSize(smallComponentDimension);
 		sortLabel.setHorizontalAlignment(JLabel.RIGHT);
-		sortDropdown = new JComboBox(sortOptions);
+		sortDropdown = new JComboBox<String>(sortOptions);
 		sortDropdown.setPreferredSize(smallComponentDimension);
 		sortDropdown.addActionListener(modernControlListener);
 		JPanel sortPanel = new JPanel();
@@ -223,7 +223,7 @@ public class PublicationSystemGUI extends JFrame
 		searchLabel2.setPreferredSize(smallComponentDimension);
 		searchLabel2.setHorizontalAlignment(JLabel.RIGHT);
 		String[] searchOptions = {"Title"};
-		searchDropdown = new JComboBox(searchOptions);
+		searchDropdown = new JComboBox<String>(searchOptions);
 		searchDropdown.setPreferredSize(smallComponentDimension);
 		searchDropdown.addActionListener(modernControlListener);
 		searchTextField = new JTextField();
