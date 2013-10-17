@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 
 /**
  * Project #3
@@ -9,8 +11,20 @@
  * @version 2.0
  */
 
-public class ConferencePaper extends Paper
+public class ConferencePaper extends Paper implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The default constructor
+	 */
+	public ConferencePaper(){
+		super(new String[]{"",""}, "", "", new String[]{"",""}, "", "");
+	}
+	
 	/**
      * This constructor initializes all of the variables specific to a ConferencePaper.
      * @param             authors      			an array of the author's names for this conference paper. The first author should be the primary one.

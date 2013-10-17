@@ -7,13 +7,10 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 
 public class PublicationDataGrapher extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -33,6 +30,7 @@ public class PublicationDataGrapher extends JPanel{
 	public PublicationDataGrapher(int width, int height, JSpinner authorSelector){
 		this.width = width;
 		this.height = height;
+		graphType = -1;
 		
 		//This stuff creates the control panel stuff
 		add(new JLabel("Author"));
@@ -57,7 +55,6 @@ public class PublicationDataGrapher extends JPanel{
 		super.paintComponent(g);
 		setBackground(new Color(218, 223, 245));
 
-		System.out.println("bro");
 		drawBarGraph(g);
 		drawDecor(g);
 	}
@@ -79,7 +76,7 @@ public class PublicationDataGrapher extends JPanel{
 			int tempVal = 0;
 			String nextDate = "";
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
-				for(int i = 0; i < conPaps.size(); i++){  //TODO TEST THIS ALGORITHM
+				for(int i = 0; i < conPaps.size(); i++){
 					nextDate = conPaps.get(i).getDate();
 					if(nextDate.split(" ").length > 1){
 						nextDate = nextDate.split(" ")[1];
@@ -111,6 +108,9 @@ public class PublicationDataGrapher extends JPanel{
 			ArrayList<String> keys = new ArrayList<String>(dateMap.keySet());
 			String minDate = "9999";
 			String maxDate = "0000";
+			if(keys.size() == 0){
+				return;
+			}
 			for(int i = 0; i < keys.size(); i++){
 				if(keys.get(i).compareTo(minDate) < 0){
 					minDate = keys.get(i);
@@ -121,8 +121,20 @@ public class PublicationDataGrapher extends JPanel{
 			}
 			int[] values;
 			String[] labels;
-			int min = Integer.parseInt(minDate);
-			int max = Integer.parseInt(maxDate);
+			int min = 0;
+			int max = 0;
+			try{
+				min = Integer.parseInt(minDate);
+				max = Integer.parseInt(maxDate);
+			}
+			catch(NumberFormatException e){
+				return;
+			}
+			if(min > max){
+				int temp = min;
+				min = max;
+				max = temp;
+			}
 			values = new int[max - min + 1];
 			labels = new String[max - min + 1];
 			for(int i = min; i <= max; i++){
@@ -142,7 +154,7 @@ public class PublicationDataGrapher extends JPanel{
 			ArrayList<Article> jourArts = author.getJournalArticles();
 			int tempVal = 0;
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
-				for(int i = 0; i < conPaps.size(); i++){  //TODO TEST THIS ALGORITHM
+				for(int i = 0; i < conPaps.size(); i++){
 					if(!coauthorMap.containsKey(conPaps.get(i).getAuthors().length - 1)){
 						coauthorMap.put(conPaps.get(i).getAuthors().length - 1, 1);
 					}
@@ -208,15 +220,18 @@ public class PublicationDataGrapher extends JPanel{
 	}
 
 	private void drawBars(int[] values, String[] labels, Color[] colors, Graphics g){
+		if(values.length == 0){
+			return;
+		}
 		Font labelFont = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 		FontMetrics labelStick = g.getFontMetrics(labelFont);
 		g.setFont(labelFont);
 		int yTopOffset = 80;  //Should be the same as above
 		int yBottomOffset = 28;  //Should be the same as above
 		int xMargin = 28;  //Should be the same as above
-		int xPadding = 4 + 5/values.length;
+		int xPadding = 5 + (int)(400/Math.pow(values.length + 1, 2));
 		int columnWidth = (width - ((values.length + 1) * xPadding) - xMargin * 2) / values.length;
-		int maxValue = 0;
+		int maxValue = 1;
 		for(int i = 0; i < values.length; i++){
 			if(values[i] > maxValue){
 				maxValue = values[i];

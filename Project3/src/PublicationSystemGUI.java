@@ -6,12 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -57,9 +57,11 @@ public class PublicationSystemGUI extends JFrame
 	private JComboBox searchDropdown;
 
 	private JButton defaultImportButton;
+	private JButton defaultExportButton;
 	private JButton defaultSwitchViewButton;
 	private JButton defaultToggleGraphButton;
 	private JButton modernImportButton;
+	private JButton modernExportButton;
 	private JButton modernSwitchViewButton;
 	private JButton modernToggleGraphButton;
 	private JButton printButton;
@@ -67,6 +69,7 @@ public class PublicationSystemGUI extends JFrame
 	private JLabel displayLabel;
 	private PublicationDataGrapher dataGrapher;
 	private JSpinner graphInputField;
+	private ArrayList<String> authorNames;
 
 	private DefaultControlListener controlListener;
 	private ModernControlListener modernControlListener;
@@ -141,33 +144,54 @@ public class PublicationSystemGUI extends JFrame
 		
 		userPrompt = new JLabel("Enter command");
 		userPrompt.setHorizontalAlignment(JLabel.CENTER);
+		JButton helpButton = new JButton("?");
+		helpButton.setPreferredSize(new Dimension(20, 20));
+		helpButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JDialog dialog = new JDialog();
+				JLabel commandLabel = new JLabel("<html><h3>  Commands</h3><br />BI  -  Bibliographic Sort<br />AN  -  Author Sort<br />PT  -  Paper Title Sort<br />ST  -  Serial Title Sort<br />CH  -  Chronological Sort<br />R  -  Random Shuffle<br />DI  -  Digital Identifier Sort<br />PF  -   Print to File<br />S  -   Search by Title<br />G  -   Toggle Graph<br />SV  -   Export to File<br />LD  -   Load from File<br />FA  -   Find Author<html>");
+				commandLabel.setHorizontalAlignment(JLabel.CENTER);
+				dialog.add(commandLabel);
+				dialog.setSize(240, 320);
+				dialog.setLocationRelativeTo(null);
+				dialog.setVisible(true);
+			}
+		});
 		userInput = new JTextField();
-		userPrompt.setPreferredSize(componentDimension);
+		userPrompt.setPreferredSize(new Dimension(componentDimension.width - 20 - new FlowLayout().getHgap()*2, componentDimension.height));
 		userInput.setPreferredSize(componentDimension);
 		userInput.addKeyListener(defaultInputListener);
 		userInput.addActionListener(defaultInputListener);
 		inputPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*2 + new FlowLayout().getVgap()*3));
-		inputPanel.add(userPrompt);
+		JPanel labelPanel = new JPanel();
+		labelPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height));
+		labelPanel.add(userPrompt);
+		labelPanel.add(helpButton);
+		inputPanel.add(labelPanel);
 		inputPanel.add(userInput);
-		
-		defaultImportButton = new JButton("Import Publication");
+
+		defaultImportButton = new JButton("Import Publications");
 		defaultImportButton.setPreferredSize(componentDimension);
 		defaultImportButton.addActionListener(controlListener);
+		defaultExportButton = new JButton("Export Publications");
+		defaultExportButton.setPreferredSize(componentDimension);
+		defaultExportButton.addActionListener(controlListener);
 		defaultSwitchViewButton = new JButton("Switch View");
 		defaultSwitchViewButton.setPreferredSize(componentDimension);
 		defaultSwitchViewButton.addActionListener(controlListener);
 		defaultToggleGraphButton = new JButton("Show Graph");
 		defaultToggleGraphButton.setPreferredSize(componentDimension);
 		defaultToggleGraphButton.addActionListener(controlListener);
-		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*3 + new FlowLayout().getVgap()*4));
+		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*4 + new FlowLayout().getVgap()*5));
 		controlPanel.add(defaultImportButton);
+		controlPanel.add(defaultExportButton);
 		controlPanel.add(defaultToggleGraphButton);
 		controlPanel.add(defaultSwitchViewButton);
 
 		FlowLayout flowy = new FlowLayout();
 		flowy.setHgap(40);
 		userPanel.setLayout(flowy);
-		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, componentDimension.height*3 + new FlowLayout().getVgap()*7));
+		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, componentDimension.height*4 + new FlowLayout().getVgap()*8));
 		userPanel.add(inputPanel);
 		userPanel.add(controlPanel);
 
@@ -213,7 +237,7 @@ public class PublicationSystemGUI extends JFrame
 		searchPanel2.add(searchDropdown);
 		searchPanel1.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
 		searchPanel2.setPreferredSize(new Dimension(smallComponentDimension.width * 2 + new FlowLayout().getHgap()*3, smallComponentDimension.height + new FlowLayout().getVgap()));
-		printButton = new JButton("Print to File"); //Print panel stuff
+		printButton = new JButton("Print to Text File"); //Print panel stuff
 		printButton.setPreferredSize(componentDimension);
 		printButton.addActionListener(modernControlListener);
 		JPanel printPanel = new JPanel();
@@ -225,24 +249,28 @@ public class PublicationSystemGUI extends JFrame
 		inputPanel.add(searchPanel2);
 		inputPanel.add(printPanel);
 
-		modernImportButton = new JButton("Import Publication");
+		modernImportButton = new JButton("Import Publications");
 		modernImportButton.setPreferredSize(componentDimension);
 		modernImportButton.addActionListener(modernControlListener);
+		modernExportButton = new JButton("Export Publications");
+		modernExportButton.setPreferredSize(componentDimension);
+		modernExportButton.addActionListener(modernControlListener);
 		modernSwitchViewButton = new JButton("Switch View");
 		modernSwitchViewButton.setPreferredSize(componentDimension);
 		modernSwitchViewButton.addActionListener(modernControlListener);
 		modernToggleGraphButton = new JButton("Show Graph");
 		modernToggleGraphButton.setPreferredSize(componentDimension);
 		modernToggleGraphButton.addActionListener(modernControlListener);
-		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*3 + new FlowLayout().getVgap()*4));
+		controlPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*4 + new FlowLayout().getVgap()*5));
 		controlPanel.add(modernImportButton);
+		controlPanel.add(modernExportButton);
 		controlPanel.add(modernToggleGraphButton);
 		controlPanel.add(modernSwitchViewButton);
 		
 		FlowLayout flowy = new FlowLayout();
 		flowy.setHgap(40);
 		userPanel.setLayout(flowy);
-		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, smallComponentDimension.height*4 + new FlowLayout().getVgap()*12));
+		userPanel.setPreferredSize(new Dimension(width - new FlowLayout().getHgap()*2, smallComponentDimension.height*4 + new FlowLayout().getVgap()*10));
 		userPanel.add(inputPanel);
 		userPanel.add(controlPanel);
 		
@@ -278,14 +306,14 @@ public class PublicationSystemGUI extends JFrame
 	}
 
 	/**
-    * Makes the GUI visible to the user/
+    * Makes the GUI visible to the user
     */
 	public void open(){
 		setVisible(true);
 	}
 
 	/**
-    * Makes the GUI invisible to the user/
+    * Makes the GUI invisible to the user
     */
 	public void close(){
 		setVisible(false);
@@ -321,21 +349,65 @@ public class PublicationSystemGUI extends JFrame
 		getContentPane().repaint();
 	}
 	
-	private void importPublication(){
-		publicationSystem.importPublication();
+	private void importPublications(){
+		publicationSystem.importPublications();
 		
 		//Update the graphInputField's model
-		ArrayList<String> authorNames = new ArrayList<String>(publicationSystem.getAuthorMap().keySet());
+		authorNames = new ArrayList<String>(publicationSystem.getAuthorMap().keySet());
 		Collections.sort(authorNames);
-		SpinnerModel model = new SpinnerListModel(authorNames);
-		graphInputField.setModel(model);
+		if(authorNames.size() > 0){
+			SpinnerModel model = new SpinnerListModel(authorNames);
+			graphInputField.setModel(model);
+		}
+	}
+	
+	private void exportPublicationList(){
+		publicationSystem.exportPublicationList();
+	}
+	
+	private void findAuthor(){
+		JDialog dialog = new JDialog();
+		dialog.setSize(180, 32 + new FlowLayout().getVgap()*2);
+		dialog.setTitle("Find Author");
+		final JSpinner searchField = new JSpinner();
+		if(authorNames == null){
+			JOptionPane.showMessageDialog(this, "No authors found", "", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		if(authorNames.size() > 0){
+			SpinnerModel model = new SpinnerListModel(authorNames);
+			searchField.setModel(model);
+		}
+		dialog.add(searchField);
+		searchField.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e){
+				displayAuthorPublications(publicationSystem.findAuthor(searchField.getModel().getValue().toString()));
+			}
+		});
+		dialog.setLocationRelativeTo(this);
+		dialog.setResizable(false);
+		dialog.setVisible(true);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	}
+	
+	private void displayAuthorPublications(Author author){
+		PublicationList pubs = new PublicationList();
+		pubs.addAll(author.getConferencePapers());
+		pubs.addAll(author.getJournalArticles());
+		pubs.sortByPaperTitle();
+		String forLabel = "<html>";
+		for(Paper p: pubs){
+			forLabel += "<p>" + p.toString() + "</p><br />";
+		}
+		forLabel += "</html>";
+		displayLabel.setText(forLabel);
 	}
 	
 	/**
 	 * Sorts according to terms dictated by the sort drop down component
 	 */
 	private void sortPublications(){
-		switch(searchDropdown.getSelectedIndex()){
+		switch(sortDropdown.getSelectedIndex()){
 		case 0:
 			performTask("PT");
 			break;
@@ -409,6 +481,7 @@ public class PublicationSystemGUI extends JFrame
 					}
 					forLabel += "</html>";
 					displayLabel.setText(forLabel);
+					return;
 				}
 			}
 			else{
@@ -418,6 +491,15 @@ public class PublicationSystemGUI extends JFrame
 		}
 		else if(task.equals("G")){
 			toggleGraph();
+		}
+		else if(task.equals("SV")){
+			exportPublicationList();
+		}
+		else if(task.equals("LD")){
+			importPublications();
+		}
+		else if(task.equals("FA")){
+			findAuthor();
 		}
 		//By default the method prints the publicationList to the screen
 		String forLabel = "<html>";
@@ -431,7 +513,10 @@ public class PublicationSystemGUI extends JFrame
 	private class DefaultControlListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource().equals(defaultImportButton)){
-				importPublication();
+				importPublications();
+			}
+			else if(event.getSource().equals(defaultExportButton)){
+				exportPublicationList();
 			}
 			else if(event.getSource().equals(defaultSwitchViewButton)){
 				switchView();
@@ -445,7 +530,10 @@ public class PublicationSystemGUI extends JFrame
 	private class ModernControlListener implements ActionListener{
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource() == modernImportButton){
-				importPublication();
+				importPublications();
+			}
+			else if(event.getSource() == modernExportButton){
+				exportPublicationList();
 			}
 			else if(event.getSource() == modernSwitchViewButton){
 				switchView();
@@ -486,7 +574,7 @@ public class PublicationSystemGUI extends JFrame
 	private class DefaultInputListener extends KeyAdapter implements ActionListener{
 		public void keyReleased(KeyEvent event){
 			if(event.getSource() == userInput){
-				if(!userInput.getText().equalsIgnoreCase("s") && !userInput.getText().equalsIgnoreCase("pf")){
+				if(!userInput.getText().equalsIgnoreCase("s") && !userInput.getText().equalsIgnoreCase("pf") && !userInput.getText().equalsIgnoreCase("fa")){
 					performTask(userInput.getText().toUpperCase());
 				}
 			}

@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 /**
  * Project #3
  * CS 2334, Section 011
@@ -8,11 +10,15 @@
  * @version 2.0
  */
 
-public class Paper implements Comparable<Paper>
+public class Paper implements Comparable<Paper>, Serializable
 {
 	/* Instance Variables */
     
-    /** The authors of the paper */ 	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** The authors of the paper */ 	
 	private String[] authors;
 	/** The title of the paper */
 	private String title;
@@ -24,6 +30,18 @@ public class Paper implements Comparable<Paper>
 	private String date;	//look into using Calendar or GregorianCalendar or something cooler
 	/** A digital identifier such as a URL for the paper */
 	private String digitalIdentifier;
+
+	/**
+	 * The default constructor
+	 */
+	public Paper(){
+		authors = new String[2];
+		title = "";
+		serialTitle = "";
+		pageNumbers = new String[2];
+		date = "";
+		digitalIdentifier = "";
+	}
 	
 	/**
      * Initializes all of the variables specific to a paper.
@@ -192,12 +210,9 @@ public class Paper implements Comparable<Paper>
 		{
 			author1=firstAuthors[i].split(" ")[0];
 			author2=secondAuthors[i].split(" ")[0];
-			System.out.println(author1);
-			System.out.println(author2);
 			compare=author1.compareTo(author2);
 			i++;
 		}
-		System.out.println(compare);
 		if(compare == 0)
 		{
 			if(firstLength>secondLength)

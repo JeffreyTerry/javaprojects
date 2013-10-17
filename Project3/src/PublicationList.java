@@ -322,8 +322,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		{
 			Article a1;
 			Article a2;
-			int v1=-1;
-			int v2=-1;
+			String v1="";
+			String v2="";
 			if(p1 instanceof Article)
 			{
 				a1=(Article)p1;
@@ -334,12 +334,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 				a2=(Article)p2;
 				v2=a2.getVolume();
 			}
-			int compare=0;
-			if(v1>v2)
-				compare=1;
-			else if(v1<v2)
-				compare=-1;
-			return compare;
+			return v1.compareTo(v2);
 		}
 	};
 
@@ -357,8 +352,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		{
 			Article a1;
 			Article a2;
-			int i1=-1;
-			int i2=-1;
+			String i1="";
+			String i2="";
 			if(p1 instanceof Article)
 			{
 				a1=(Article)p1;
@@ -369,12 +364,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 				a2=(Article)p2;
 				i2=a2.getIssue();
 			}
-			int compare=0;
-			if(i1>i2)
-				compare=1;
-			else if(i1<i2)
-				compare=-1;
-			return compare;
+			return i1.compareTo(i2);
 		}
 	};
 
