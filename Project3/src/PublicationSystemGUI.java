@@ -23,7 +23,6 @@ import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.SpinnerUI;
 
 /**
  * Project #3
@@ -145,13 +144,30 @@ public class PublicationSystemGUI extends JFrame
 		
 		userPrompt = new JLabel("Enter command");
 		userPrompt.setHorizontalAlignment(JLabel.CENTER);
+		JButton helpButton = new JButton("?");
+		helpButton.setPreferredSize(new Dimension(20, 20));
+		helpButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				JDialog dialog = new JDialog();
+				JLabel commandLabel = new JLabel("<html><h3>  Commands</h3><br />BI  -  Bibliographic Sort<br />AN  -  Author Sort<br />PT  -  Paper Title Sort<br />ST  -  Serial Title Sort<br />CH  -  Chronological Sort<br />R  -  Random Shuffle<br />DI  -  Digital Identifier Sort<br />PF  -   Print to File<br />S  -   Search by Title<br />G  -   Toggle Graph<br />SV  -   Export to File<br />LD  -   Load from File<br />FA  -   Find Author<html>");
+				commandLabel.setHorizontalAlignment(JLabel.CENTER);
+				dialog.add(commandLabel);
+				dialog.setSize(240, 320);
+				dialog.setLocationRelativeTo(null);
+				dialog.setVisible(true);
+			}
+		});
 		userInput = new JTextField();
-		userPrompt.setPreferredSize(componentDimension);
+		userPrompt.setPreferredSize(new Dimension(componentDimension.width - 20 - new FlowLayout().getHgap()*2, componentDimension.height));
 		userInput.setPreferredSize(componentDimension);
 		userInput.addKeyListener(defaultInputListener);
 		userInput.addActionListener(defaultInputListener);
 		inputPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height*2 + new FlowLayout().getVgap()*3));
-		inputPanel.add(userPrompt);
+		JPanel labelPanel = new JPanel();
+		labelPanel.setPreferredSize(new Dimension(componentDimension.width, componentDimension.height));
+		labelPanel.add(userPrompt);
+		labelPanel.add(helpButton);
+		inputPanel.add(labelPanel);
 		inputPanel.add(userInput);
 
 		defaultImportButton = new JButton("Import Publications");
@@ -351,7 +367,7 @@ public class PublicationSystemGUI extends JFrame
 	
 	private void findAuthor(){
 		JDialog dialog = new JDialog();
-		dialog.setSize(240,80);
+		dialog.setSize(180, 32 + new FlowLayout().getVgap()*2);
 		dialog.setTitle("Find Author");
 		final JSpinner searchField = new JSpinner();
 		if(authorNames == null){
