@@ -170,8 +170,11 @@ public class PublicationSystem implements Serializable {
 			fileReader.close();
 		}
 		catch(Exception e){
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Error", "", JOptionPane.ERROR_MESSAGE);
+			//Changes
+			JOptionPane.showMessageDialog(null, "There was an error while reading your file. \nImport failed.", "", JOptionPane.ERROR_MESSAGE);
+			int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
+			if(choice == 0)
+				e.printStackTrace();
 		}
 	}
 
@@ -193,8 +196,11 @@ public class PublicationSystem implements Serializable {
 			writer.close();
 		}
 		catch(Exception e){
-			e.printStackTrace();
-			JOptionPane.showMessageDialog(null, "Error", "", JOptionPane.ERROR_MESSAGE);
+			//Changes
+			JOptionPane.showMessageDialog(null, "There was an error while writing your file. \nExport failed.", "", JOptionPane.ERROR_MESSAGE);
+			int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
+			if(choice == 0)
+				e.printStackTrace();
 		}
 	}
 	
@@ -291,6 +297,10 @@ public class PublicationSystem implements Serializable {
 		}
 		catch(NullPointerException e){
 			JOptionPane.showMessageDialog(null, "Error processing paper", "", JOptionPane.ERROR_MESSAGE);
+			//Changes
+			int choice = JOptionPane.showConfirmDialog(null, "Would you like to print the error stream?");
+			if(choice == 0)
+				e.printStackTrace();
 		}
 	}
 	
