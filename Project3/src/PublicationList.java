@@ -123,6 +123,12 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	{
 		 Collections.shuffle(this);
 	}
+	
+	//findMe
+	public void dontSort()
+	{
+		
+	}
 
 	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
 	{

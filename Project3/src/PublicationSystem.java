@@ -142,6 +142,11 @@ public class PublicationSystem implements Serializable {
 		publicationList.randomSort();
 	}
 
+	//findMe
+	public void dontSort()
+	{
+		publicationList.dontSort();
+	}
 	/**
 	 * Imports a publication from a file given by the user
 	 */
@@ -162,6 +167,7 @@ public class PublicationSystem implements Serializable {
 				publicationList = newSys.getPublicationList();
 				authorMap = newSys.getAuthorMap();
 				objectReader.close();
+				//findMe
 				return;
 			}
 			catch(Exception e){}
@@ -239,6 +245,7 @@ public class PublicationSystem implements Serializable {
 					}
 					if(digId.equals("")){
 						readPaper(fileReader);
+						//findMe
 						return;
 					}
 				}
@@ -284,6 +291,7 @@ public class PublicationSystem implements Serializable {
 					}
 					if(digId.equals("")){
 						readPaper(fileReader);
+						//findMe
 						return;
 					}
 				}

@@ -149,7 +149,7 @@ public class PublicationSystemGUI extends JFrame
 		helpButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				JDialog dialog = new JDialog();
-				JLabel commandLabel = new JLabel("<html><h3>  Commands</h3><br />BI  -  Bibliographic Sort<br />AN  -  Author Sort<br />PT  -  Paper Title Sort<br />ST  -  Serial Title Sort<br />CH  -  Chronological Sort<br />R  -  Random Shuffle<br />DI  -  Digital Identifier Sort<br />PF  -   Print to File<br />S  -   Search by Title<br />G  -   Toggle Graph<br />SV  -   Export to File<br />LD  -   Load from File<br />FA  -   Find Author<html>");
+				JLabel commandLabel = new JLabel("<html><h3>  Commands</h3><br />BI &nbsp;&nbsp;-  Bibliographic Sort<br />AN  -  Author Sort<br />PT  &nbsp;-  Paper Title Sort<br />ST  &nbsp;-  Serial Title Sort<br />CH  -  Chronological Sort<br />R  &nbsp;&nbsp;&nbsp;-  Random Shuffle<br />DI  &nbsp;-  Digital Identifier Sort<br />PF  &nbsp;-   Print to File<br />S  &nbsp;&nbsp;&nbsp;-   Search by Title<br />G  &nbsp;&nbsp;-   Toggle Graph<br />SV  &nbsp;-   Export to File<br />LD  &nbsp;-   Load from File<br />FA  &nbsp;-   Find Author<br />N  &nbsp;&nbsp;-  Do Nothing<html>");
 				commandLabel.setHorizontalAlignment(JLabel.CENTER);
 				dialog.add(commandLabel);
 				dialog.setSize(240, 320);
@@ -359,6 +359,8 @@ public class PublicationSystemGUI extends JFrame
 			SpinnerModel model = new SpinnerListModel(authorNames);
 			graphInputField.setModel(model);
 		}
+		//findMe
+		performTask("N");
 	}
 	
 	private void exportPublicationList(){
@@ -450,6 +452,10 @@ public class PublicationSystemGUI extends JFrame
 		else if(task.equals("R")){  //Random sort
 			publicationSystem.randomSort();
 		}
+		//findMe
+		else if(task.equals("N")){  //Nothing
+			publicationSystem.dontSort();
+		}
 		else if(task.equals("DI")){  //
 			publicationSystem.sortByDigitalIdentifier();
 		}
@@ -460,6 +466,7 @@ public class PublicationSystemGUI extends JFrame
 				publicationSystem.printPublicationsToFile(fileName);
 			}
 			catch(Exception e){e.printStackTrace();}
+			//findMe
 			return;
 		}
 		else if(task.equals("S")){  //Search
