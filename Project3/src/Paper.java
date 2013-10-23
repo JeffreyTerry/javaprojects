@@ -10,6 +10,7 @@ import java.io.Serializable;
  * @version 2.0
  */
 
+
 public class Paper implements Comparable<Paper>, Serializable
 {
 	/* Instance Variables */
@@ -222,6 +223,11 @@ public class Paper implements Comparable<Paper>, Serializable
 		}
 		return compare;
 	}
+	
+	/**
+	 * This method returns the title of this paper
+	 * @return	the title of this paper
+	 */
 	public String toString()
 	{
 		return this.getTitle();

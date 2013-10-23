@@ -3,6 +3,9 @@ import org.junit.Test;
 
 
 public class PaperTest {
+	/*Variables for testing*/
+	
+	/** Paper1 */
 	String[] authors={"Bob, Joe", "AppleSeed, Jonny"};
 	String title = "A grand advnture";
 	String serialTitle = "children's stuff";
@@ -11,7 +14,7 @@ public class PaperTest {
 	String digitalIdentifier = "www.thatonesite.com";
 	Paper testPaper1 = new Paper(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 
-
+	/** Paper2 */
 	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
 	String title2 = "AA Agrand advnture";
 	String serialTitle2 = "Achildren's stuff";
@@ -21,6 +24,9 @@ public class PaperTest {
 	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 	Paper testPaper3 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 	
+	/**
+	 * This tests the Comparable method
+	 */
 	@Test
 	public void testComparable() {
 		Assert.assertEquals(1, testPaper1.compareTo(testPaper2));
