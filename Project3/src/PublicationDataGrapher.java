@@ -25,7 +25,7 @@ public class PublicationDataGrapher extends JPanel{
 	private int height;
 	private int graphType;
 	private Author author;
-	private JComboBox<String> typeSelector;
+	private JComboBox typeSelector;
 
 	public PublicationDataGrapher(int width, int height, JSpinner authorSelector){
 		this.width = width;
@@ -36,7 +36,7 @@ public class PublicationDataGrapher extends JPanel{
 		add(new JLabel("Author"));
 		add(authorSelector);
 		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthors"};
-		typeSelector = new JComboBox<String>(types);
+		typeSelector = new JComboBox(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
 				graphType = typeSelector.getSelectedIndex() - 1;
