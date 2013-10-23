@@ -49,7 +49,7 @@ public class PublicationDataGrapher extends JPanel{
 	/** the Author being looked at */
 	private Author author;
 	/** the type selector */
-	private JComboBox<String> typeSelector;
+	private JComboBox typeSelector;
 
 	
 	/**
@@ -67,7 +67,7 @@ public class PublicationDataGrapher extends JPanel{
 		add(new JLabel("Author"));
 		add(authorSelector);
 		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthors"};
-		typeSelector = new JComboBox<String>(types);
+		typeSelector = new JComboBox(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
 				graphType = typeSelector.getSelectedIndex() - 1;
