@@ -1,7 +1,3 @@
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-
 /**
  * Project #3
  * CS 2334, Section 011
