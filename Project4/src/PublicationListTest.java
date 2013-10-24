@@ -13,31 +13,31 @@ public class PublicationListTest {
 	PublicationList correctList = new PublicationList();
 	
 	/** Paper1 */
-	String[] authors={"Bob, Joe", "AppleSeed, Jonny"};
+	String[] scholars={"Bob, Joe", "AppleSeed, Jonny"};
 	String title = "AB grand advnture";
 	String serialTitle = "children's stuff";
 	String[] pageNumbers = {"1","100"};
 	String date = "September 1994";
 	String digitalIdentifier = "www.thatonesite.com";
-	Paper testPaper1 = new Paper(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
+	Paper testPaper1 = new Paper(scholars, title, serialTitle, pageNumbers, date, digitalIdentifier);
 
 	/** Paper2 */
-	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
+	String[] scholars2={"ABob, Joe", "BAppleSeed, Jonny"};
 	String title2 = "AA Agrand advnture";
 	String serialTitle2 = "Achildren's stuff";
 	String[] pageNumbers2 = {"2","150"};
 	String date2 = "July 1990";
 	String digitalIdentifier2 = "www.thatonesite2.com";
-	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
+	Paper testPaper2 = new Paper(scholars2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 	
 	/** Paper3 */
-	String[] authors3={"ABCob, Joe", "BACppleSeed, Jonny"};
+	String[] scholars3={"ABCob, Joe", "BACppleSeed, Jonny"};
 	String title3 = "AAC Agrand advnture";
 	String serialTitle3 = "ACchildren's stuff";
 	String[] pageNumbers3 = {"5","10"};
 	String date3 = "June 1994";
 	String digitalIdentifier3 = "www.thatonesite3.com";
-	Paper testPaper3 = new Paper(authors3, title3, serialTitle3, pageNumbers3, date3, digitalIdentifier3);
+	Paper testPaper3 = new Paper(scholars3, title3, serialTitle3, pageNumbers3, date3, digitalIdentifier3);
 	
 	/**
 	 * This tests the sortByDate method
@@ -115,15 +115,15 @@ public class PublicationListTest {
 	}
 
 	/**
-	 * This tests the sortByAuthor method
+	 * This tests the sortByScholar method
 	 */
 	@Test
-	public void testSortByAuthor() {
+	public void testSortByScholar() {
 		testingList.add(testPaper1);
 		testingList.add(testPaper2);
 		testingList.add(testPaper3);
 		
-		testingList.sortByAuthor();
+		testingList.sortByScholar();
 		
 		correctList.add(testPaper3);
 		correctList.add(testPaper2);

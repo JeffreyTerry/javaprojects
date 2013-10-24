@@ -27,7 +27,7 @@ public class ConferencePaper extends Paper implements Serializable
 	
 	/**
      * This constructor initializes all of the variables specific to a ConferencePaper.
-     * @param             authors      			an array of the author's names for this conference paper. The first author should be the primary one.
+     * @param             scholars      			an array of the scholar's names for this conference paper. The first scholar should be the primary one.
      * @param             title        			the title of this conference paper.
      * @param			  serialTitle  			the title of the serial publishing this conference paper.
      * @param			  pageNumbers  			an array representing the first and last page numbers in the serial where this conference paper is found.
@@ -37,9 +37,9 @@ public class ConferencePaper extends Paper implements Serializable
      * <dt><b>Conditions:</b>
      * <dd>POST -         all instance variables are initialized.
      */
-	public ConferencePaper(String[] authors, String title, String serialTitle, String[] pageNumbers, String date, String digitalIdentifier)
+	public ConferencePaper(String[] scholars, String title, String serialTitle, String[] pageNumbers, String date, String digitalIdentifier)
 	{
-		super(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
+		super(scholars, title, serialTitle, pageNumbers, date, digitalIdentifier);
 	}
 	
 	/**
@@ -52,7 +52,7 @@ public class ConferencePaper extends Paper implements Serializable
 		String print;
 		print="Conference Paper";
 		print+="<br />";
-		for(String s:this.getAuthors())
+		for(String s:this.getScholars())
 			print+=s + "; ";
 		print=print.substring(0, print.length()-2);
 		print+="<br />";

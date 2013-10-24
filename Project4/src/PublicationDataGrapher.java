@@ -37,7 +37,7 @@ public class PublicationDataGrapher extends JPanel{
 	public static final int CONFERENCE_PAPERS_PER_YEAR = 2;
 	/** the location for the journal articles per year label */
 	public static final int JOURNAL_ARTICLES_PER_YEAR = 3;
-	/** the location for the number of coauthorships label */
+	/** the location for the number of coscholarships label */
 	public static final int NUMBER_OF_COAUTHORS = 4;
 	
 	/** width of the panel */
@@ -46,27 +46,27 @@ public class PublicationDataGrapher extends JPanel{
 	private int height;
 	/** the int representation of the graph type */
 	private int graphType;
-	/** the Author being looked at */
-	private Author author;
+	/** the Scholar being looked at */
+	private Scholar scholar;
 	/** the type selector */
 	private JComboBox typeSelector;
 
 	
 	/**
-     * Initializes all of the variables specific to a publication date grapher excepting the Author
+     * Initializes all of the variables specific to a publication date grapher excepting the Scholar
      * @param             width					width of the panel
      * @param             height				height of the panel
-     * @param			  authorSelector		the selector for the authors
+     * @param			  scholarSelector		the selector for the scholars
      */
-	public PublicationDataGrapher(int width, int height, JSpinner authorSelector){
+	public PublicationDataGrapher(int width, int height, JSpinner scholarSelector){
 		this.width = width;
 		this.height = height;
 		graphType = -1;
 		
 		//This stuff creates the control panel stuff
-		add(new JLabel("Author"));
-		add(authorSelector);
-		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthors"};
+		add(new JLabel("Scholar"));
+		add(scholarSelector);
+		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coscholars"};
 		typeSelector = new JComboBox(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -81,12 +81,12 @@ public class PublicationDataGrapher extends JPanel{
      * Initializes all of the variables specific to a publication date grapher
      * @param             width					width of the panel
      * @param             height				height of the panel
-     * @param			  authorSelector		the selector for the authors
-     * @param			  author				the Author to look at
+     * @param			  scholarSelector		the selector for the scholars
+     * @param			  scholar				the Scholar to look at
      */
-	public PublicationDataGrapher(int width, int height, JSpinner authorSelector, Author author){
-		this(width, height, authorSelector);
-		this.author = author;
+	public PublicationDataGrapher(int width, int height, JSpinner scholarSelector, Scholar scholar){
+		this(width, height, scholarSelector);
+		this.scholar = scholar;
 	}
 	
 	/**
@@ -105,19 +105,19 @@ public class PublicationDataGrapher extends JPanel{
 	 * @param g			the Graphics to use
 	 */
 	private void drawBarGraph(Graphics g){
-		if(author == null){
+		if(scholar == null){
 			return;
 		}
 		
 		if(graphType == PUBLICATION_TYPE){
-			int[] values = {author.getConferencePapers().size(), author.getJournalArticles().size()};
+			int[] values = {scholar.getConferencePapers().size(), scholar.getJournalArticles().size()};
 			String[] labels = {"Conference Papers", "Journal Articles"};
 			drawBars(values, labels, g);
 		}
 		else if(graphType == PUBLICATIONS_PER_YEAR || graphType == CONFERENCE_PAPERS_PER_YEAR || graphType == JOURNAL_ARTICLES_PER_YEAR){
 			HashMap<String, Integer> dateMap = new HashMap<String, Integer>();
-			ArrayList<ConferencePaper> conPaps = author.getConferencePapers();
-			ArrayList<Article> jourArts = author.getJournalArticles();
+			ArrayList<ConferencePaper> conPaps = scholar.getConferencePapers();
+			ArrayList<Article> jourArts = scholar.getJournalArticles();
 			int tempVal = 0;
 			String nextDate = "";
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
@@ -194,53 +194,53 @@ public class PublicationDataGrapher extends JPanel{
 			drawBars(values, labels, g);
 		}
 		else if(graphType == NUMBER_OF_COAUTHORS){
-			HashMap<Integer, Integer> coauthorMap = new HashMap<Integer, Integer>();
-			ArrayList<ConferencePaper> conPaps = author.getConferencePapers();
-			ArrayList<Article> jourArts = author.getJournalArticles();
+			HashMap<Integer, Integer> coscholarMap = new HashMap<Integer, Integer>();
+			ArrayList<ConferencePaper> conPaps = scholar.getConferencePapers();
+			ArrayList<Article> jourArts = scholar.getJournalArticles();
 			int tempVal = 0;
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
 				for(int i = 0; i < conPaps.size(); i++){
-					if(!coauthorMap.containsKey(conPaps.get(i).getAuthors().length - 1)){
-						coauthorMap.put(conPaps.get(i).getAuthors().length - 1, 1);
+					if(!coscholarMap.containsKey(conPaps.get(i).getScholars().length - 1)){
+						coscholarMap.put(conPaps.get(i).getScholars().length - 1, 1);
 					}
 					else{
-						tempVal = coauthorMap.get(conPaps.get(i).getAuthors().length - 1);
-						coauthorMap.put(conPaps.get(i).getAuthors().length - 1, tempVal + 1);
+						tempVal = coscholarMap.get(conPaps.get(i).getScholars().length - 1);
+						coscholarMap.put(conPaps.get(i).getScholars().length - 1, tempVal + 1);
 					}
 				}
 			}
 			if(graphType != CONFERENCE_PAPERS_PER_YEAR){
 				for(int i = 0; i < jourArts.size(); i++){
-					if(!coauthorMap.containsKey(jourArts.get(i).getAuthors().length - 1)){
-						coauthorMap.put(jourArts.get(i).getAuthors().length - 1, 1);
+					if(!coscholarMap.containsKey(jourArts.get(i).getScholars().length - 1)){
+						coscholarMap.put(jourArts.get(i).getScholars().length - 1, 1);
 					}
 					else{
-						tempVal = coauthorMap.get(jourArts.get(i).getAuthors().length - 1);
-						coauthorMap.put(jourArts.get(i).getAuthors().length - 1, tempVal + 1);
+						tempVal = coscholarMap.get(jourArts.get(i).getScholars().length - 1);
+						coscholarMap.put(jourArts.get(i).getScholars().length - 1, tempVal + 1);
 					}
 				}
 			}
-			ArrayList<Integer> keys = new ArrayList<Integer>(coauthorMap.keySet());
-			int minCoauthors = 9999;
-			int maxCoauthors = -9999;
+			ArrayList<Integer> keys = new ArrayList<Integer>(coscholarMap.keySet());
+			int minCoscholars = 9999;
+			int maxCoscholars = -9999;
 			for(int i = 0; i < keys.size(); i++){
-				if(keys.get(i) < minCoauthors){
-					minCoauthors = keys.get(i);
+				if(keys.get(i) < minCoscholars){
+					minCoscholars = keys.get(i);
 				}
-				if(keys.get(i) > maxCoauthors){
-					maxCoauthors = keys.get(i);
+				if(keys.get(i) > maxCoscholars){
+					maxCoscholars = keys.get(i);
 				}
 			}
-			int[] values = new int[maxCoauthors - minCoauthors + 1];
-			String[] labels = new String[maxCoauthors - minCoauthors + 1];
-			for(int i = minCoauthors; i <= maxCoauthors; i++){
-				if(coauthorMap.get(i) == null){
-					values[i - minCoauthors] = 0;
+			int[] values = new int[maxCoscholars - minCoscholars + 1];
+			String[] labels = new String[maxCoscholars - minCoscholars + 1];
+			for(int i = minCoscholars; i <= maxCoscholars; i++){
+				if(coscholarMap.get(i) == null){
+					values[i - minCoscholars] = 0;
 				}
 				else{
-					values[i - minCoauthors] = coauthorMap.get(i);
+					values[i - minCoscholars] = coscholarMap.get(i);
 				}
-				labels[i - minCoauthors] = ""+i;
+				labels[i - minCoscholars] = ""+i;
 			}
 			drawBars(values, labels, g);
 		}
@@ -315,11 +315,11 @@ public class PublicationDataGrapher extends JPanel{
 
 	
 	/**
-	 * sets the Author		
-	 * @param auth			the Author to look at
+	 * sets the Scholar		
+	 * @param auth			the Scholar to look at
 	 */
-	public void setAuthor(Author auth){
-		author = auth;
+	public void setScholar(Scholar auth){
+		scholar = auth;
 	}
 	
 	/**
