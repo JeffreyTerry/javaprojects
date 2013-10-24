@@ -6,6 +6,7 @@ import java.util.HashMap;
  * 10/9/2013
  * <P>
  * This class represents a HashMap of Scholars
+ * Formerly AuthorMap in Project3
  * </P>
  * @version 1.0
  */
