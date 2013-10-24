@@ -24,6 +24,11 @@ import javax.swing.SpinnerModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Daniel.Paper;
+import Daniel.PublicationList;
+import Daniel.Scholar;
+import Daniel.ScholarshipStructure;
+
 /**
  * Project #3
  * CS 2334, Section 011
@@ -57,9 +62,9 @@ public class PublicationSystemGUI extends JFrame
 	/** the label for the title */
 	private JLabel title;
 	
-	/** the lable for the user's prompt */
+	/** the label for the user's prompt */
 	private JLabel userPrompt;
-	/** the lable for the user's input */
+	/** the label for the user's input */
 	private JTextField userInput;
 
 	/** the JComboBox for the sort drop down */

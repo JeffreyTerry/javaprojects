@@ -12,6 +12,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
+import Daniel.Article;
+import Daniel.ConferencePaper;
+import Daniel.Scholar;
+
 /**
  * Project #3
  * CS 2334, Section 011

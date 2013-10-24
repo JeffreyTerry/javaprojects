@@ -1,3 +1,4 @@
+package Daniel;
 import java.util.HashMap;
 
 /**
