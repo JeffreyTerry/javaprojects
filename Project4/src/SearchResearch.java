@@ -10,7 +10,7 @@ public class SearchResearch {
 		system.sortByBibliographicInfo();
 		System.out.print("BI");
 		System.out.println("\t\t"+system.getSearchComparisonsBI(titles[0])+"\t\t"+system.getSearchComparisonsBI(titles[1])+"\t\t\t"+system.getSearchComparisonsBI(titles[2])+"\t\t\t"+system.getSearchComparisonsBI(titles[3])+"\t\t\t"+system.getSearchComparisonsBI(titles[4]));
-		system.sortByAuthor();
+		system.sortByScholar();
 		System.out.println("AN");
 		System.out.println("\t\t"+system.getSearchComparisonsLI(titles[0])+"\t\t"+system.getSearchComparisonsLI(titles[1])+"\t\t\t"+system.getSearchComparisonsLI(titles[2])+"\t\t\t"+system.getSearchComparisonsLI(titles[3])+"\t\t\t"+system.getSearchComparisonsLI(titles[4]));
 		system.sortByPaperTitle();

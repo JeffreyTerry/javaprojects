@@ -34,15 +34,15 @@ public class PublicationSystem implements Serializable {
 	/**A list of all publications in the system*/
 	private PublicationList publicationList;
 	
-	/**A map of author names to authors*/
-	private AuthorMap authorMap;
+	/**A map of scholar names to scholars*/
+	private ScholarMap scholarMap;
 
 	/**
      * Creates a publication system with no publications
      */
 	public PublicationSystem(){
 		publicationList = new PublicationList();
-		authorMap = new AuthorMap();
+		scholarMap = new ScholarMap();
 	}
 	
 	/*
@@ -104,16 +104,16 @@ public class PublicationSystem implements Serializable {
 	}
 
 	/**
-    * This methods sorts papers by author
+    * This methods sorts papers by scholar
     * <P>
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
     * <dt><b>Conditions:</b>
-    * <dd>POST -         Papers are sorted by author
+    * <dd>POST -         Papers are sorted by scholar
     */
-	public void sortByAuthor(){
-		publicationList.sortByAuthor();
+	public void sortByScholar(){
+		publicationList.sortByScholar();
 	}
 
 	/**
@@ -164,7 +164,7 @@ public class PublicationSystem implements Serializable {
 				ObjectInputStream objectReader = new ObjectInputStream(new FileInputStream(new File(newFileName)));
 				PublicationSystem newSys = (PublicationSystem)objectReader.readObject();
 				publicationList = newSys.getPublicationList();
-				authorMap = newSys.getAuthorMap();
+				scholarMap = newSys.getScholarMap();
 				objectReader.close();
 				return;
 			}
@@ -211,8 +211,8 @@ public class PublicationSystem implements Serializable {
 		try{
 			String bro = fileReader.readLine();
 			if(bro.equals("Conference Paper")){
-				String authorString = fileReader.readLine();
-				String[] authorList = authorString.split("; ");
+				String scholarString = fileReader.readLine();
+				String[] scholarList = scholarString.split("; ");
 				String paperTitle = fileReader.readLine();
 				String serialTitle = fileReader.readLine();
 				String[] pageNumbers = new String[2];
@@ -227,17 +227,17 @@ public class PublicationSystem implements Serializable {
 				String date = fileReader.readLine();
 				String digId = fileReader.readLine();
 				if(digId != null){
-					ConferencePaper next = new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, digId);
-					Author auth;
+					ConferencePaper next = new ConferencePaper(scholarList, paperTitle, serialTitle, pageNumbers, date, digId);
+					Scholar auth;
 					publicationList.add(next);
-					for(int i = 0; i < authorList.length; i++){
-						if(authorMap.containsKey(authorList[i])){
-							authorMap.get(authorList[i]).addConferenceProceeding(next);
+					for(int i = 0; i < scholarList.length; i++){
+						if(scholarMap.containsKey(scholarList[i])){
+							scholarMap.get(scholarList[i]).addConferenceProceeding(next);
 						}
 						else{
-							auth = new Author(authorList[i]);
+							auth = new Scholar(scholarList[i]);
 							auth.addConferenceProceeding(next);
-							authorMap.put(authorList[i], auth);
+							scholarMap.put(scholarList[i], auth);
 						}
 					}
 					if(digId.equals("")){
@@ -246,15 +246,15 @@ public class PublicationSystem implements Serializable {
 					}
 				}
 				else{
-					publicationList.add(new ConferencePaper(authorList, paperTitle, serialTitle, pageNumbers, date, ""));
+					publicationList.add(new ConferencePaper(scholarList, paperTitle, serialTitle, pageNumbers, date, ""));
 				}
 				if(fileReader.readLine().equals("")){
 					readPaper(fileReader);
 				}
 			}
 			else{
-				String authorString = fileReader.readLine();
-				String[] authorList = authorString.split("; ");
+				String scholarString = fileReader.readLine();
+				String[] scholarList = scholarString.split("; ");
 				String paperTitle = fileReader.readLine();
 				String serialTitle = fileReader.readLine();
 				String[] pageNumbers = new String[2];
@@ -272,17 +272,17 @@ public class PublicationSystem implements Serializable {
 				String date = fileReader.readLine();
 				String digId = fileReader.readLine();
 				if(digId != null){
-					Article next = new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, digId);
-					Author auth;
+					Article next = new Article(scholarList, paperTitle, serialTitle, pageNumbers, volume, issue, date, digId);
+					Scholar auth;
 					publicationList.add(next);
-					for(int i = 0; i < authorList.length; i++){
-						if(authorMap.containsKey(authorList[i])){
-							authorMap.get(authorList[i]).addJournalArticle(next);
+					for(int i = 0; i < scholarList.length; i++){
+						if(scholarMap.containsKey(scholarList[i])){
+							scholarMap.get(scholarList[i]).addJournalArticle(next);
 						}
 						else{
-							auth = new Author(authorList[i]);
+							auth = new Scholar(scholarList[i]);
 							auth.addJournalArticle(next);
-							authorMap.put(authorList[i], auth);
+							scholarMap.put(scholarList[i], auth);
 						}
 					}
 					if(digId.equals("")){
@@ -291,7 +291,7 @@ public class PublicationSystem implements Serializable {
 					}
 				}
 				else{
-					publicationList.add(new Article(authorList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
+					publicationList.add(new Article(scholarList, paperTitle, serialTitle, pageNumbers, volume, issue, date, ""));
 				}
 				if(fileReader.readLine() == ""){
 					readPaper(fileReader);
@@ -474,19 +474,19 @@ public class PublicationSystem implements Serializable {
 	}
 
 	/**
-	 * Returns the author in the author map with a specified name.
-	 * @param auth	The name of the author
-	 * @return		The author
+	 * Returns the scholar in the scholar map with a specified name.
+	 * @param auth	The name of the scholar
+	 * @return		The scholar
 	 */
-	public Author findAuthor(String auth){
-		return authorMap.get(auth);
+	public Scholar findScholar(String auth){
+		return scholarMap.get(auth);
 	}
 	
 	/**
-	 * Returns the authorMap being used
-	 * @return		the authorMap being used
+	 * Returns the scholarMap being used
+	 * @return		the scholarMap being used
 	 */
-	public AuthorMap getAuthorMap(){
-		return authorMap;
+	public ScholarMap getScholarMap(){
+		return scholarMap;
 	}
 }

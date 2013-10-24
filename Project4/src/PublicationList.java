@@ -82,21 +82,21 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	}
 
 	/**
-    * This methods sorts papers by author
+    * This methods sorts papers by scholar
     * <P>
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
     * <dt><b>Conditions:</b>
-    * <dd>POST -         Publications are sorted by author
+    * <dd>POST -         Publications are sorted by scholar
     */
-	public void sortByAuthor()
+	public void sortByScholar()
 	{
-		Collections.sort(this,authorComparator);
+		Collections.sort(this,scholarComparator);
 	}
 
 	/**
-    * This methods sorts papers by bibliographic info according to MLA format. i.e. author name
+    * This methods sorts papers by bibliographic info according to MLA format. i.e. scholar name
     * https://owl.english.purdue.edu/owl/resource/747/07/
     * <P>
     * Algorithm:<br>
@@ -107,7 +107,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     */
 	public void sortByBibliographicInfo()
 	{
-		Collections.sort(this,authorComparator);
+		Collections.sort(this,scholarComparator);
 	}
 
 	/**
@@ -133,14 +133,14 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	}
 
 	
-	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
+	public static Comparator<Paper>  scholarComparator = new Comparator<Paper>() 
 	{
 		/** 
-		 * This compares two papers to one another by their author
+		 * This compares two papers to one another by their scholar
 		 * <P>
 		 * @param 			  p1		the first paper to be compared
 		 * @param			  p2		the second paper to be compared
-		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the primary author being alphanumerically before another is considered less than.
+		 * @return			  -1, 0, or 1 as the p1 is less than, equal to, or greater than p2. Where the primary scholar being alphanumerically before another is considered less than.
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
@@ -424,7 +424,7 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 	};
 
 	/**
-    * This methods compares two papers by the author's last name
+    * This methods compares two papers by the scholar's last name
     */
 	public int compare(Paper p1, Paper p2){
 		return p1.compareTo(p2);

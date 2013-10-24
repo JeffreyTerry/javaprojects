@@ -30,7 +30,7 @@ public class Article extends Paper implements Serializable
 	}
 	/**
      * This constructor initializes all of the variables specific to an Article.
-     * @param             authors      			an array of the author's names for this article. The first author should be the primary one.
+     * @param             scholars      			an array of the scholar's names for this article. The first scholar should be the primary one.
      * @param             title        			the title of this article.
      * @param			  serialTitle  			the title of the journal publishing this article.
      * @param			  pageNumbers  			an array representing the first and last page numbers in the journal where this article is found.
@@ -39,16 +39,16 @@ public class Article extends Paper implements Serializable
      * @param 			  issue					the issue of the journal this article is found in.
      * @param			  digitalIdentifier		a digital identifier for the article such as a URL.
      */
-	public Article(String[] authors, String title, String serialTitle, String[] pageNumbers, String volume, String issue, String date, String digitalIdentifier)
+	public Article(String[] scholars, String title, String serialTitle, String[] pageNumbers, String volume, String issue, String date, String digitalIdentifier)
 	{
-		super(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
+		super(scholars, title, serialTitle, pageNumbers, date, digitalIdentifier);
 		this.volume=volume;
 		this.issue=issue;
 	}
 	
 	/**
      * This constructor initializes all of the variables specific to an Article except digitalIdentifier.
-     * @param             authors      			an array of the author's names for this article. The first author should be the primary one.
+     * @param             scholars      			an array of the scholar's names for this article. The first scholar should be the primary one.
      * @param             title        			the title of this article.
      * @param			  serialTitle  			the title of the journal publishing this article.
      * @param			  pageNumbers  			an array representing the first and last page numbers in the journal where this article is found.
@@ -56,9 +56,9 @@ public class Article extends Paper implements Serializable
      * @param 			  volume				the volume of the journal this article is found in.
      * @param 			  issue					the issue of the journal this article is found in.
      */
-	public Article(String[] authors, String title, String serialTitle, String[] pageNumbers, String volume, String issue, String date)
+	public Article(String[] scholars, String title, String serialTitle, String[] pageNumbers, String volume, String issue, String date)
 	{
-		super(authors, title, serialTitle, pageNumbers, date);
+		super(scholars, title, serialTitle, pageNumbers, date);
 		this.volume=volume;
 		this.issue=issue;
 	}
@@ -93,7 +93,7 @@ public class Article extends Paper implements Serializable
 		String print;
 		print="Journal Article";
 		print+="<br />";
-		for(String s:this.getAuthors())
+		for(String s:this.getScholars())
 			print+=s + "; ";
 		print=print.substring(0, print.length()-2);
 		print+="<br />";

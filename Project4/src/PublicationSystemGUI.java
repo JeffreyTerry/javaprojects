@@ -95,7 +95,7 @@ public class PublicationSystemGUI extends JFrame
 	/** the input field for the graph as a Spinner*/
 	private JSpinner graphInputField;
 	/** the input field for the graph */
-	private ArrayList<String> authorNames;
+	private ArrayList<String> scholarNames;
 
 	/** the default control listener */
 	private DefaultControlListener controlListener;
@@ -189,7 +189,7 @@ public class PublicationSystemGUI extends JFrame
 		helpButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				JDialog dialog = new JDialog();
-				JLabel commandLabel = new JLabel("<html><h3>  Commands</h3><br />BI &nbsp;&nbsp;-  Bibliographic Sort<br />AN  -  Author Sort<br />PT  &nbsp;-  Paper Title Sort<br />ST  &nbsp;-  Serial Title Sort<br />CH  -  Chronological Sort<br />R  &nbsp;&nbsp;&nbsp;-  Random Shuffle<br />DI  &nbsp;-  Digital Identifier Sort<br />PF  &nbsp;-   Print to File<br />S  &nbsp;&nbsp;&nbsp;-   Search by Title<br />G  &nbsp;&nbsp;-   Toggle Graph<br />SV  &nbsp;-   Export to File<br />LD  &nbsp;-   Load from File<br />FA  &nbsp;-   Find Author<br />N  &nbsp;&nbsp;-  Do Nothing<html>");
+				JLabel commandLabel = new JLabel("<html><h3>  Commands</h3><br />BI &nbsp;&nbsp;-  Bibliographic Sort<br />AN  -  Scholar Sort<br />PT  &nbsp;-  Paper Title Sort<br />ST  &nbsp;-  Serial Title Sort<br />CH  -  Chronological Sort<br />R  &nbsp;&nbsp;&nbsp;-  Random Shuffle<br />DI  &nbsp;-  Digital Identifier Sort<br />PF  &nbsp;-   Print to File<br />S  &nbsp;&nbsp;&nbsp;-   Search by Title<br />G  &nbsp;&nbsp;-   Toggle Graph<br />SV  &nbsp;-   Export to File<br />LD  &nbsp;-   Load from File<br />FA  &nbsp;-   Find Scholar<br />N  &nbsp;&nbsp;-  Do Nothing<html>");
 				commandLabel.setHorizontalAlignment(JLabel.CENTER);
 				dialog.add(commandLabel);
 				dialog.setSize(240, 320);
@@ -248,7 +248,7 @@ public class PublicationSystemGUI extends JFrame
 		Dimension componentDimension = new Dimension(160, 32);
 		Dimension smallComponentDimension = new Dimension(80, 32);
 
-		String[] sortOptions = {"Paper Title", "Serial Title", "Author", "Bibliography", "Date", "Digital Identifier"};  //Sort panel stuff
+		String[] sortOptions = {"Paper Title", "Serial Title", "Scholar", "Bibliography", "Date", "Digital Identifier"};  //Sort panel stuff
 		JLabel sortLabel = new JLabel("Sort by ");
 		sortLabel.setPreferredSize(smallComponentDimension);
 		sortLabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -339,14 +339,14 @@ public class PublicationSystemGUI extends JFrame
 	private void createDataGrapher(){
 		Dimension componentDimension = new Dimension(160, 32);
 		graphInputField = new JSpinner();
-		ArrayList<String> noAuthors = new ArrayList<String>();
-		noAuthors.add("None");
-		SpinnerModel model = new SpinnerListModel(noAuthors);
+		ArrayList<String> noScholars = new ArrayList<String>();
+		noScholars.add("None");
+		SpinnerModel model = new SpinnerListModel(noScholars);
 		graphInputField.setModel(model);
 		graphInputField.setPreferredSize(componentDimension);
 		graphInputField.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent e){
-				dataGrapher.setAuthor(publicationSystem.findAuthor(graphInputField.getModel().getValue().toString()));
+				dataGrapher.setScholar(publicationSystem.findScholar(graphInputField.getModel().getValue().toString()));
 				dataGrapher.repaint();
 			}
 		});
@@ -411,10 +411,10 @@ public class PublicationSystemGUI extends JFrame
 		publicationSystem.importPublications();
 		
 		//Update the graphInputField's model
-		authorNames = new ArrayList<String>(publicationSystem.getAuthorMap().keySet());
-		Collections.sort(authorNames);
-		if(authorNames.size() > 0){
-			SpinnerModel model = new SpinnerListModel(authorNames);
+		scholarNames = new ArrayList<String>(publicationSystem.getScholarMap().keySet());
+		Collections.sort(scholarNames);
+		if(scholarNames.size() > 0){
+			SpinnerModel model = new SpinnerListModel(scholarNames);
 			graphInputField.setModel(model);
 		}
 		performTask("N");
@@ -428,25 +428,25 @@ public class PublicationSystemGUI extends JFrame
 	}
 	
 	/**
-	 * Finds the author the user selects
+	 * Finds the scholar the user selects
 	 */
-	private void findAuthor(){
+	private void findScholar(){
 		JDialog dialog = new JDialog();
 		dialog.setSize(180, 32 + new FlowLayout().getVgap()*2);
-		dialog.setTitle("Find Author");
+		dialog.setTitle("Find Scholar");
 		final JSpinner searchField = new JSpinner();
-		if(authorNames == null){
-			JOptionPane.showMessageDialog(this, "No authors found", "", JOptionPane.ERROR_MESSAGE);
+		if(scholarNames == null){
+			JOptionPane.showMessageDialog(this, "No scholars found", "", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		if(authorNames.size() > 0){
-			SpinnerModel model = new SpinnerListModel(authorNames);
+		if(scholarNames.size() > 0){
+			SpinnerModel model = new SpinnerListModel(scholarNames);
 			searchField.setModel(model);
 		}
 		dialog.add(searchField);
 		searchField.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent e){
-				displayAuthorPublications(publicationSystem.findAuthor(searchField.getModel().getValue().toString()));
+				displayScholarPublications(publicationSystem.findScholar(searchField.getModel().getValue().toString()));
 			}
 		});
 		dialog.setLocationRelativeTo(this);
@@ -456,13 +456,13 @@ public class PublicationSystemGUI extends JFrame
 	}
 	
 	/**
-	 * Displays the publications made by a particular author
-	 * @param author		The Author who's work to display
+	 * Displays the publications made by a particular scholar
+	 * @param scholar		The Scholar who's work to display
 	 */
-	private void displayAuthorPublications(Author author){
+	private void displayScholarPublications(Scholar scholar){
 		PublicationList pubs = new PublicationList();
-		pubs.addAll(author.getConferencePapers());
-		pubs.addAll(author.getJournalArticles());
+		pubs.addAll(scholar.getConferencePapers());
+		pubs.addAll(scholar.getJournalArticles());
 		pubs.sortByPaperTitle();
 		String forLabel = "<html>";
 		for(Paper p: pubs){
@@ -507,8 +507,8 @@ public class PublicationSystemGUI extends JFrame
 		if(task.equals("BI")){  //Bibliographic sort
 			publicationSystem.sortByBibliographicInfo();
 		}
-		else if(task.equals("AN")){  //Author sort
-			publicationSystem.sortByAuthor();
+		else if(task.equals("AN")){  //Scholar sort
+			publicationSystem.sortByScholar();
 		}
 		else if(task.equals("PT")){  //Paper title sort
 			publicationSystem.sortByPaperTitle();
@@ -584,7 +584,7 @@ public class PublicationSystemGUI extends JFrame
 			importPublications();
 		}
 		else if(task.equals("FA")){
-			findAuthor();
+			findScholar();
 		}
 		//By default the method prints the publicationList to the screen
 		String forLabel = "<html>";
