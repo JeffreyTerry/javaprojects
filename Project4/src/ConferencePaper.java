@@ -1,3 +1,5 @@
+import java.io.Serializable;
+
 
 /**
  * Project #3
@@ -9,8 +11,20 @@
  * @version 2.0
  */
 
-public class ConferencePaper extends Paper
+public class ConferencePaper extends Paper implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The default constructor
+	 */
+	public ConferencePaper(){
+		super(new String[]{"",""}, "", "", new String[]{"",""}, "", "");
+	}
+	
 	/**
      * This constructor initializes all of the variables specific to a ConferencePaper.
      * @param             authors      			an array of the author's names for this conference paper. The first author should be the primary one.
@@ -28,11 +42,30 @@ public class ConferencePaper extends Paper
 		super(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 	}
 	
-	/*
-	 * other methods
-	 */
+	/**
+     * returns a String representation of the object in the same format it was read in.
+     * <P>
+     * @return            a String representation of the object in the same format it was read in.
+     */
 	public String toString()
 	{
-		return " ";
+		String print;
+		print="Conference Paper";
+		print+="<br />";
+		for(String s:this.getAuthors())
+			print+=s + "; ";
+		print=print.substring(0, print.length()-2);
+		print+="<br />";
+		print+=this.getTitle();
+		print+="<br />";
+		print+=this.getSerialTitle();
+		print+="<br />";
+		print+=getPageNumbers()[0]+"-"+getPageNumbers()[1];
+		print+="<br />";
+		print+=this.getDate();
+		print+="<br />";
+		if(!this.getDigitalIdentifier().equals("N/A"))
+			print+=this.getDigitalIdentifier();
+		return print;
 	}
 }

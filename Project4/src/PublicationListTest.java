@@ -41,7 +41,6 @@ public class PublicationListTest {
 	
 	/**
 	 * This tests the sortByDate method
-	 * @test
 	 */
 	@Test
 	public void testSortByDate() {
@@ -60,7 +59,6 @@ public class PublicationListTest {
 
 	/**
 	 * This tests the sortByDigitalIdentifier method
-	 * @test
 	 */
 	@Test
 	public void testSortByDigitalIdentifier() {
@@ -79,7 +77,6 @@ public class PublicationListTest {
 
 	/**
 	 * This tests the sortSerialTitle method
-	 * @test
 	 */
 	@Test
 	public void testSortBySerialTitle() {
@@ -98,7 +95,6 @@ public class PublicationListTest {
 
 	/**
 	 * This tests the sortByPaperTitle method
-	 * @test
 	 */
 	@Test
 	public void testSortByPaperTitle() {
@@ -120,7 +116,6 @@ public class PublicationListTest {
 
 	/**
 	 * This tests the sortByAuthor method
-	 * @test
 	 */
 	@Test
 	public void testSortByAuthor() {
@@ -139,7 +134,6 @@ public class PublicationListTest {
 
 	/**
 	 * This tests the sortByBiliograhicInfo method
-	 * @test
 	 */
 	@Test
 	public void testSortByBibliographicInfo() {
@@ -158,7 +152,6 @@ public class PublicationListTest {
 
 	/**
 	 * This tests the Compare method
-	 * @test
 	 */
 	@Test
 	public void testCompare() {

@@ -5,12 +5,12 @@ import java.util.HashMap;
  * CS 2334, Section 011
  * 10/9/2013
  * <P>
- * This class is a HashMap of Authors with a Key of type String that is their name
+ * This class represents a HashMap of Authors
  * </P>
  * @version 1.0
  */
+
 public class AuthorMap extends HashMap<String, Author>{
 
-	/** the serual version ID*/
 	private static final long serialVersionUID = 1L;
 }

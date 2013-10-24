@@ -26,7 +26,6 @@ public class PaperTest {
 	
 	/**
 	 * This tests the Comparable method
-	 * @test
 	 */
 	@Test
 	public void testComparable() {

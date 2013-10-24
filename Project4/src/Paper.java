@@ -1,6 +1,5 @@
 import java.io.Serializable;
 
-
 /**
  * Project #3
  * CS 2334, Section 011
@@ -11,11 +10,16 @@ import java.io.Serializable;
  * @version 2.0
  */
 
+
 public class Paper implements Comparable<Paper>, Serializable
 {
 	/* Instance Variables */
     
-    /** The authors of the paper */ 	
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** The authors of the paper */ 	
 	private String[] authors;
 	/** The title of the paper */
 	private String title;
@@ -24,9 +28,21 @@ public class Paper implements Comparable<Paper>, Serializable
 	/** The first and last page number in the serial where this paper is found */
 	private String[] pageNumbers;
 	/** The date the paper was published */
-	private String date;
+	private String date;	//look into using Calendar or GregorianCalendar or something cooler
 	/** A digital identifier such as a URL for the paper */
 	private String digitalIdentifier;
+
+	/**
+	 * The default constructor
+	 */
+	public Paper(){
+		authors = new String[2];
+		title = "";
+		serialTitle = "";
+		pageNumbers = new String[2];
+		date = "";
+		digitalIdentifier = "";
+	}
 	
 	/**
      * Initializes all of the variables specific to a paper.
@@ -37,6 +53,8 @@ public class Paper implements Comparable<Paper>, Serializable
      * @param			  date		   			the date this paper was published.
      * @param			  digitalIdentifier		a digital identifier for the paper such as a URL.
      *
+     * <dt><b>Conditions:</b>
+     * <dd>POST -         all instance variables are initialized.
      */
 	public Paper(String[] authors, String title, String serialTitle, String[] pageNumbers, String date, String digitalIdentifier)
 	{
@@ -167,12 +185,7 @@ public class Paper implements Comparable<Paper>, Serializable
 			return digitalIdentifier;
 		return "N/A";
 	}
-	
-	
-	/*
-	 * other methods
-	 */
-	
+
 	/**
 	 * Compares two papers using MLA bibliographic ordering
 	 * <P>
@@ -181,9 +194,40 @@ public class Paper implements Comparable<Paper>, Serializable
 	 */
 	public int compareTo(Paper other) 
 	{
+		String[] firstAuthors = this.getAuthors();
+		String[] secondAuthors = other.getAuthors();
+		
 		int compare=0;
+		int firstLength=firstAuthors.length;
+		int secondLength=secondAuthors.length;
+		int shorterLength = firstLength;
+		if(firstLength>secondLength)
+			shorterLength=secondLength;
+		String author1;
+		String author2;
+		
+		int i=0;
+		while(compare == 0 && i<shorterLength)
+		{
+			author1=firstAuthors[i].split(" ")[0];
+			author2=secondAuthors[i].split(" ")[0];
+			compare=author1.compareTo(author2);
+			i++;
+		}
+		if(compare == 0)
+		{
+			if(firstLength>secondLength)
+				compare=1;
+			if(firstLength<secondLength)
+				compare=-1;
+		}
 		return compare;
 	}
+	
+	/**
+	 * This method returns the title of this paper
+	 * @return	the title of this paper
+	 */
 	public String toString()
 	{
 		return this.getTitle();

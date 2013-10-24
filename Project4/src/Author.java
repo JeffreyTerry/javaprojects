@@ -12,20 +12,21 @@ import java.util.ArrayList;
  */
 
 public class Author implements Serializable{
-	
-	/* Instance variables */
-	
-	/**the conference papers the author has written*/
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/** A list of conference papers published by this author */
 	private ArrayList<ConferencePaper> conferencePapers;
-	/**the journal articles the author has written*/
+	/** A list of journal articles published by this author */
 	private ArrayList<Article> journalArticles;
-	/**the author's name*/
+	/** The name of this author */
 	private String name;
 	
 	/**
-     * This constructor initializes all of the variables specific to an Author.
-     * @param             name			the Author's name
-     */
+	 * This constructor sets the name of the author and creates new instances of conferencePapers and journalArticles
+	 * @param name	The name of the author
+	 */
 	public Author(String name){
 		this.name = name;
 		conferencePapers = new ArrayList<ConferencePaper>();
@@ -33,50 +34,41 @@ public class Author implements Serializable{
 	}
 	
 	/**
-     * This returns the conference papers the author has written
-     * @return 			  the conference papers the author has written
-     */
+	 * This method returns the name of the Author
+	 * @return	the name of the Author
+	 */
+	public String getName(){
+		return name;
+	}
+
+	/**
+	 * This method returns the ArrayList of conference papers the author has published
+	 * @return	the ArrayList of conference papers the author has published
+	 */
 	public ArrayList<ConferencePaper> getConferencePapers(){
 		return conferencePapers;
 	}
 	
 	/**
-     * This returns the journal articles the author has written
-     * @return 			  the journal articles the author has written
-     */
+	 * This method returns the ArrayList of journal articles the author has published
+	 * @return	the ArrayList of journal articles the author has published
+	 */
 	public ArrayList<Article> getJournalArticles(){
 		return journalArticles;
 	}
 	
-	/*
-	 * Accessor methods
-	 */
-	
 	/**
-     * This returns the author's name
-     * @return 			  the author's name
-     */
-	public String getname(){
-		return name;
-	}
-
-	
-	/*
-	 * mutator methods
+	 * This method adds a conference proceeding to conferencePapers
+	 * @param pro	The conference proceeding to add
 	 */
-	
-	/**
-     * This adds a conference proceeding to conferencePapers
-     * @param			  art		the conference proceeding to add
-     */
-	public void addConferenceProceeding(ConferencePaper art){
-		conferencePapers.add(art);
+	public void addConferenceProceeding(ConferencePaper pro){
+		conferencePapers.add(pro);
 	}
 	
 	/**
-     * This adds a journal article to journalArticles
-     * @param			  art		the journal article to add
-     */
+	 * This method adds a journal article to add to journalArticles
+	 * @param art	The article to add
+	 */
 	public void addJournalArticle(Article art){
 		journalArticles.add(art);
 	}

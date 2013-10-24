@@ -19,21 +19,19 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
      */
     
 	 /**
-	 * the serial version ID
+	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public PublicationList()
-	{
-		super();
-	}
-	
 	/**
      * Sorts papers by the date they were published
      * <P>
      * Algorithm:<br>
      * Algorithm not yet implemented.<br>
      * </P>
+     * <dt><b>Conditions:</b>
+     * <dd>PRE  -         PublicationList is not empty
+     * <dd>POST -         PublicationList is sorted by the date they were published
      */
 	public void sortByDate()
 	{
@@ -46,6 +44,9 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
      * Algorithm:<br>
      * Algorithm not yet implemented.<br>
      * </P>
+     * <dt><b>Conditions:</b>
+     * <dd>PRE  -         PublicationList is not empty
+     * <dd>POST -         PublicationList is sorted by the digital identifier associated with it alphanumerically
      */
 	public void sortByDigitalIdentifier()
 	{
@@ -58,6 +59,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
+    * <dt><b>Conditions:</b>
+    * <dd>POST -         Publications are sorted by serial title
     */
 	public void sortBySerialTitle()
 	{
@@ -70,6 +73,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
+    * <dt><b>Conditions:</b>
+    * <dd>POST -         Publications are sorted by paper title
     */
 	public void sortByPaperTitle()
 	{
@@ -82,6 +87,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
+    * <dt><b>Conditions:</b>
+    * <dd>POST -         Publications are sorted by author
     */
 	public void sortByAuthor()
 	{
@@ -95,6 +102,8 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * Algorithm:<br>
     * Algorithm not yet implemented.<br>
     * </P>
+    * <dt><b>Conditions:</b>
+    * <dd>POST -         Publications are sorted by bibliographic info
     */
 	public void sortByBibliographicInfo()
 	{
@@ -105,14 +114,25 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
     * This methods sorts papers by title
     * <P>
     * Algorithm:<br>
-    * use Collection.suffle().<br>
+    * Algorithm not yet implemented.<br>
     * </P>
+    * <dt><b>Conditions:</b>
+    * <dd>POST -         The order is ranomized
     */
 	public void randomSort()
 	{
 		 Collections.shuffle(this);
 	}
+	
+	/**
+	 * This method doesn't do anything. It allows the data to be made visible when first imported without altering it.
+	 */
+	public void dontSort()
+	{
+		
+	}
 
+	
 	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
 	{
 		/** 
@@ -176,8 +196,105 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
+			String[] date1=p1.getDate().split(" ");
+			String[] date2=p2.getDate().split(" ");
 			int compare=0;
-			//TODO
+			
+			int year1=Integer.parseInt(date1[1]);
+	        int year2=Integer.parseInt(date2[1]);
+	        if(compare==0)
+	        {
+	        	if(year1<year2)
+	        		compare=-1;
+	        	if(year1>year2)
+	        		compare=1;
+	        }
+	        if(compare==0)
+	        {
+	        	int month1=13;
+		        String toSwitch = date1[0].toLowerCase();
+		        if(toSwitch.equals("january")){
+	            	month1=1;
+		        }
+		        else if(toSwitch.equals("february")){
+	            	month1=2;
+		        }
+		        else if(toSwitch.equals("march")){
+	            	month1=3;
+		        }
+		        else if(toSwitch.equals("april")){
+	            	month1=4;
+		        }
+		        else if(toSwitch.equals("may")){
+	            	month1=5;
+		        }
+		        else if(toSwitch.equals("june")){
+	            	month1=6;
+		        }
+		        else if(toSwitch.equals("july")){
+	            	month1=7;
+		        }
+		        else if(toSwitch.equals("august")){
+	            	month1=8;
+		        }
+		        else if(toSwitch.equals("september")){
+	            	month1=9;
+		        }
+		        else if(toSwitch.equals("october")){
+	            	month1=10;
+		        }
+		        else if(toSwitch.equals("november")){
+	            	month1=11;
+		        }
+		        else if(toSwitch.equals("december")){
+	            	month1=12;
+		        }
+
+		        int month2=13;
+		        toSwitch = date2[0].toLowerCase();
+		        if(toSwitch.equals("january")){
+	            	month2=1;
+		        }
+		        else if(toSwitch.equals("february")){
+	            	month2=2;
+		        }
+		        else if(toSwitch.equals("march")){
+	            	month2=3;
+		        }
+		        else if(toSwitch.equals("april")){
+	            	month2=4;
+		        }
+		        else if(toSwitch.equals("may")){
+	            	month2=5;
+		        }
+		        else if(toSwitch.equals("june")){
+	            	month2=6;
+		        }
+		        else if(toSwitch.equals("july")){
+	            	month2=7;
+		        }
+		        else if(toSwitch.equals("august")){
+	            	month2=8;
+		        }
+		        else if(toSwitch.equals("september")){
+	            	month2=9;
+		        }
+		        else if(toSwitch.equals("october")){
+	            	month2=10;
+		        }
+		        else if(toSwitch.equals("november")){
+	            	month2=11;
+		        }
+		        else if(toSwitch.equals("december")){
+	            	month2=12;
+		        }
+		        
+		        if(month1<month2)
+		        	compare=-1;
+		        if(month1>month2)
+		        	compare=1;
+	        }
+			
 			return compare;
 		}
 	};
@@ -212,10 +329,21 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			
-			int compare=0;
-			//TODO
-			return compare;
+			Article a1;
+			Article a2;
+			String v1="";
+			String v2="";
+			if(p1 instanceof Article)
+			{
+				a1=(Article)p1;
+				v1=a1.getVolume();
+			}
+			if(p2 instanceof Article)
+			{
+				a2=(Article)p2;
+				v2=a2.getVolume();
+			}
+			return v1.compareTo(v2);
 		}
 	};
 
@@ -231,9 +359,21 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			int compare=0;
-			//TODO
-			return compare;
+			Article a1;
+			Article a2;
+			String i1="";
+			String i2="";
+			if(p1 instanceof Article)
+			{
+				a1=(Article)p1;
+				i1=a1.getIssue();
+			}
+			if(p2 instanceof Article)
+			{
+				a2=(Article)p2;
+				i2=a2.getIssue();
+			}
+			return i1.compareTo(i2);
 		}
 	};
 
@@ -249,8 +389,14 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 */
 		public int compare(Paper p1, Paper p2) 
 		{
-			int compare=0; 
-			//TODO
+			int length1=Integer.parseInt(p1.getPageNumbers()[1])-Integer.parseInt(p1.getPageNumbers()[0]);
+			int length2=Integer.parseInt(p2.getPageNumbers()[1])-Integer.parseInt(p2.getPageNumbers()[0]);
+
+			int compare=0;
+			if(length1<length2)
+				compare=-1;
+			else if(length1>length2)
+				compare=1;
 			return compare;
 		}
 	};
