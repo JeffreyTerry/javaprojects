@@ -35,47 +35,78 @@ import javax.swing.event.ChangeListener;
  */
 public class PublicationSystemGUI extends JFrame
 {
+	/* instance variables */
+	
 	/**
-	 * 
+	 * the serial version id
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/** the publicationSystem to interact with */
 	private PublicationSystem publicationSystem;
 	
+	/** the title panel */
 	private JPanel titlePanel;
+	/** the default panel for the user */
 	private JPanel defaultUserPanel;
+	/** the non command line panel for the user */
 	private JPanel modernUserPanel;
+	/** the display area for the publications */
 	private JPanel publicationDisplayPanel;
 	
+	/** the label for the title */
 	private JLabel title;
 	
+	/** the lable for the user's prompt */
 	private JLabel userPrompt;
+	/** the lable for the user's input */
 	private JTextField userInput;
 
+	/** the JComboBox for the sort drop down */
 	private JComboBox sortDropdown;
+	/** the text field for searching */
 	private JTextField searchTextField;
+	/** the JComboBox for the search drop down */
 	private JComboBox searchDropdown;
 
+	/** the default import button */
 	private JButton defaultImportButton;
+	/** the default export button */
 	private JButton defaultExportButton;
+	/** the default switch view button */
 	private JButton defaultSwitchViewButton;
+	/** the default button to toggle the graph*/
 	private JButton defaultToggleGraphButton;
+	/** the non-commandline import button */
 	private JButton modernImportButton;
+	/** the non-commandline export button */
 	private JButton modernExportButton;
+	/** the non-commandline switch view button */
 	private JButton modernSwitchViewButton;
+	/** the non-commandline button to toggle the graph*/
 	private JButton modernToggleGraphButton;
+	/** the button to print */
 	private JButton printButton;
 	
+	/** the display label */
 	private JLabel displayLabel;
+	/** the object to handle graphing */
 	private PublicationDataGrapher dataGrapher;
+	/** the input field for the graph as a Spinner*/
 	private JSpinner graphInputField;
+	/** the input field for the graph */
 	private ArrayList<String> authorNames;
 
+	/** the default control listener */
 	private DefaultControlListener controlListener;
+	/** the non-commandline control listener */
 	private ModernControlListener modernControlListener;
+	/** the default input listener */
 	private DefaultInputListener defaultInputListener;
 
+	/** the height of the frame */
 	private int height;
+	/** the width of the frame */
 	private int width;
 
 	/**
@@ -101,6 +132,9 @@ public class PublicationSystemGUI extends JFrame
 		init();
 	}
 	
+	/**
+	 * initializes everything
+	 */
 	private void init(){
 		controlListener = new DefaultControlListener();
 		modernControlListener = new ModernControlListener();
@@ -125,6 +159,9 @@ public class PublicationSystemGUI extends JFrame
 		setResizable(false);
 	}
 	
+	/**
+	 * creates the title panel
+	 */
 	private void createTitlePanel(){
 		title = new JLabel("PUBLICATION SYSTEM");
 		title.setHorizontalAlignment(JLabel.CENTER);
@@ -136,6 +173,9 @@ public class PublicationSystemGUI extends JFrame
 		this.titlePanel = titlePanel;
 	}
 
+	/**
+	 * creates the default user panel
+	 */
 	private void createDefaultUserPanel(){
 		JPanel userPanel = new JPanel();
 		JPanel inputPanel = new JPanel();
@@ -198,6 +238,9 @@ public class PublicationSystemGUI extends JFrame
 		defaultUserPanel = userPanel;
 	}
 
+	/**
+	 * creates the non command line user panel
+	 */
 	private void createModernUserPanel(){
 		JPanel userPanel = new JPanel();
 		JPanel inputPanel = new JPanel();
@@ -277,6 +320,9 @@ public class PublicationSystemGUI extends JFrame
 		modernUserPanel = userPanel;
 	}
 	
+	/**
+	 * creates the display panel for the publications
+	 */
 	private void createPublicationDisplayPanel(){
 		displayLabel = new JLabel();
 		JScrollPane pane = new JScrollPane(displayLabel);
@@ -287,6 +333,9 @@ public class PublicationSystemGUI extends JFrame
 		publicationDisplayPanel = displayPanel;
 	}
 	
+	/**
+	 * creates the data grapher
+	 */
 	private void createDataGrapher(){
 		Dimension componentDimension = new Dimension(160, 32);
 		graphInputField = new JSpinner();
@@ -319,6 +368,9 @@ public class PublicationSystemGUI extends JFrame
 		setVisible(false);
 	}
 	
+	/**
+	 * switches between graphs
+	 */
 	private void toggleGraph(){
 		if(defaultToggleGraphButton.getText().equals("Show Graph")){
 			defaultToggleGraphButton.setText("Show List");
@@ -336,6 +388,9 @@ public class PublicationSystemGUI extends JFrame
 		getContentPane().repaint();
 	}
 	
+	/**
+	 * switches from command line to non command line view or visa versa
+	 */
 	private void switchView(){
 		if(getContentPane().getComponent(1) == defaultUserPanel){
 			remove(defaultUserPanel);
@@ -349,6 +404,9 @@ public class PublicationSystemGUI extends JFrame
 		getContentPane().repaint();
 	}
 	
+	/** 
+	 * imports a publication from a txt file
+	 */
 	private void importPublications(){
 		publicationSystem.importPublications();
 		
@@ -362,10 +420,16 @@ public class PublicationSystemGUI extends JFrame
 		performTask("N");
 	}
 	
+	/**
+	 * exports the publication list to a file
+	 */
 	private void exportPublicationList(){
 		publicationSystem.exportPublicationList();
 	}
 	
+	/**
+	 * Finds the author the user selects
+	 */
 	private void findAuthor(){
 		JDialog dialog = new JDialog();
 		dialog.setSize(180, 32 + new FlowLayout().getVgap()*2);
@@ -391,6 +455,10 @@ public class PublicationSystemGUI extends JFrame
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 	
+	/**
+	 * Displays the publications made by a particular author
+	 * @param author		The Author who's work to display
+	 */
 	private void displayAuthorPublications(Author author){
 		PublicationList pubs = new PublicationList();
 		pubs.addAll(author.getConferencePapers());
@@ -432,6 +500,9 @@ public class PublicationSystemGUI extends JFrame
 		}
 	}
 	
+	/**
+	 * performs the task the user requests
+	 */
 	private void performTask(String task){
 		if(task.equals("BI")){  //Bibliographic sort
 			publicationSystem.sortByBibliographicInfo();
@@ -524,7 +595,13 @@ public class PublicationSystemGUI extends JFrame
 		displayLabel.setText(forLabel);
 	}
 
+	/**
+	 * this is the listener for the command line viewer
+	 */
 	private class DefaultControlListener implements ActionListener{
+		/**
+		 * performs the appropriate action based on the user's actions
+		 */
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource().equals(defaultImportButton)){
 				importPublications();
@@ -541,7 +618,13 @@ public class PublicationSystemGUI extends JFrame
 		}
 	}
 
+	/**
+	 * this is the listener for the non command line viewer
+	 */
 	private class ModernControlListener implements ActionListener{
+		/**
+		 * performs the appropriate action based on the user's actions
+		 */
 		public void actionPerformed(ActionEvent event){
 			if(event.getSource() == modernImportButton){
 				importPublications();
@@ -585,7 +668,13 @@ public class PublicationSystemGUI extends JFrame
 		}
 	}
 
+	/**
+	 * this is the input listener for the non command line viewer
+	 */
 	private class DefaultInputListener extends KeyAdapter implements ActionListener{
+		/**
+		 * performs the appropriate action for when a key is released
+		 */
 		public void keyReleased(KeyEvent event){
 			if(event.getSource() == userInput){
 				if(!userInput.getText().equalsIgnoreCase("s") && !userInput.getText().equalsIgnoreCase("pf") && !userInput.getText().equalsIgnoreCase("fa")){
@@ -593,6 +682,9 @@ public class PublicationSystemGUI extends JFrame
 				}
 			}
 		}
+		/**
+		 * performs the appropriate action based on the user's actions
+		 */
 		public void actionPerformed(ActionEvent e){
 			performTask(userInput.getText().toUpperCase());
 		}

@@ -41,6 +41,12 @@ public class ConferencePaper extends Paper implements Serializable
 	{
 		super(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 	}
+	
+	/**
+     * returns a String representation of the object in the same format it was read in.
+     * <P>
+     * @return            a String representation of the object in the same format it was read in.
+     */
 	public String toString()
 	{
 		String print;

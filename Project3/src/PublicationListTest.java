@@ -4,9 +4,15 @@ import org.junit.Test;
 
 public class PublicationListTest {
 
+	/*Variables for testing*/
+	
+	
+	/** The list to be sorted */
 	PublicationList testingList = new PublicationList();
+	/** What the sorted list should look like */
 	PublicationList correctList = new PublicationList();
 	
+	/** Paper1 */
 	String[] authors={"Bob, Joe", "AppleSeed, Jonny"};
 	String title = "AB grand advnture";
 	String serialTitle = "children's stuff";
@@ -15,7 +21,7 @@ public class PublicationListTest {
 	String digitalIdentifier = "www.thatonesite.com";
 	Paper testPaper1 = new Paper(authors, title, serialTitle, pageNumbers, date, digitalIdentifier);
 
-
+	/** Paper2 */
 	String[] authors2={"ABob, Joe", "BAppleSeed, Jonny"};
 	String title2 = "AA Agrand advnture";
 	String serialTitle2 = "Achildren's stuff";
@@ -24,6 +30,7 @@ public class PublicationListTest {
 	String digitalIdentifier2 = "www.thatonesite2.com";
 	Paper testPaper2 = new Paper(authors2, title2, serialTitle2, pageNumbers2, date2, digitalIdentifier2);
 	
+	/** Paper3 */
 	String[] authors3={"ABCob, Joe", "BACppleSeed, Jonny"};
 	String title3 = "AAC Agrand advnture";
 	String serialTitle3 = "ACchildren's stuff";
@@ -32,6 +39,9 @@ public class PublicationListTest {
 	String digitalIdentifier3 = "www.thatonesite3.com";
 	Paper testPaper3 = new Paper(authors3, title3, serialTitle3, pageNumbers3, date3, digitalIdentifier3);
 	
+	/**
+	 * This tests the sortByDate method
+	 */
 	@Test
 	public void testSortByDate() {
 		testingList.add(testPaper1);
@@ -47,6 +57,9 @@ public class PublicationListTest {
 		assertEquals(testingList,correctList);
 	}
 
+	/**
+	 * This tests the sortByDigitalIdentifier method
+	 */
 	@Test
 	public void testSortByDigitalIdentifier() {
 		testingList.add(testPaper1);
@@ -62,6 +75,9 @@ public class PublicationListTest {
 		assertEquals(testingList,correctList);
 	}
 
+	/**
+	 * This tests the sortSerialTitle method
+	 */
 	@Test
 	public void testSortBySerialTitle() {
 	testingList.add(testPaper1);
@@ -77,6 +93,9 @@ public class PublicationListTest {
 	assertEquals(testingList,correctList);
 }
 
+	/**
+	 * This tests the sortByPaperTitle method
+	 */
 	@Test
 	public void testSortByPaperTitle() {
 		testingList.add(testPaper1);
@@ -95,6 +114,9 @@ public class PublicationListTest {
 		assertEquals(testingList,correctList);
 	}
 
+	/**
+	 * This tests the sortByAuthor method
+	 */
 	@Test
 	public void testSortByAuthor() {
 		testingList.add(testPaper1);
@@ -110,6 +132,9 @@ public class PublicationListTest {
 		assertEquals(testingList,correctList);
 	}
 
+	/**
+	 * This tests the sortByBiliograhicInfo method
+	 */
 	@Test
 	public void testSortByBibliographicInfo() {
 		testingList.add(testPaper1);
@@ -125,6 +150,9 @@ public class PublicationListTest {
 		assertEquals(testingList,correctList);
 	}
 
+	/**
+	 * This tests the Compare method
+	 */
 	@Test
 	public void testCompare() {
 		assertTrue(testPaper1.compareTo(testPaper2)==1);

@@ -83,6 +83,11 @@ public class Article extends Paper implements Serializable
 		return issue;
 	}
 	
+	/**
+     * returns a String representation of the object in the same format it was read in.
+     * <P>
+     * @return            a String representation of the object in the same format it was read in.
+     */
 	public String toString()
 	{
 		String print;

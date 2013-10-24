@@ -5,7 +5,7 @@ public class SearchResearch {
 		system.importPublications();
 		String[] titles={"title1","title2","title3","title4","title5"};
 		System.out.println("Title	|	1.		2.			3.			4.			5.");
-		System.out.println("Order");
+		System.out.println("Order		Comparisons 	Comparisons		Comparisons		Comparisons		Comparisons");
 		System.out.println("-------		---------	---------		---------		---------		---------");
 		system.sortByBibliographicInfo();
 		System.out.print("BI");

@@ -473,10 +473,19 @@ public class PublicationSystem implements Serializable {
 		return count;
 	}
 
+	/**
+	 * Returns the author in the author map with a specified name.
+	 * @param auth	The name of the author
+	 * @return		The author
+	 */
 	public Author findAuthor(String auth){
 		return authorMap.get(auth);
 	}
 	
+	/**
+	 * Returns the authorMap being used
+	 * @return		the authorMap being used
+	 */
 	public AuthorMap getAuthorMap(){
 		return authorMap;
 	}

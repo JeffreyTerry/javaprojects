@@ -12,21 +12,52 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 
+/**
+ * Project #3
+ * CS 2334, Section 011
+ * 10/9/2013
+ * <P>
+ * This class is the JPanel that handles the graphing
+ * </P>
+ * @version 1.0
+ */
+
 public class PublicationDataGrapher extends JPanel{
+	/* Instance variables */
+	
+	/** the serialVersionID */
 	private static final long serialVersionUID = 1L;
+	/** the colors to be used for the graph*/
 	private static final Color[] BAR_COLORS = {Color.CYAN, Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.YELLOW, Color.RED};
+	/** the location for the publication type label */
 	public static final int PUBLICATION_TYPE = 0;
+	/** the location for the publications per year label */
 	public static final int PUBLICATIONS_PER_YEAR = 1;
+	/** the location for the conference papers per year label */
 	public static final int CONFERENCE_PAPERS_PER_YEAR = 2;
+	/** the location for the journal articles per year label */
 	public static final int JOURNAL_ARTICLES_PER_YEAR = 3;
+	/** the location for the number of coauthorships label */
 	public static final int NUMBER_OF_COAUTHORS = 4;
 	
+	/** width of the panel */
 	private int width;
+	/** height of the panel */
 	private int height;
+	/** the int representation of the graph type */
 	private int graphType;
+	/** the Author being looked at */
 	private Author author;
+	/** the type selector */
 	private JComboBox typeSelector;
 
+	
+	/**
+     * Initializes all of the variables specific to a publication date grapher excepting the Author
+     * @param             width					width of the panel
+     * @param             height				height of the panel
+     * @param			  authorSelector		the selector for the authors
+     */
 	public PublicationDataGrapher(int width, int height, JSpinner authorSelector){
 		this.width = width;
 		this.height = height;
@@ -46,11 +77,21 @@ public class PublicationDataGrapher extends JPanel{
 		add(typeSelector);
 	}
 	
+	/**
+     * Initializes all of the variables specific to a publication date grapher
+     * @param             width					width of the panel
+     * @param             height				height of the panel
+     * @param			  authorSelector		the selector for the authors
+     * @param			  author				the Author to look at
+     */
 	public PublicationDataGrapher(int width, int height, JSpinner authorSelector, Author author){
 		this(width, height, authorSelector);
 		this.author = author;
 	}
 	
+	/**
+	 * sets the background and draws the graph and decor
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		setBackground(new Color(218, 223, 245));
@@ -59,6 +100,10 @@ public class PublicationDataGrapher extends JPanel{
 		drawDecor(g);
 	}
 	
+	/**
+	 * draws the graph
+	 * @param g			the Graphics to use
+	 */
 	private void drawBarGraph(Graphics g){
 		if(author == null){
 			return;
@@ -202,6 +247,10 @@ public class PublicationDataGrapher extends JPanel{
 		drawDecor(g);
 	}
 	
+	/**
+	 * draws the decor
+	 * @param g			the Graphics to use
+	 */
 	private void drawDecor(Graphics g){
 		int yTopOffset = 80;  //Should be the same as below
 		int yBottomOffset = 28;  //Should be the same as below
@@ -215,10 +264,23 @@ public class PublicationDataGrapher extends JPanel{
 		g.drawString(typeSelector.getSelectedItem().toString(), (width - titleStick.stringWidth(typeSelector.getSelectedItem().toString()))/2, yTopOffset - 10);
 	}
 
+	/**
+	 * draws the bars
+	 * @param values	the values to graph
+	 * @param labels	the labels to give the bars
+	 * @param g			the Graphics to use
+	 */
 	private void drawBars(int[] values, String[] labels, Graphics g){
 		drawBars(values, labels, BAR_COLORS, g);
 	}
 
+	/**
+	 * draws the bars
+	 * @param values	the values to graph
+	 * @param labels	the labels to give the bars
+	 * @param colors	the colors for the bars
+	 * @param g			the Graphics to use
+	 */
 	private void drawBars(int[] values, String[] labels, Color[] colors, Graphics g){
 		if(values.length == 0){
 			return;
@@ -250,11 +312,20 @@ public class PublicationDataGrapher extends JPanel{
 	/*
 	 * Mutator Methods
 	 */
+
 	
+	/**
+	 * sets the Author		
+	 * @param auth			the Author to look at
+	 */
 	public void setAuthor(Author auth){
 		author = auth;
 	}
 	
+	/**
+	 * sets the graphType
+	 * @param graphType		the graph type
+	 */
 	public void setGraphType(int graphType){
 		this.graphType = graphType;
 	}

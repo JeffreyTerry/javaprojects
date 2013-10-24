@@ -124,11 +124,15 @@ public class PublicationList extends ArrayList<Paper> implements Comparator<Pape
 		 Collections.shuffle(this);
 	}
 	
+	/**
+	 * This method doesn't do anything. It allows the data to be made visible when first imported without altering it.
+	 */
 	public void dontSort()
 	{
 		
 	}
 
+	
 	public static Comparator<Paper>  authorComparator = new Comparator<Paper>() 
 	{
 		/** 

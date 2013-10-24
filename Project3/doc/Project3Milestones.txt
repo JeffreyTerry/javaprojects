@@ -1,0 +1,62 @@
+﻿1. Implement Serializable for the list of publications and for any other classes necessary 
+to save and load all publication and author data.
+
+
+We chose to implement Serializable for Article, Author, PublicationList, ConferencePaper, PublicationSystem, and Paper. All of the data we needed to save and load properly are contained in these classes.
+
+
+2. Use object serialization to save and load the list of the publications to and from a 
+binary file.
+
+
+We used an ObjectOutputStream object with a BufferedOutputStream and a FileOutputStream with a File of a user given name to save to a file. We chose the extension .pubsys to signify the type of object we were storing. If the user didn’t add .pubsys to the name of the File, we added it for them.
+        We used an ObjectInputStream object with a BufferedInputStream and a FileInputStream with a File of a user given name to load from a file. We chose the extension .pubsys to signify the type of object we were reading. If the user didn’t add .pubsys to the name of the File, we added it for them.
+
+
+3. Implement a simple graphical display for showing counts of data.
+        
+        We used bar graphs to show how many of each type of publication an Author has published, the publications of an Author per year, how many publications of a certain type an Author published per year, and how many of an Author’s papers had a certain number of co-authors. 
+To do this, we created a Spinner for the user to select which Author they wanted to see data of. This allowed us to use auto-complete on the author names which was fun. The user selects the information they want to see from a Combo Box. The height of the bars we draw is determined by setting the highest bar to the maximum height the window permits, then setting the smaller bars proportional to that one.
+
+
+
+
+4. Create a class to store information on individual authors.
+
+
+Our Author class represents an author and has a name, a list of journal  articles, and a list of conference proceeding. 
+
+
+
+
+5. Use the HashMap class to save to and retrieve information on authors.
+
+
+        Rather than create a class with a private HashMap, we created a class that extended HashMap that we called AuthorMap. This kept our code very readable and cleaner than it would have been otherwise. It also ensured we always used the correct key and value.
+
+
+6. Determine how to connect authors to publications and vice versa.
+
+
+        We chose to have a central PublicationSystem class that handled all of the imported publications. When displaying and sorting all the publications, we used that object. When dealing with the graph, we created an AuthorMap of all of the Authors found in the publication System. In short, the user provides a file which we create as a PublicationSystem, then from the PublicationSystem we create an AuthorMap of Authors.
+
+
+
+
+
+
+
+
+
+
+
+
+Title        |        1.                2.                3.                4.                5.
+Order                Comparisons         Comparisons        Comparisons        Comparisons         Comparisons
+-------                ---------                ---------                ---------                ---------                ---------
+BI                8                8                8                8                8
+AN                143                143                143                143                143
+PT                8                8                8                8                8
+ST                143                143                143                143                143
+Ch                143                143                143                143                143
+R                143                143                143                143                143
