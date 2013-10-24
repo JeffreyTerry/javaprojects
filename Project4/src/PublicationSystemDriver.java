@@ -11,7 +11,7 @@ public class PublicationSystemDriver
 {
 	public static void main(String args[])
 	{
-		PublicationSystemGUI gooey = new PublicationSystemGUI(900, 680);
-		gooey.open();
+		ScholarshipModel model = new ScholarshipModel();
+		SelectionView selectionView = new SelectionView(model);
 	}
 }

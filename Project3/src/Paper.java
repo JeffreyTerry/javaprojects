@@ -13,12 +13,13 @@ import java.io.Serializable;
 
 public class Paper implements Comparable<Paper>, Serializable
 {
-	/* Instance Variables */
-    
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	/* Instance Variables */
+	
 	/** The authors of the paper */ 	
 	private String[] authors;
 	/** The title of the paper */
@@ -28,7 +29,7 @@ public class Paper implements Comparable<Paper>, Serializable
 	/** The first and last page number in the serial where this paper is found */
 	private String[] pageNumbers;
 	/** The date the paper was published */
-	private String date;	//look into using Calendar or GregorianCalendar or something cooler
+	private String date;
 	/** A digital identifier such as a URL for the paper */
 	private String digitalIdentifier;
 
