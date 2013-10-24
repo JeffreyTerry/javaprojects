@@ -11,7 +11,7 @@ public class PublicationSystemDriver
 {
 	public static void main(String args[])
 	{
-		ScholarshipModel model = new ScholarshipModel();
-		SelectionView selectionView = new SelectionView(model);
+		//ScholarshipModel model = new ScholarshipModel();
+		//SelectionView selectionView = new SelectionView(model);
 	}
 }
