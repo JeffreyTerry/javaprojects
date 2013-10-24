@@ -42,8 +42,8 @@ public class PublicationSystemGUI extends JFrame
 	 */
 	private static final long serialVersionUID = 1L;
 
-	/** the publicationSystem to interact with */
-	private PublicationSystem publicationSystem;
+	/** the scholarshipStructure to interact with */
+	private ScholarshipStructure scholarshipStructure;
 	
 	/** the title panel */
 	private JPanel titlePanel;
@@ -110,7 +110,7 @@ public class PublicationSystemGUI extends JFrame
 	private int width;
 
 	/**
-     * Creates a GUI designed to allow a user to quickly access and modify a PublicationSystem.
+     * Creates a GUI designed to allow a user to quickly access and modify a ScholarshipStructure.
      * @param             width      			The width of the GUI
      * @param             height        		The height of the GUI
      *
@@ -128,7 +128,7 @@ public class PublicationSystemGUI extends JFrame
 		this.width = width;
 		this.height = height;
 		
-		publicationSystem = new PublicationSystem();
+		scholarshipStructure = new ScholarshipStructure();
 		init();
 	}
 	
@@ -346,7 +346,7 @@ public class PublicationSystemGUI extends JFrame
 		graphInputField.setPreferredSize(componentDimension);
 		graphInputField.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent e){
-				dataGrapher.setScholar(publicationSystem.findScholar(graphInputField.getModel().getValue().toString()));
+				dataGrapher.setScholar(scholarshipStructure.findScholar(graphInputField.getModel().getValue().toString()));
 				dataGrapher.repaint();
 			}
 		});
@@ -408,10 +408,10 @@ public class PublicationSystemGUI extends JFrame
 	 * imports a publication from a txt file
 	 */
 	private void importPublications(){
-		publicationSystem.importPublications();
+		scholarshipStructure.importPublications();
 		
 		//Update the graphInputField's model
-		scholarNames = new ArrayList<String>(publicationSystem.getScholarMap().keySet());
+		scholarNames = new ArrayList<String>(scholarshipStructure.getScholarMap().keySet());
 		Collections.sort(scholarNames);
 		if(scholarNames.size() > 0){
 			SpinnerModel model = new SpinnerListModel(scholarNames);
@@ -424,7 +424,7 @@ public class PublicationSystemGUI extends JFrame
 	 * exports the publication list to a file
 	 */
 	private void exportPublicationList(){
-		publicationSystem.exportPublicationList();
+		scholarshipStructure.exportPublicationList();
 	}
 	
 	/**
@@ -446,7 +446,7 @@ public class PublicationSystemGUI extends JFrame
 		dialog.add(searchField);
 		searchField.addChangeListener(new ChangeListener(){
 			public void stateChanged(ChangeEvent e){
-				displayScholarPublications(publicationSystem.findScholar(searchField.getModel().getValue().toString()));
+				displayScholarPublications(scholarshipStructure.findScholar(searchField.getModel().getValue().toString()));
 			}
 		});
 		dialog.setLocationRelativeTo(this);
@@ -505,34 +505,34 @@ public class PublicationSystemGUI extends JFrame
 	 */
 	private void performTask(String task){
 		if(task.equals("BI")){  //Bibliographic sort
-			publicationSystem.sortByBibliographicInfo();
+			scholarshipStructure.sortByBibliographicInfo();
 		}
 		else if(task.equals("AN")){  //Scholar sort
-			publicationSystem.sortByScholar();
+			scholarshipStructure.sortByScholar();
 		}
 		else if(task.equals("PT")){  //Paper title sort
-			publicationSystem.sortByPaperTitle();
+			scholarshipStructure.sortByPaperTitle();
 		}
 		else if(task.equals("ST")){  //Serial title sort
-			publicationSystem.sortBySerialTitle();
+			scholarshipStructure.sortBySerialTitle();
 		}
 		else if(task.equals("CH")){  //Chronological sort
-			publicationSystem.sortByDate();
+			scholarshipStructure.sortByDate();
 		}
 		else if(task.equals("R")){  //Random sort
-			publicationSystem.randomSort();
+			scholarshipStructure.randomSort();
 		}
 		else if(task.equals("N")){  //Nothing
-			publicationSystem.dontSort();
+			scholarshipStructure.dontSort();
 		}
 		else if(task.equals("DI")){  //
-			publicationSystem.sortByDigitalIdentifier();
+			scholarshipStructure.sortByDigitalIdentifier();
 		}
 		else if(task.equals("PF")){  //Print to file
 			String fileName = "";
 			try{
 				fileName = JOptionPane.showInputDialog("Enter new file name", "Print to File");
-				publicationSystem.printPublicationsToFile(fileName);
+				scholarshipStructure.printPublicationsToFile(fileName);
 			}
 			catch(Exception e){
 				JOptionPane.showMessageDialog(null, "There was an error printing to the file", "", JOptionPane.ERROR_MESSAGE);
@@ -553,9 +553,9 @@ public class PublicationSystemGUI extends JFrame
 				if(choice == 0)
 					e.printStackTrace();
 			}
-			Paper paperFound = publicationSystem.getPaperLinear(searchQuery);
+			Paper paperFound = scholarshipStructure.getPaperLinear(searchQuery);
 			if(paperFound == null){
-				ArrayList<Paper> papersFound = publicationSystem.getPapers(searchQuery);
+				ArrayList<Paper> papersFound = scholarshipStructure.getPapers(searchQuery);
 				if(papersFound.size() == 0){
 					JOptionPane.showMessageDialog(null, "No paper found matching the given title", "", JOptionPane.ERROR_MESSAGE);
 				}
@@ -588,7 +588,7 @@ public class PublicationSystemGUI extends JFrame
 		}
 		//By default the method prints the publicationList to the screen
 		String forLabel = "<html>";
-		for(Paper p: publicationSystem.getPublicationList()){
+		for(Paper p: scholarshipStructure.getPublicationList()){
 			forLabel += "<p>" + p.toString() + "</p><br />";
 		}
 		forLabel += "</html>";
@@ -645,9 +645,9 @@ public class PublicationSystemGUI extends JFrame
 				toggleGraph();
 			}
 			else if(event.getSource() == searchTextField){
-				Paper paperFound = publicationSystem.getPaperLinear(searchTextField.getText());
+				Paper paperFound = scholarshipStructure.getPaperLinear(searchTextField.getText());
 				if(paperFound == null){
-					ArrayList<Paper> papersFound = publicationSystem.getPapers(searchTextField.getText());
+					ArrayList<Paper> papersFound = scholarshipStructure.getPapers(searchTextField.getText());
 					if(papersFound.size() == 0){
 						JOptionPane.showMessageDialog(null, "No papers found matching the given title", "", JOptionPane.ERROR_MESSAGE);
 					}

@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  * </P>
  * @version 2.0
  */
-public class PublicationSystem implements Serializable {
+public class ScholarshipStructure implements Serializable {
 	/* Instance Variables */
 	
 	/**
@@ -40,7 +40,7 @@ public class PublicationSystem implements Serializable {
 	/**
      * Creates a publication system with no publications
      */
-	public PublicationSystem(){
+	public ScholarshipStructure(){
 		publicationList = new PublicationList();
 		scholarMap = new ScholarMap();
 	}
@@ -162,7 +162,7 @@ public class PublicationSystem implements Serializable {
 					newFileName += ".pubsys";
 				}
 				ObjectInputStream objectReader = new ObjectInputStream(new FileInputStream(new File(newFileName)));
-				PublicationSystem newSys = (PublicationSystem)objectReader.readObject();
+				ScholarshipStructure newSys = (ScholarshipStructure)objectReader.readObject();
 				publicationList = newSys.getPublicationList();
 				scholarMap = newSys.getScholarMap();
 				objectReader.close();

@@ -1,7 +1,7 @@
 public class SearchResearch {
 	public static void main(String[] args)
 	{
-		PublicationSystem system = new PublicationSystem();
+		ScholarshipStructure system = new ScholarshipStructure();
 		system.importPublications();
 		String[] titles={"title1","title2","title3","title4","title5"};
 		System.out.println("Title	|	1.		2.			3.			4.			5.");
