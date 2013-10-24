@@ -1,3 +1,4 @@
+package Jeff;
 import Daniel.*;
 
 public class ScholarshipModel extends ScholarshipStructure{
