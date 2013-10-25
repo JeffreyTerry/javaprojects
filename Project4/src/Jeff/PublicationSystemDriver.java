@@ -1,7 +1,4 @@
 package Jeff;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
 
 /**
  * Project #3
@@ -17,6 +14,6 @@ public class PublicationSystemDriver
 	public static void main(String args[])
 	{
 		ScholarshipModel model = new ScholarshipModel();
-		//SelectionView selectionView = new SelectionView(model);
+		SelectionView selectionView = new SelectionView(model);
 	}
 }
