@@ -1,15 +1,15 @@
 package Jeff;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import Daniel.*;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,15 +19,14 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.ListModel;
 
-public class SelectionView extends JFrame{
+public class SelectionView extends JFrame implements ActionListener{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	ScholarshipModel model;
+	private ScholarshipModel model;
 	
 	/* Menu Items */
 	private JMenuItem save = new JMenuItem("Save Scholarship");
@@ -71,6 +70,7 @@ public class SelectionView extends JFrame{
 	
 	public SelectionView(ScholarshipModel model){
 		this.model = model;
+		this.model.addListener(this);
 		
 		createMenu();
 		addComponents();
@@ -176,5 +176,83 @@ public class SelectionView extends JFrame{
 		
 		add(titleBox, BorderLayout.NORTH);
 		add(itemPanel, BorderLayout.CENTER);
+	}
+	
+	public void actionPerformed(ActionEvent e){
+		//TODO
+	}
+
+	/* GETTERS AND SETTERS */
+	
+	public JMenuItem getSaveMenuItem() {
+		return save;
+	}
+
+	public JMenuItem getLoadMenuItem() {
+		return load;
+	}
+
+	public JMenuItem getImportMenuItem() {
+		return importItem;
+	}
+
+	public JMenuItem getExportMenuItem() {
+		return export;
+	}
+
+	public JMenuItem getTypeMenuItem() {
+		return type;
+	}
+
+	public JMenuItem getPubsPerYearMenuItem() {
+		return pubsPerYear;
+	}
+
+	public JMenuItem getConfPapsPerYearMenuItem() {
+		return confPapsPerYear;
+	}
+
+	public JMenuItem getJourArtsPerYearMenuItem() {
+		return jourArtsPerYear;
+	}
+
+	public JMenuItem getNumOfCoauthsMenuItem() {
+		return numOfCoauths;
+	}
+	
+	public JButton getAddScholarsButton() {
+		return addScholarButton;
+	}
+
+	public JButton getRemoveScholarsButton() {
+		return removeScholarButton;
+	}
+
+	public JButton getRemoveAllScholarsButton() {
+		return removeAllScholarsButton;
+	}
+
+	public JButton getAddSerialsButton() {
+		return addSerialButton;
+	}
+
+	public JButton getRemoveSerialsButton() {
+		return removeSerialButton;
+	}
+
+	public JButton getRemoveAllSerialsButton() {
+		return removeAllSerialsButton;
+	}
+
+	public JButton getAddPapersButton() {
+		return addPaperButton;
+	}
+
+	public JButton getRemovePapersButton() {
+		return removePaperButton;
+	}
+
+	public JButton getRemoveAllPapersButton() {
+		return removeAllPapersButton;
 	}
 }

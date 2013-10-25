@@ -1,10 +1,15 @@
 package Jeff;
 import Daniel.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
@@ -12,9 +17,10 @@ import java.util.HashMap;
 
 import javax.swing.Box;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerListModel;
 
 /**
  * Project #3
@@ -26,7 +32,7 @@ import javax.swing.JPanel;
  * @version 1.0
  */
 
-public class DisplayView extends JPanel{
+public class DisplayView extends JPanel implements ActionListener{
 	/* Instance variables */
 	
 	/** the serialVersionID */
@@ -41,7 +47,7 @@ public class DisplayView extends JPanel{
 	public static final int CONFERENCE_PAPERS_PER_YEAR = 2;
 	/** the location for the journal articles per year label */
 	public static final int JOURNAL_ARTICLES_PER_YEAR = 3;
-	/** the location for the number of coscholarships label */
+	/** the location for the number of coauthorships label */
 	public static final int NUMBER_OF_COAUTHORS = 4;
 	
 	/** width of the panel */
@@ -52,29 +58,47 @@ public class DisplayView extends JPanel{
 	private int graphType;
 	/** the Scholar being looked at */
 	private Scholar scholar;
+	/** the list of Scholars */
+	private ArrayList<String> scholarNameList;
+	/** the scholar spinner model */
+	private SpinnerListModel scholarSpinnerModel;
+	/** the Scholar selector */
+	private JSpinner scholarSpinner;
 	/** the type selector */
 	private JComboBox typeSelector;
 	/** the model */
 	private ScholarshipModel model;
 
-	
+
 	/**
      * Initializes all of the variables specific to a publication date grapher excepting the Scholar
      * @param             width					width of the panel
      * @param             height				height of the panel
      * @param			  scholarSelector		the selector for the scholars
      */
-	public DisplayView(int width, int height, ScholarshipModel model){
+	public DisplayView(ScholarshipModel model){
 		this.model = model;
-		this.width = width;
-		this.height = height;
+		this.model.addListener(this);
 		graphType = -1;
+		addComponentListener(new ComponentAdapter(){
+			public void componentResized(ComponentEvent e){
+				width = getWidth();
+				height = getHeight();
+			}
+		});
 		
+		scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
+		if(scholarNameList.size() == 0){
+			scholarNameList.add("none");
+		}
+		scholarSpinnerModel = new SpinnerListModel(scholarNameList);
+		scholarSpinner = new JSpinner(scholarSpinnerModel);
 		Box controlBox = Box.createHorizontalBox();
 		controlBox.add(Box.createGlue());
-		//This stuff creates the control panel stuff
 		controlBox.add(new JLabel("Scholar"));
-		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coscholars"};
+		controlBox.add(Box.createHorizontalStrut(10));
+		controlBox.add(scholarSpinner);
+		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthors"};
 		typeSelector = new JComboBox(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
@@ -82,13 +106,12 @@ public class DisplayView extends JPanel{
 				repaint();
 			}
 		});
-		controlBox.add(Box.createHorizontalStrut(40));
+		controlBox.add(Box.createHorizontalStrut(20));
 		controlBox.add(typeSelector);
 		controlBox.add(Box.createGlue());
 		
-		JFrame frame = new JFrame();
-		frame.add(controlBox, BorderLayout.NORTH);
-		frame.add(this, BorderLayout.CENTER);
+		setLayout(new BorderLayout());
+		add(controlBox, BorderLayout.NORTH);
 	}
 	
 	/**
@@ -311,24 +334,26 @@ public class DisplayView extends JPanel{
 		}
 	}
 	
+	public void actionPerformed(ActionEvent e){
+		if(e.getActionCommand() == "scholars"){
+			//TODO check and see if this actually updates the spinner
+			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
+			if(scholarNameList.size() == 0){
+				scholarNameList.add("none");
+			}
+		}
+	}
+	
 	/*
 	 * Mutator Methods
 	 */
 
-	
-	/**
-	 * sets the Scholar		
-	 * @param schol			the Scholar to look at
-	 */
-	public void setScholar(Scholar schol){
-		scholar = schol;
-	}
-	
 	/**
 	 * sets the graphType
 	 * @param graphType		the graph type
 	 */
 	public void setGraphType(int graphType){
 		this.graphType = graphType;
+		typeSelector.setSelectedIndex(graphType + 1);
 	}
 }

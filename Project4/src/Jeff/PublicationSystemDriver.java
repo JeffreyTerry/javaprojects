@@ -14,6 +14,10 @@ public class PublicationSystemDriver
 	public static void main(String args[])
 	{
 		ScholarshipModel model = new ScholarshipModel();
+		DisplayView displayView = new DisplayView(model);
 		SelectionView selectionView = new SelectionView(model);
+		ScholarPubController controller = new ScholarPubController(model);
+		controller.setSelectionView(selectionView);
+		controller.setDisplayView(displayView);
 	}
 }
