@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Daniel.*;
 
-public class ScholarshipModel extends ScholarshipStructure{
+public class ScholarshipModel extends ScholarlySystem{
 	/**
 	 * 
 	 */

@@ -142,36 +142,36 @@ public class DisplayView extends JPanel implements ActionListener{
 		else if(graphType == PUBLICATIONS_PER_YEAR || graphType == CONFERENCE_PAPERS_PER_YEAR || graphType == JOURNAL_ARTICLES_PER_YEAR){
 			HashMap<String, Integer> dateMap = new HashMap<String, Integer>();
 			ArrayList<ConferencePaper> conPaps = scholar.getConferencePapers();
-			ArrayList<Article> jourArts = scholar.getJournalArticles();
+			ArrayList<JournalArticle> jourArts = scholar.getJournalArticles();
 			int tempVal = 0;
-			String nextDate = "";
+			String nextYear = "";
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
 				for(int i = 0; i < conPaps.size(); i++){
-					nextDate = conPaps.get(i).getDate();
-					if(nextDate.split(" ").length > 1){
-						nextDate = nextDate.split(" ")[1];
+					nextYear = conPaps.get(i).getYear();
+					if(nextYear.split(" ").length > 1){
+						nextYear = nextYear.split(" ")[1];
 					}
-					if(!dateMap.containsKey(nextDate)){
-						dateMap.put(nextDate, 1);
+					if(!dateMap.containsKey(nextYear)){
+						dateMap.put(nextYear, 1);
 					}
 					else{
-						tempVal = dateMap.get(nextDate);
-						dateMap.put(nextDate, tempVal + 1);
+						tempVal = dateMap.get(nextYear);
+						dateMap.put(nextYear, tempVal + 1);
 					}
 				}
 			}
 			if(graphType != CONFERENCE_PAPERS_PER_YEAR){
 				for(int i = 0; i < jourArts.size(); i++){
-					nextDate = jourArts.get(i).getDate();
-					if(nextDate.split(" ").length > 1){
-						nextDate = nextDate.split(" ")[1];
+					nextYear = jourArts.get(i).getYear();
+					if(nextYear.split(" ").length > 1){
+						nextYear = nextYear.split(" ")[1];
 					}
-					if(!dateMap.containsKey(nextDate)){
-						dateMap.put(nextDate, 1);
+					if(!dateMap.containsKey(nextYear)){
+						dateMap.put(nextYear, 1);
 					}
 					else{
-						tempVal = dateMap.get(nextDate);
-						dateMap.put(nextDate, tempVal + 1);
+						tempVal = dateMap.get(nextYear);
+						dateMap.put(nextYear, tempVal + 1);
 					}
 				}
 			}
@@ -221,27 +221,27 @@ public class DisplayView extends JPanel implements ActionListener{
 		else if(graphType == NUMBER_OF_COAUTHORS){
 			HashMap<Integer, Integer> coscholarMap = new HashMap<Integer, Integer>();
 			ArrayList<ConferencePaper> conPaps = scholar.getConferencePapers();
-			ArrayList<Article> jourArts = scholar.getJournalArticles();
+			ArrayList<JournalArticle> jourArts = scholar.getJournalArticles();
 			int tempVal = 0;
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
 				for(int i = 0; i < conPaps.size(); i++){
-					if(!coscholarMap.containsKey(conPaps.get(i).getScholars().length - 1)){
-						coscholarMap.put(conPaps.get(i).getScholars().length - 1, 1);
+					if(!coscholarMap.containsKey(conPaps.get(i).getAuthors().size() - 1)){
+						coscholarMap.put(conPaps.get(i).getAuthors().size() - 1, 1);
 					}
 					else{
-						tempVal = coscholarMap.get(conPaps.get(i).getScholars().length - 1);
-						coscholarMap.put(conPaps.get(i).getScholars().length - 1, tempVal + 1);
+						tempVal = coscholarMap.get(conPaps.get(i).getAuthors().size() - 1);
+						coscholarMap.put(conPaps.get(i).getAuthors().size() - 1, tempVal + 1);
 					}
 				}
 			}
 			if(graphType != CONFERENCE_PAPERS_PER_YEAR){
 				for(int i = 0; i < jourArts.size(); i++){
-					if(!coscholarMap.containsKey(jourArts.get(i).getScholars().length - 1)){
-						coscholarMap.put(jourArts.get(i).getScholars().length - 1, 1);
+					if(!coscholarMap.containsKey(jourArts.get(i).getAuthors().size() - 1)){
+						coscholarMap.put(jourArts.get(i).getAuthors().size() - 1, 1);
 					}
 					else{
-						tempVal = coscholarMap.get(jourArts.get(i).getScholars().length - 1);
-						coscholarMap.put(jourArts.get(i).getScholars().length - 1, tempVal + 1);
+						tempVal = coscholarMap.get(jourArts.get(i).getAuthors().size() - 1);
+						coscholarMap.put(jourArts.get(i).getAuthors().size() - 1, tempVal + 1);
 					}
 				}
 			}

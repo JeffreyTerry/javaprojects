@@ -10,4 +10,9 @@ public class JournalArticle extends Paper{
 	public void setIssue(Issue issue) {
 		this.issue = issue;
 	}
+	
+	public String getYear()
+	{
+		return issue.getYear();
+	}
 }

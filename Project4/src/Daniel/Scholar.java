@@ -1,6 +1,7 @@
 package Daniel;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Scholar {
 	private String name;
@@ -89,5 +90,37 @@ public class Scholar {
 	}
 	public void setReviewingPositions(ArrayList<Issue> reviewingPositions) {
 		this.reviewingPositions = reviewingPositions;
+	}
+	
+	public ArrayList<JournalArticle> getJournalArticles()
+	{
+		Collection<Paper> papers = this.papers.values();
+		for(Paper p: papers)
+		{
+			if(!(p instanceof JournalArticle))
+				papers.remove(p);
+		}
+		ArrayList<JournalArticle> journalArticles = new ArrayList<JournalArticle>();
+		for(Paper p: papers)
+		{
+			journalArticles.add((JournalArticle) p);
+		}
+		return journalArticles;
+	}
+	
+	public ArrayList<ConferencePaper> getConferencePapers()
+	{
+		Collection<Paper> papers = this.papers.values();
+		for(Paper p: papers)
+		{
+			if(!(p instanceof ConferencePaper))
+				papers.remove(p);
+		}
+		ArrayList<ConferencePaper> conferencePapers = new ArrayList<ConferencePaper>();
+		for(Paper p: papers)
+		{
+			conferencePapers.add((ConferencePaper) p);
+		}
+		return conferencePapers;
 	}
 }
