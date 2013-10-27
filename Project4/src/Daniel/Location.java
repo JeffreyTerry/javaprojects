@@ -2,8 +2,17 @@ package Daniel;
 
 public class Location {
 	private String city;
-	private String stateOrProvence;
+	private String stateOrProvince;
 	private String country;
+	public Location(String city, String country){
+		this.city = city;
+		this.country = country;
+	}
+	public Location(String city, String stateOrProvince, String country){
+		this.city = city;
+		this.stateOrProvince = stateOrProvince;
+		this.country = country;
+	}
 	public String getCity() {
 		return city;
 	}
@@ -11,15 +20,23 @@ public class Location {
 		this.city = city;
 	}
 	public String getStateOrProvence() {
-		return stateOrProvence;
+		return stateOrProvince;
 	}
-	public void setStateOrProvence(String stateOrProvence) {
-		this.stateOrProvence = stateOrProvence;
+	public void setStateOrProvence(String stateOrProvince) {
+		this.stateOrProvince = stateOrProvince;
 	}
 	public String getCountry() {
 		return country;
 	}
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	public String toString(){
+		if(stateOrProvince != null){
+			return city + ", " + stateOrProvince + ", " + country;
+		}
+		else{
+			return city + ", " + country;
+		}
 	}
 }

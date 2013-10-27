@@ -12,7 +12,17 @@ public class ScholarshipModel extends ScholarlySystem{
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<ActionListener> listenerList = new ArrayList<ActionListener>();
-
+	
+	public void addScholar(Scholar scholar){
+		super.addScholar(scholar);
+		processEvent(new ActionEvent(this, 0, "scholar"));
+	}
+	
+	public void addAcademicOutlet(AcademicOutlet outlet){
+		super.addAcademicOutlet(outlet);
+		processEvent(new ActionEvent(this, 1, "serial"));
+	}
+	
 	public synchronized void addListener(ActionListener e){
 		listenerList.add(e);
 	}

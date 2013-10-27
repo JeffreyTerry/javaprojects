@@ -3,17 +3,17 @@ package Daniel;
 import java.util.ArrayList;
 
 public class Issue extends AcademicInstance{
-	public void setEditers(ScholarMap s)
+	public void setEditors(ScholarMap s)
 	{
 		super.setLeads(s);
 	}
 	
-	public ScholarMap getEditers()
+	public ScholarMap getEditors()
 	{
 		return super.getLeads();
 	}
 	
-	public void addEditer(Scholar s)
+	public void addEditor(Scholar s)
 	{
 		super.addLead(s);
 	}
@@ -27,9 +27,9 @@ public class Issue extends AcademicInstance{
 		super.setHelpers(s);
 	}
 	
-	public void getReviewers()
+	public ScholarMap getReviewers()
 	{
-		super.getHelpers();
+		return super.getHelpers();
 	}
 	
 	public void setJournalArticles(PaperMap papers) {

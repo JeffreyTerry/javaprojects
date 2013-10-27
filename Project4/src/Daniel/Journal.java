@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Journal extends AcademicOutlet{
 	private Location location;
-	private ArrayList<Volume> volumes;
+	private ArrayList<Volume> volumes = new ArrayList<Volume>();
 	public Location getLocation() {
 		return location;
 	}
