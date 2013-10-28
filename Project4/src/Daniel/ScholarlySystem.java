@@ -4,6 +4,7 @@ public class ScholarlySystem {
 	private ScholarMap scholarMap;
 	private PaperMap paperMap;
 	private OutletList outletList;
+	
 	public ScholarMap getScholarMap() {
 		return scholarMap;
 	}
