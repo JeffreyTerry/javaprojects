@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import Daniel.*;
 
@@ -179,7 +180,22 @@ public class SelectionView extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		//TODO
+		if(e.getActionCommand() == "scholar"){
+			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
+			for(int i = 0; i < scholars.size(); i++){
+				if(!scholarListModel.contains(scholars.get(i))){
+					scholarListModel.addElement(scholars.get(i));
+				}
+			}
+		}
+		if(e.getActionCommand() == "serial"){
+			ArrayList<AcademicOutlet> serials = model.getOutletList();
+			for(int i = 0; i < serials.size(); i++){
+				if(!serialListModel.contains(serials.get(i))){
+					serialListModel.addElement(serials.get(i));
+				}
+			}
+		}
 	}
 
 	/* GETTERS AND SETTERS */

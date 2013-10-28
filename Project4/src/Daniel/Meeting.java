@@ -23,12 +23,12 @@ public class Meeting extends AcademicInstance{
 		return super.getLeads();
 	}
 	
-	public void setCommiteeMembers(ScholarMap s)
+	public void setCommitteeMembers(ScholarMap s)
 	{
 		super.setHelpers(s);
 	}
 	
-	public ScholarMap getCommiteeMembers()
+	public ScholarMap getCommitteeMembers()
 	{
 		return super.getHelpers();
 	}

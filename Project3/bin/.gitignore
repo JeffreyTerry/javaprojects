@@ -1,5 +1,9 @@
-/PublicationDataGrapher$1.class
-/PublicationSystemGUI$1.class
-/PublicationSystemGUI$2.class
-/PublicationSystemGUI$3.class
 /PublicationSystemDriver.class
+/Article.class
+/Author.class
+/AuthorMap.class
+/ConferencePaper.class
+/Paper.class
+/PaperTest.class
+/PublicationDataGrapher$1.class
+/PublicationDataGrapher.class

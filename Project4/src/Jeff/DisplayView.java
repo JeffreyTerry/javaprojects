@@ -59,7 +59,7 @@ public class DisplayView extends JPanel implements ActionListener{
 	/** the Scholar being looked at */
 	private Scholar scholar;
 	/** the list of Scholars */
-	private ArrayList<String> scholarNameList;
+	private ArrayList<String> scholarNameList = new ArrayList<String>();
 	/** the scholar spinner model */
 	private SpinnerListModel scholarSpinnerModel;
 	/** the Scholar selector */
@@ -86,8 +86,10 @@ public class DisplayView extends JPanel implements ActionListener{
 				height = getHeight();
 			}
 		});
-		
-		scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
+
+		if(this.model != null && this.model.getScholarMap() != null){
+			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
+		}
 		if(scholarNameList.size() == 0){
 			scholarNameList.add("none");
 		}
@@ -335,12 +337,12 @@ public class DisplayView extends JPanel implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		if(e.getActionCommand() == "scholars"){
-			//TODO check and see if this actually updates the spinner
+		if(e.getActionCommand() == "scholar"){
 			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
 			if(scholarNameList.size() == 0){
 				scholarNameList.add("none");
 			}
+			scholarSpinnerModel.setList(scholarNameList);
 		}
 	}
 	

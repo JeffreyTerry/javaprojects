@@ -5,13 +5,13 @@ import java.util.Collection;
 
 public class Scholar {
 	private String name;
-	private ArrayList<String> institutionalAffiliations;
-	private ArrayList<String> researchAreas;
-	private PaperMap papers;
-	private ArrayList<Meeting> chairs;
-	private ArrayList<Meeting> committees;
-	private ArrayList<Issue> editingPositions;
-	private ArrayList<Issue> reviewingPositions;
+	private ArrayList<String> institutionalAffiliations = new ArrayList<String>();
+	private ArrayList<String> researchAreas = new ArrayList<String>();
+	private PaperMap papers = new PaperMap();
+	private ArrayList<Meeting> chairs = new ArrayList<Meeting>();
+	private ArrayList<Meeting> committees = new ArrayList<Meeting>();
+	private ArrayList<Issue> editingPositions = new ArrayList<Issue>();
+	private ArrayList<Issue> reviewingPositions = new ArrayList<Issue>();
 	
 	public void addInstitutionalAffiliations(String s)
 	{
@@ -37,11 +37,17 @@ public class Scholar {
 	{
 		this.editingPositions.add(i);
 	}
-	
-	public void addReivewingPosition(Issue i)
+
+	public void addReviewingPosition(Issue i)
 	{
 		this.reviewingPositions.add(i);
 	}
+
+	public void addPaper(Paper p)
+	{
+		this.papers.put(p.getTitle(), p);
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -122,5 +128,9 @@ public class Scholar {
 			conferencePapers.add((ConferencePaper) p);
 		}
 		return conferencePapers;
+	}
+	
+	public String toString(){
+		return name;
 	}
 }
