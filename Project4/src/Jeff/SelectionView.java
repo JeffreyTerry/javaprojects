@@ -96,6 +96,7 @@ public class SelectionView extends JFrame implements ActionListener{
 		
 		menuBar.add(fileMenu);
 		menuBar.add(plotMenu);
+		plotMenu.setEnabled(false);
 
 		setJMenuBar(menuBar);		
 	}
@@ -192,20 +193,27 @@ public class SelectionView extends JFrame implements ActionListener{
 		if(e.getActionCommand() == "scholar added"){
 			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
 			for(int i = 0; i < scholars.size(); i++){
-				if(!scholarListModel.contains(scholars.get(i))){
+				if(!(scholars.get(i).getName()==null) && !scholarListModel.contains(scholars.get(i))){
+					System.out.println(scholars.get(i));
 					scholarListModel.addElement(scholars.get(i));
 				}
 				//TODO: tell user if it already exists
 			}
-			addSerialButton.setEnabled(true);
-			removeScholarButton.setEnabled(true);
-			removeAllScholarsButton.setEnabled(true);
-		
-			type.setEnabled(true);
-			pubsPerYear.setEnabled(true);
-			confPapsPerYear.setEnabled(true);
-			jourArtsPerYear.setEnabled(true);
-			numOfCoauths.setEnabled(true);
+			if(scholarListModel.size()>0)
+			{
+				addSerialButton.setEnabled(true);
+				removeScholarButton.setEnabled(true);
+				removeAllScholarsButton.setEnabled(true);
+			
+				type.setEnabled(true);
+				pubsPerYear.setEnabled(true);
+				confPapsPerYear.setEnabled(true);
+				jourArtsPerYear.setEnabled(true);
+				numOfCoauths.setEnabled(true);
+				
+				plotMenu.setEnabled(true);
+			}
+			
 		}
 		if(e.getActionCommand() == "serial added"){
 			ArrayList<AcademicOutlet> serials = model.getOutletList();
