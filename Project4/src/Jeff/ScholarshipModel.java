@@ -23,6 +23,11 @@ public class ScholarshipModel extends ScholarlySystem{
 		processEvent(new ActionEvent(this, 1, "serial"));
 	}
 	
+	public void addPaper(Paper paper){
+		super.addPaper(paper);
+		processEvent(new ActionEvent(this, 2, "paper"));
+	}
+	
 	public synchronized void addListener(ActionListener e){
 		listenerList.add(e);
 	}

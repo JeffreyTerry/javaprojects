@@ -15,4 +15,7 @@ public class JournalArticle extends Paper{
 	{
 		return issue.getYear();
 	}
+	public String toString(){
+		return getTitle();
+	}
 }

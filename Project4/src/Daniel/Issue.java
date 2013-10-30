@@ -53,4 +53,7 @@ public class Issue extends AcademicInstance{
 		else
 			ErrorHandling.showMessage("Not a JournalArticle. addJournalArticle failed to operate.");
 	}
+	public String toString(){
+		return getMonth() + " " + getYear();
+	}
 }

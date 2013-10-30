@@ -21,4 +21,7 @@ public class Journal extends AcademicOutlet{
 	{
 		this.volumes.add(v); 
 	}
+	public String toString(){
+		return this.getOrganizationName();
+	}
 }
