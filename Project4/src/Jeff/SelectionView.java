@@ -111,6 +111,7 @@ public class SelectionView extends JFrame implements ActionListener{
 		
 		menuBar.add(fileMenu);
 		menuBar.add(plotMenu);
+		plotMenu.setEnabled(false);
 
 		setJMenuBar(menuBar);		
 	}
