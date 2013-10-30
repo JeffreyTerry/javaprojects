@@ -383,6 +383,15 @@ public class ScholarPubController{
 			}
 		});
 
+		addResearchAreaButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				researchAreaFields.add(new JTextField());
+				researchAreaFields.get(researchAreaFields.size() - 1).setPreferredSize(textFieldDimension);;
+				researchAreaPanel.add(researchAreaFields.get(researchAreaFields.size() - 1), researchAreaPanel.getComponentCount() - 1);
+				addScholarDialog.validate();
+			}
+		});
+
 		saveScholarButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				//Add name
