@@ -3,9 +3,9 @@ package Daniel;
 public class AcademicInstance { 
 	private String month;
 	private String year;
-	private ScholarMap leads;
-	private ScholarMap helpers;
-	private PaperMap papers;
+	private ScholarMap leads = new ScholarMap();
+	private ScholarMap helpers = new ScholarMap();
+	private PaperMap papers = new PaperMap();
 	
 	public String getMonth() {
 		return month;

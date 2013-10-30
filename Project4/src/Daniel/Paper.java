@@ -33,4 +33,7 @@ public class Paper {
 	{
 		authors.put(s.getName(),s);
 	}
+	public String toString(){
+		return title;
+	}
 }

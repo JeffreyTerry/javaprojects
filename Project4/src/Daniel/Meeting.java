@@ -59,4 +59,8 @@ public class Meeting extends AcademicInstance{
 		else
 			ErrorHandling.showMessage("Not a ConferencePaper. addConferencePaper failed to operate.");
 	}
+	
+	public String toString(){
+		return getMonth() + " " + getYear();
+	}
 }

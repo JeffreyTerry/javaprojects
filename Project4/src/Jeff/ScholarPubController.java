@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,8 +19,10 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
@@ -33,6 +37,10 @@ public class ScholarPubController{
 
 	public void setSelectionView(SelectionView view){
 		selectionView = view;
+		ListClickListener listClickListener = new ListClickListener();
+		selectionView.getScholarList().addMouseListener(listClickListener);
+		selectionView.getSerialList().addMouseListener(listClickListener);
+		selectionView.getPaperList().addMouseListener(listClickListener);
 		selectionView.getAddScholarsButton().addActionListener(new AddScholarsListener());
 		selectionView.getAddSerialsButton().addActionListener(new AddSerialsListener());
 		selectionView.getAddPapersButton().addActionListener(new AddPapersListener());
@@ -127,7 +135,7 @@ public class ScholarPubController{
 				for(int i = 0; i < reviewerArr.length; i++){
 					reviewers.put(((Scholar)reviewerArr[i]).getName(), (Scholar)reviewerArr[i]);
 				}
-				theNewIssue.setEditors(reviewers);
+				theNewIssue.setReviewers(reviewers);
 				//Add papers
 				PaperMap papers = new PaperMap();
 				Object[] paperArr = paperList.getSelectedValues();
@@ -266,7 +274,6 @@ public class ScholarPubController{
 					papers.put(((Paper)paperArr[i]).getTitle(), (Paper)paperArr[i]);
 				}
 				theNewMeeting.setPapers(papers);
-				
 
 				addMeetingDialog.dispatchEvent(new WindowEvent(addMeetingDialog, WindowEvent.WINDOW_CLOSING));
 			}
@@ -278,7 +285,7 @@ public class ScholarPubController{
 		addMeetingDialog.setLocationRelativeTo(selectionView);
 		addMeetingDialog.setModal(true);
 		addMeetingDialog.setVisible(true);
-		
+
 		return theNewMeeting;
 	}
 	
@@ -574,9 +581,21 @@ public class ScholarPubController{
 				else{
 					theNewJournal.setOrganizationName(organizationField.getText());
 				}
-				
 				//Add location
-				
+				if(cityField.getText().length() == 0){
+					JOptionPane.showMessageDialog(addJournalDialog, "Please enter a city", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(countryField.getText().length() == 0){
+					JOptionPane.showMessageDialog(addJournalDialog, "Please enter a country", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(stateField.getText().length() != 0){
+					theNewJournal.setLocation(new Location(cityField.getText(), stateField.getText(), countryField.getText()));
+				}
+				else{
+					theNewJournal.setLocation(new Location(cityField.getText(), countryField.getText()));
+				}
 				//Add volumes
 				theNewJournal.setVolumes(volumes);
 
@@ -595,13 +614,265 @@ public class ScholarPubController{
 	}
 
 	private ConferencePaper openCreateConferencePaperDialog(){
-		//TODO
-		return null;
+		JLabel titleLabel = new JLabel("Title");
+		final JTextField titleField = new JTextField();
+		JLabel pagesLabel = new JLabel("Pages");
+		final JTextField startPageField = new JTextField();
+		JLabel pagesHyphen = new JLabel("-");
+		final JTextField endPageField = new JTextField();
+		JLabel confLabel = new JLabel("Conference");
+		OutletList outletList = model.getOutletList();
+		ArrayList<Conference> conferences = new ArrayList<Conference>();
+		for(int i = 0; i < outletList.size(); i++){
+			if(outletList.get(i) instanceof Conference){
+				conferences.add((Conference)outletList.get(i));
+			}
+		}
+		final JList confList = new JList(conferences.toArray());
+		confList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JLabel scholarLabel = new JLabel("Authors");
+		final JList scholarList = new JList(model.getScholarMap().values().toArray());
+		JLabel diLabel = new JLabel("Digital Identifier (optional)");
+		final JTextField diField = new JTextField();
+		JButton saveConferencePaperButton = new JButton("Save ConferencePaper");
+		
+		final Dimension textFieldDimension = new Dimension(160, 30);
+		titleField.setPreferredSize(textFieldDimension);
+		startPageField.setPreferredSize(textFieldDimension);
+		endPageField.setPreferredSize(textFieldDimension);
+		diField.setPreferredSize(textFieldDimension);
+
+		JPanel titlePanel = new JPanel();
+		JPanel pagesPanel = new JPanel();
+		JPanel confPanel = new JPanel();
+		JPanel scholarPanel = new JPanel();
+		JPanel diPanel = new JPanel();
+		JPanel savePanel = new JPanel();
+
+		titlePanel.add(titleLabel);
+		titlePanel.add(titleField);
+		pagesPanel.add(pagesLabel);
+		pagesPanel.add(startPageField);
+		pagesPanel.add(pagesHyphen);
+		pagesPanel.add(endPageField);
+		confPanel.add(confLabel);
+		confPanel.add(confList);
+		scholarPanel.add(scholarLabel);
+		scholarPanel.add(scholarList);
+		diPanel.add(diLabel);
+		diPanel.add(diField);
+		savePanel.add(saveConferencePaperButton);
+
+		Box addConferencePaperBox = Box.createVerticalBox();
+		addConferencePaperBox.add(Box.createVerticalGlue());
+		addConferencePaperBox.add(titlePanel);
+		addConferencePaperBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addConferencePaperBox.add(pagesPanel);
+		addConferencePaperBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addConferencePaperBox.add(confPanel);
+		addConferencePaperBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addConferencePaperBox.add(scholarPanel);
+		addConferencePaperBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addConferencePaperBox.add(diPanel);
+		addConferencePaperBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addConferencePaperBox.add(savePanel);
+		addConferencePaperBox.add(Box.createVerticalGlue());
+
+		final JDialog addConferencePaperDialog = new JDialog();
+		
+		final ConferencePaper theNewConferencePaper = new ConferencePaper();
+		saveConferencePaperButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				//Add title
+				if(titleField.getText().length() == 0){
+					JOptionPane.showMessageDialog(addConferencePaperDialog, "Please enter a title", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				else{
+					theNewConferencePaper.setTitle(titleField.getText());
+				}
+				//Add pages
+				if(startPageField.getText().length() == 0 || endPageField.getText().length() == 0){
+					JOptionPane.showMessageDialog(addConferencePaperDialog, "Please enter pages", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				else{
+					try{
+						theNewConferencePaper.setPageNumbers(new int[]{Integer.parseInt(startPageField.getText()), Integer.parseInt(endPageField.getText())});
+					}
+					catch(NumberFormatException ex){
+						JOptionPane.showMessageDialog(addConferencePaperDialog, "Invalid page numbers", "", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+				//Add conference
+				if(confList.getSelectedValue() == null){
+					JOptionPane.showMessageDialog(addConferencePaperDialog, "Please select a conference", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				theNewConferencePaper.setConference((Conference)confList.getSelectedValue());
+				//Add scholars
+				ScholarMap scholars = new ScholarMap();
+				Object[] scholarArr = scholarList.getSelectedValues();
+				for(int i = 0; i < scholarArr.length; i++){
+					scholars.put(((Scholar)scholarArr[i]).getName(), (Scholar)scholarArr[i]);
+				}
+				if(scholars.isEmpty()){
+					JOptionPane.showMessageDialog(addConferencePaperDialog, "Please add authors", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				theNewConferencePaper.setAuthors(scholars);
+				//Add digital object identifier
+				if(diField.getText().length() != 0){
+					theNewConferencePaper.setDigitalIdentifier(diField.getText());
+				}
+
+				addConferencePaperDialog.dispatchEvent(new WindowEvent(addConferencePaperDialog, WindowEvent.WINDOW_CLOSING));
+			}
+		});
+		
+		addConferencePaperDialog.setTitle("Add ConferencePaper");
+		addConferencePaperDialog.add(addConferencePaperBox);
+		addConferencePaperDialog.setSize(selectionView.getWidth() - 40, selectionView.getHeight() - 100);
+		addConferencePaperDialog.setLocationRelativeTo(selectionView);
+		addConferencePaperDialog.setModal(true);
+		addConferencePaperDialog.setVisible(true);
+		
+		return theNewConferencePaper;
 	}
 
 	private JournalArticle openCreateJournalArticleDialog(){
-		//TODO
-		return null;
+		JLabel titleLabel = new JLabel("Title");
+		final JTextField titleField = new JTextField();
+		JLabel pagesLabel = new JLabel("Pages");
+		final JTextField startPageField = new JTextField();
+		JLabel pagesHyphen = new JLabel("-");
+		final JTextField endPageField = new JTextField();
+		JLabel issueLabel = new JLabel("Issue");
+		OutletList outletList = model.getOutletList();
+		ArrayList<Journal> journals = new ArrayList<Journal>();
+		for(int i = 0; i < outletList.size(); i++){
+			if(outletList.get(i) instanceof Journal){
+				journals.add((Journal)outletList.get(i));
+			}
+		}
+		ArrayList<Issue> issues = new ArrayList<Issue>();
+		for(int i = 0; i < journals.size(); i++){
+			for(int j = 0; j < journals.get(i).getVolumes().size(); j++){
+				issues.addAll(journals.get(i).getVolumes().get(j));
+			}
+		}
+		final JList issueList = new JList(issues.toArray());
+		issueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JLabel scholarLabel = new JLabel("Authors");
+		final JList scholarList = new JList(model.getScholarMap().values().toArray());
+		JLabel diLabel = new JLabel("Digital Identifier (optional)");
+		final JTextField diField = new JTextField();
+		JButton saveJournalArticleButton = new JButton("Save JournalArticle");
+		
+		final Dimension textFieldDimension = new Dimension(160, 30);
+		titleField.setPreferredSize(textFieldDimension);
+		startPageField.setPreferredSize(textFieldDimension);
+		endPageField.setPreferredSize(textFieldDimension);
+		diField.setPreferredSize(textFieldDimension);
+
+		JPanel titlePanel = new JPanel();
+		JPanel pagesPanel = new JPanel();
+		JPanel issuePanel = new JPanel();
+		JPanel scholarPanel = new JPanel();
+		JPanel diPanel = new JPanel();
+		JPanel savePanel = new JPanel();
+
+		titlePanel.add(titleLabel);
+		titlePanel.add(titleField);
+		pagesPanel.add(pagesLabel);
+		pagesPanel.add(startPageField);
+		pagesPanel.add(pagesHyphen);
+		pagesPanel.add(endPageField);
+		issuePanel.add(issueLabel);
+		issuePanel.add(issueList);
+		scholarPanel.add(scholarLabel);
+		scholarPanel.add(scholarList);
+		diPanel.add(diLabel);
+		diPanel.add(diField);
+		savePanel.add(saveJournalArticleButton);
+
+		Box addJournalArticleBox = Box.createVerticalBox();
+		addJournalArticleBox.add(Box.createVerticalGlue());
+		addJournalArticleBox.add(titlePanel);
+		addJournalArticleBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addJournalArticleBox.add(pagesPanel);
+		addJournalArticleBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addJournalArticleBox.add(issuePanel);
+		addJournalArticleBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addJournalArticleBox.add(scholarPanel);
+		addJournalArticleBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addJournalArticleBox.add(diPanel);
+		addJournalArticleBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		addJournalArticleBox.add(savePanel);
+		addJournalArticleBox.add(Box.createVerticalGlue());
+
+		final JDialog addJournalArticleDialog = new JDialog();
+		
+		final JournalArticle theNewJournalArticle = new JournalArticle();
+		saveJournalArticleButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				//Add title
+				if(titleField.getText().length() == 0){
+					JOptionPane.showMessageDialog(addJournalArticleDialog, "Please enter a title", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				else{
+					theNewJournalArticle.setTitle(titleField.getText());
+				}
+				//Add pages
+				if(startPageField.getText().length() == 0 || endPageField.getText().length() == 0){
+					JOptionPane.showMessageDialog(addJournalArticleDialog, "Please enter pages", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				else{
+					try{
+						theNewJournalArticle.setPageNumbers(new int[]{Integer.parseInt(startPageField.getText()), Integer.parseInt(endPageField.getText())});
+					}
+					catch(NumberFormatException ex){
+						JOptionPane.showMessageDialog(addJournalArticleDialog, "Invalid page numbers", "", JOptionPane.WARNING_MESSAGE);
+						return;
+					}
+				}
+				//Add issue
+				if(issueList.getSelectedValue() == null){
+					JOptionPane.showMessageDialog(addJournalArticleDialog, "Please select an issue", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				theNewJournalArticle.setIssue((Issue)issueList.getSelectedValue());
+				//Add scholars
+				ScholarMap scholars = new ScholarMap();
+				Object[] scholarArr = scholarList.getSelectedValues();
+				for(int i = 0; i < scholarArr.length; i++){
+					scholars.put(((Scholar)scholarArr[i]).getName(), (Scholar)scholarArr[i]);
+				}
+				if(scholars.isEmpty()){
+					JOptionPane.showMessageDialog(addJournalArticleDialog, "Please add authors", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				theNewJournalArticle.setAuthors(scholars);
+				//Add digital object identifier
+				if(diField.getText().length() != 0){
+					theNewJournalArticle.setDigitalIdentifier(diField.getText());
+				}
+
+				addJournalArticleDialog.dispatchEvent(new WindowEvent(addJournalArticleDialog, WindowEvent.WINDOW_CLOSING));
+			}
+		});
+		
+		addJournalArticleDialog.setTitle("Add JournalArticle");
+		addJournalArticleDialog.add(addJournalArticleBox);
+		addJournalArticleDialog.setSize(selectionView.getWidth() - 40, selectionView.getHeight() - 100);
+		addJournalArticleDialog.setLocationRelativeTo(selectionView);
+		addJournalArticleDialog.setModal(true);
+		addJournalArticleDialog.setVisible(true);
+		
+		return theNewJournalArticle;
 	}
 	
 	private Conference openAddConferenceDialog(){
@@ -784,6 +1055,116 @@ public class ScholarPubController{
 	private class ExportListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			//TODO
+		}
+	}
+	
+	private class ListClickListener extends MouseAdapter{
+		public void mousePressed(final MouseEvent e){
+			if(e.isPopupTrigger()){
+				final int verticalMargin = 10;
+				JPopupMenu infoMenu = new JPopupMenu();
+				JMenuItem infoItem = new JMenuItem("Get Info");
+				infoMenu.add(infoItem);
+				if(e.getSource() == selectionView.getScholarList()){
+					selectionView.getScholarList().setSelectedIndex(selectionView.getScholarList().locationToIndex(e.getPoint()));
+					infoMenu.show(selectionView.getScholarList(), e.getX(), e.getY());
+					infoItem.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent event){
+							Scholar scholar = (Scholar)selectionView.getScholarList().getModel().getElementAt(selectionView.getScholarList().locationToIndex(e.getPoint()));
+							JDialog infoDialog = new JDialog();
+							JPanel namePanel = new JPanel();
+							JPanel institutionPanel = new JPanel();
+							JPanel researchAreaPanel = new JPanel();
+							JPanel conferencePaperPanel = new JPanel();
+							JPanel journalArticlePanel = new JPanel();
+							JPanel chairPanel = new JPanel();
+							JPanel committeePanel = new JPanel();
+							JPanel editorPanel = new JPanel();
+							JPanel reviewerPanel = new JPanel();
+							
+							namePanel.add(new JLabel("Name "));
+							institutionPanel.add(new JLabel("Institutional Affiliations "));
+							researchAreaPanel.add(new JLabel("Research Areas "));
+							conferencePaperPanel.add(new JLabel("Conference Papers "));
+							journalArticlePanel.add(new JLabel("Journal Articles "));
+							chairPanel.add(new JLabel("Committees Chaired"));
+							committeePanel.add(new JLabel("Committees"));
+							editorPanel.add(new JLabel("Issues Edited"));
+							reviewerPanel.add(new JLabel("Issues Reviewed"));
+							namePanel.add(new JLabel(scholar.getName()));
+							for(int i = 0; i < scholar.getInstitutionalAffiliations().size(); i++){
+								institutionPanel.add(new JLabel(scholar.getInstitutionalAffiliations().get(i)));
+							}
+							for(int i = 0; i < scholar.getResearchAreas().size(); i++){
+								researchAreaPanel.add(new JLabel(scholar.getResearchAreas().get(i)));
+							}
+							for(int i = 0; i < scholar.getConferencePapers().size(); i++){
+								conferencePaperPanel.add(new JLabel(scholar.getConferencePapers().get(i).toString()));
+							}
+							for(int i = 0; i < scholar.getJournalArticles().size(); i++){
+								journalArticlePanel.add(new JLabel(scholar.getJournalArticles().get(i).toString()));
+							}
+							for(int i = 0; i < scholar.getChairs().size(); i++){
+								chairPanel.add(new JLabel(scholar.getChairs().get(i).toString()));
+							}
+							for(int i = 0; i < scholar.getCommittees().size(); i++){
+								committeePanel.add(new JLabel(scholar.getCommittees().get(i).toString()));
+							}
+							for(int i = 0; i < scholar.getEditingPositions().size(); i++){
+								editorPanel.add(new JLabel(scholar.getEditingPositions().get(i).toString()));
+							}
+							for(int i = 0; i < scholar.getReviewingPositions().size(); i++){
+								reviewerPanel.add(new JLabel(scholar.getReviewingPositions().get(i).toString()));
+							}
+							Box infoBox = Box.createVerticalBox();
+							infoBox.add(Box.createVerticalGlue());
+							infoBox.add(namePanel);
+							infoBox.add(Box.createVerticalStrut(verticalMargin));
+							if(scholar.getInstitutionalAffiliations().size() > 0){
+								infoBox.add(institutionPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getResearchAreas().size() > 0){
+								infoBox.add(researchAreaPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getConferencePapers().size() > 0){
+								infoBox.add(conferencePaperPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getJournalArticles().size() > 0){
+								infoBox.add(journalArticlePanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getChairs().size() > 0){
+								infoBox.add(chairPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getCommittees().size() > 0){
+								infoBox.add(committeePanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getEditingPositions().size() > 0){
+								infoBox.add(editorPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							if(scholar.getReviewingPositions().size() > 0){
+								infoBox.add(reviewerPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+							}
+							infoDialog.add(infoBox, BorderLayout.CENTER);
+							infoDialog.pack();
+							infoDialog.setLocationRelativeTo(selectionView);
+							infoDialog.setModal(true);
+							infoDialog.setVisible(true);
+						}
+					});
+				}
+				else if(e.getSource() == selectionView.getSerialList()){
+				}
+				else if(e.getSource() == selectionView.getPaperList()){
+				}
+			}
 		}
 	}
 

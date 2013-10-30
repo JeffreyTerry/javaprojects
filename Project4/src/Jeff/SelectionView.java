@@ -196,6 +196,14 @@ public class SelectionView extends JFrame implements ActionListener{
 				}
 			}
 		}
+		if(e.getActionCommand() == "paper"){
+			ArrayList<Paper> papers = new ArrayList<Paper>(model.getPaperMap().values());
+			for(int i = 0; i < papers.size(); i++){
+				if(!paperListModel.contains(papers.get(i))){
+					paperListModel.addElement(papers.get(i));
+				}
+			}
+		}
 	}
 
 	/* GETTERS AND SETTERS */
@@ -235,7 +243,11 @@ public class SelectionView extends JFrame implements ActionListener{
 	public JMenuItem getNumOfCoauthsMenuItem() {
 		return numOfCoauths;
 	}
-	
+
+	public JList getScholarList() {
+		return scholarList;
+	}
+
 	public JButton getAddScholarsButton() {
 		return addScholarButton;
 	}
@@ -248,6 +260,10 @@ public class SelectionView extends JFrame implements ActionListener{
 		return removeAllScholarsButton;
 	}
 
+	public JList getSerialList() {
+		return serialList;
+	}
+
 	public JButton getAddSerialsButton() {
 		return addSerialButton;
 	}
@@ -258,6 +274,10 @@ public class SelectionView extends JFrame implements ActionListener{
 
 	public JButton getRemoveAllSerialsButton() {
 		return removeAllSerialsButton;
+	}
+
+	public JList getPaperList() {
+		return paperList;
 	}
 
 	public JButton getAddPapersButton() {
