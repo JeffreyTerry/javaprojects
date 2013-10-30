@@ -26,12 +26,9 @@ import javax.swing.SpinnerListModel;
  * Project #3
  * CS 2334, Section 011
  * 10/9/2013
- * <P>
- * This class is the JPanel that handles the graphing
- * </P>
- * @version 1.0
+ * This class shows the scholar data graphs
+ * @version 2.0
  */
-
 public class DisplayView extends JPanel implements ActionListener{
 	/* Instance variables */
 	
@@ -91,7 +88,7 @@ public class DisplayView extends JPanel implements ActionListener{
 			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
 		}
 		if(scholarNameList.size() == 0){
-			scholarNameList.add("none");
+			scholarNameList.add("");
 		}
 		scholarSpinnerModel = new SpinnerListModel(scholarNameList);
 		scholarSpinner = new JSpinner(scholarSpinnerModel);
@@ -336,11 +333,26 @@ public class DisplayView extends JPanel implements ActionListener{
 		}
 	}
 	
-	public void actionPerformed(ActionEvent e){
-		if(e.getActionCommand() == "scholar added"){
-			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
-			if(scholarNameList.size() == 0){
-				scholarNameList.add("none");
+	/**
+	 * Listens for changes in the scholar map of the model
+	 */
+	public void actionPerformed(ActionEvent ev){
+		DataChangeEvent e;
+		if(ev instanceof DataChangeEvent){
+			e = (DataChangeEvent)ev;
+		}
+		else{
+			return;
+		}
+		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_ADDED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				scholarNameList.add(e.getObjectsChanged()[i].toString());
+			}
+			System.out.println(scholarNameList);
+		}
+		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				scholarNameList.remove(e.getObjectsChanged()[i].toString());
 			}
 			scholarSpinnerModel.setList(scholarNameList);
 		}

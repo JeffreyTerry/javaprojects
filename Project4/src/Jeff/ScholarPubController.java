@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -26,15 +25,33 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+/**
+ * Project #3
+ * CS 2334, Section 011
+ * 10/9/2013
+ * This class allows for user interaction between a selection view, a display view, and a scholarship model
+ * @version 1.0
+ */
 public class ScholarPubController{
+	/** The model */
 	private ScholarshipModel model;
+	/** The selection view */
 	private SelectionView selectionView;
+	/** The display view */
 	private DisplayView displayView;
 	
+	/** The default constructor
+	 * 
+	 * @param model		The model to be used
+	 */
 	public ScholarPubController(ScholarshipModel model){
 		this.model = model;
 	}
 
+	/**
+	 * Sets the selection view to the given view
+	 * @param view		The new selection view
+	 */
 	public void setSelectionView(SelectionView view){
 		selectionView = view;
 		ListClickListener listClickListener = new ListClickListener();
@@ -63,11 +80,19 @@ public class ScholarPubController{
 		selectionView.getJourArtsPerYearMenuItem().addActionListener(odvl);
 		selectionView.getNumOfCoauthsMenuItem().addActionListener(odvl);
 	}
-	
+
+	/**
+	 * Sets the display view to the given view
+	 * @param view		The new display view
+	 */
 	public void setDisplayView(DisplayView view){
 		displayView = view;
 	}
 
+	/**
+	 * Opens a dialog that prompts the user for issue information
+	 * @return	A new Issue created using the user input
+	 */
 	private Issue openCreateIssueDialog(){
 		final JComboBox monthSelector = new JComboBox(new String[]{"January","February","March","April","May","June","July","August","September","October","November","December"});
 		String[] years = new String[150];
@@ -158,6 +183,10 @@ public class ScholarPubController{
 		return theNewIssue;
 	}
 
+	/**
+	 * Opens a dialog that prompts the user for meeting information
+	 * @return	A new Meeting created using the user input
+	 */
 	private Meeting openCreateMeetingDialog(){
 		final JComboBox monthSelector = new JComboBox(new String[]{"January","February","March","April","May","June","July","August","September","October","November","December"});
 		String[] years = new String[150];
@@ -288,7 +317,11 @@ public class ScholarPubController{
 
 		return theNewMeeting;
 	}
-	
+
+	/**
+	 * Opens a dialog that prompts the user for volume information
+	 * @return	A new Volume created using the user input
+	 */
 	private Volume openCreateVolumeDialog(){
 		JButton addIssueButton = new JButton("Add Issue");
 		JButton saveVolumeButton = new JButton("Save Volume");
@@ -333,7 +366,11 @@ public class ScholarPubController{
 		
 		return theNewVolume;
 	}
-	
+
+	/**
+	 * Opens a dialog that prompts the user for scholar information
+	 * @return	A new Scholar created using the user input
+	 */
 	private Scholar openCreateScholarDialog(){
 		JLabel nameLabel = new JLabel("Name");
 		final JTextField nameField = new JTextField();
@@ -450,6 +487,10 @@ public class ScholarPubController{
 		return theNewScholar;
 	}
 
+	/**
+	 * Opens a dialog that prompts the user for conference information
+	 * @return	A new Conference created using the user input
+	 */
 	private Conference openCreateConferenceDialog(){
 		JLabel organizationLabel = new JLabel("Organization");
 		final JTextField organizationField = new JTextField();
@@ -517,6 +558,10 @@ public class ScholarPubController{
 		return theNewConference;
 	}
 
+	/**
+	 * Opens a dialog that prompts the user for journal information
+	 * @return	A new Journal created using the user input
+	 */
 	private Journal openCreateJournalDialog(){
 		JLabel organizationLabel = new JLabel("Organization");
 		final JTextField organizationField = new JTextField();
@@ -622,6 +667,10 @@ public class ScholarPubController{
 		return theNewJournal;
 	}
 
+	/**
+	 * Opens a dialog that prompts the user for conference paper information
+	 * @return	A new ConferencePaper created using the user input
+	 */
 	private ConferencePaper openCreateConferencePaperDialog(){
 		JLabel titleLabel = new JLabel("Title");
 		final JTextField titleField = new JTextField();
@@ -750,6 +799,10 @@ public class ScholarPubController{
 		return theNewConferencePaper;
 	}
 
+	/**
+	 * Opens a dialog that prompts the user for journal article information
+	 * @return	A new JournalArticle created using the user input
+	 */
 	private JournalArticle openCreateJournalArticleDialog(){
 		JLabel titleLabel = new JLabel("Title");
 		final JTextField titleField = new JTextField();
@@ -883,7 +936,11 @@ public class ScholarPubController{
 		
 		return theNewJournalArticle;
 	}
-	
+
+	/**
+	 * Opens a dialog that allows the user to select from a list of existing conferences
+	 * @return	The selected conference
+	 */
 	private Conference openAddConferenceDialog(){
 		ArrayList<Conference> confList = new ArrayList<Conference>();
 		for(int i = 0; i < model.getOutletList().size(); i++){
@@ -925,6 +982,10 @@ public class ScholarPubController{
 		return ((Conference)selector.getSelectedItem());
 	}
 
+	/**
+	 * Opens a dialog allows the user to select from a list of existing journals
+	 * @return	The selected journal
+	 */
 	private Journal openAddJournalDialog(){
 		ArrayList<Journal> journList = new ArrayList<Journal>();
 		for(int i = 0; i < model.getOutletList().size(); i++){
@@ -966,7 +1027,9 @@ public class ScholarPubController{
 		return ((Journal)selector.getSelectedItem());
 	}
 
+	/** The height of the vertical margins between panels in the information dialogs */
 	private final int dialogVerticalMargin = 5;
+	
 	private class AddScholarsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			Scholar newScholar = openCreateScholarDialog();
@@ -1017,7 +1080,12 @@ public class ScholarPubController{
 	}
 	private class RemoveScholarsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			Object[] selectedObjects = selectionView.getScholarList().getSelectedValues();
+			Scholar[] scholarList = new Scholar[selectedObjects.length];
+			for(int i = 0; i < selectedObjects.length; i++){
+				scholarList[i] = (Scholar)selectedObjects[i];
+			}
+			model.removeScholars(scholarList);
 		}
 	}
 	private class RemoveSerialsListener implements ActionListener{
@@ -1067,6 +1135,10 @@ public class ScholarPubController{
 		}
 	}
 	
+	/**
+	 * Listens for right clicks on the list
+	 *
+	 */
 	private class ListClickListener extends MouseAdapter{
 		public void mousePressed(final MouseEvent e){
 			if(e.isPopupTrigger()){
@@ -1176,10 +1248,13 @@ public class ScholarPubController{
 			}
 		}
 	}
-
+	
+	/**
+	 * Listens for clicks to open up the display view
+	 */
 	private class DisplayViewListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			if(displayView == null){
+			if(displayView == null || model.getScholarMap().isEmpty()){
 				return;
 			}
 			if(e.getSource() == selectionView.getTypeMenuItem()){

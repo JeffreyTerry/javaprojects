@@ -21,12 +21,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+/**
+ * Project #3
+ * CS 2334, Section 011
+ * 10/9/2013
+ * This class represents the selection view
+ * @version 1.0
+ */
 public class SelectionView extends JFrame implements ActionListener{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/** The model to use */
 	private ScholarshipModel model;
 	
 	/* Menu Items */
@@ -69,6 +77,10 @@ public class SelectionView extends JFrame implements ActionListener{
 	private JButton removePaperButton = new JButton("Delete Selected Paper");
 	private JButton removeAllPapersButton = new JButton("Delete All Papers");
 	
+	/**
+	 * The default constructor
+	 * @param model		The model to use
+	 */
 	public SelectionView(ScholarshipModel model){
 		this.model = model;
 		this.model.addListener(this);
@@ -82,6 +94,9 @@ public class SelectionView extends JFrame implements ActionListener{
 		setVisible(true);
 	}
 	
+	/**
+	 * Creates the menu
+	 */
 	private void createMenu(){
 		fileMenu.add(save);
 		fileMenu.add(load);
@@ -100,6 +115,9 @@ public class SelectionView extends JFrame implements ActionListener{
 		setJMenuBar(menuBar);		
 	}
 	
+	/**
+	 * Add the components to the frame
+	 */
 	private void addComponents(){
 		int verticalMargin = 5;
 
@@ -188,52 +206,47 @@ public class SelectionView extends JFrame implements ActionListener{
 		add(itemPanel, BorderLayout.CENTER);
 	}
 	
-	public void actionPerformed(ActionEvent e){
-		if(e.getActionCommand() == "scholar added"){
-			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
-			for(int i = 0; i < scholars.size(); i++){
-				if(!scholarListModel.contains(scholars.get(i))){
-					scholarListModel.addElement(scholars.get(i));
-				}
-				//TODO: tell user if it already exists
+	/**
+	 * Listens for changes in the model
+	 */
+	public void actionPerformed(ActionEvent ev){
+		DataChangeEvent e;
+		if(ev instanceof DataChangeEvent){
+			e = (DataChangeEvent)ev;
+		}
+		else{
+			return;
+		}
+		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_ADDED){
+			System.out.println(e.getObjectsChanged()[0].getClass());
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				scholarListModel.addElement(e.getObjectsChanged()[i]);
 			}
 			addSerialButton.setEnabled(true);
 			removeScholarButton.setEnabled(true);
 			removeAllScholarsButton.setEnabled(true);
-		
+			
 			type.setEnabled(true);
 			pubsPerYear.setEnabled(true);
 			confPapsPerYear.setEnabled(true);
 			jourArtsPerYear.setEnabled(true);
 			numOfCoauths.setEnabled(true);
 		}
-		if(e.getActionCommand() == "serial added"){
-			ArrayList<AcademicOutlet> serials = model.getOutletList();
-			for(int i = 0; i < serials.size(); i++){
-				if(!serialListModel.contains(serials.get(i))){
-					serialListModel.addElement(serials.get(i));
-				}
-				//TODO: tell user if it already exists
+		if(e.getActionCommand() == DataChangeEvent.SERIAL_ADDED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				serialListModel.addElement(e.getObjectsChanged()[i]);
 			}
 		}
-		if(e.getActionCommand() == "paper added"){
-			ArrayList<Paper> papers = new ArrayList<Paper>(model.getPaperMap().values());
-			for(int i = 0; i < papers.size(); i++){
-				if(!paperListModel.contains(papers.get(i))){
-					paperListModel.addElement(papers.get(i));
-				}
-				//TODO: tell user if it already exists
+		if(e.getActionCommand() == DataChangeEvent.PAPER_ADDED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				paperListModel.addElement(e.getObjectsChanged()[i]);
 			}
 		}
-		if(e.getActionCommand() == "scholar removed"){
-			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
-			for(int i = 0; i < scholarListModel.size(); i++){
-				if(!scholars.contains(scholarListModel.get(i))){
-					scholarListModel.remove(i);
-					i--;
-				}
+		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				scholarListModel.removeElement(e.getObjectsChanged()[i]);
 			}
-			if(model.getScholarMap().isEmpty())
+			if(scholarListModel.isEmpty())
 			{
 				addSerialButton.setEnabled(false);
 				removeScholarButton.setEnabled(false);
@@ -245,7 +258,16 @@ public class SelectionView extends JFrame implements ActionListener{
 				jourArtsPerYear.setEnabled(false);
 				numOfCoauths.setEnabled(false);
 			}
-			
+		}
+		if(e.getActionCommand() == DataChangeEvent.SERIAL_REMOVED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				serialListModel.removeElement(e.getObjectsChanged()[i]);
+			}
+		}
+		if(e.getActionCommand() == DataChangeEvent.PAPER_REMOVED){
+			for(int i = 0; i < e.getObjectsChanged().length; i++){
+				paperListModel.removeElement(e.getObjectsChanged()[i]);
+			}
 		}
 	}
 

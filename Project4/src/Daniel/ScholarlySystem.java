@@ -3,27 +3,41 @@ package Daniel;
 import java.util.ArrayList;
 
 public class ScholarlySystem {
-
+	/** A map of the scholars in the system */
 	private ScholarMap scholarMap = new ScholarMap();
+	/** A map of the papers in the system */
 	private PaperMap paperMap = new PaperMap();
+	/** A list of the academic outlets in the system */
 	private OutletList outletList = new OutletList();
 	
+	/**
+	 * The default constructor
+	 */
 	public ScholarlySystem(){
-		scholarMap = new ScholarMap();
-		paperMap = new PaperMap();
-		outletList = new OutletList();
 	}
 
+	/**
+	 * Adds a scholar to the model
+	 * @param scholar		The scholar to add
+	 */
 	public void addScholar(Scholar scholar){
 		scholarMap.put(scholar.getName(), scholar);
 		paperMap.putAll(scholar.getPapers());
 	}
 
+	/**
+	 * Adds a paper to the model
+	 * @param paper		The paper to add
+	 */
 	public void addPaper(Paper paper){
 		paperMap.put(paper.getTitle(), paper);
 		scholarMap.putAll(paper.getAuthors());
 	}
 
+	/**
+	 * Adds an academic outlet to the model
+	 * @param outlet	The outlet to add
+	 */
 	public void addAcademicOutlet(AcademicOutlet outlet){
 		//Add this conference to all authors, chairs, and committee members
 		if(outlet instanceof Conference){
@@ -90,6 +104,36 @@ public class ScholarlySystem {
 			}
 		}
 		outletList.add(outlet);
+	}
+
+	/**
+	 * Removes scholars from the model
+	 * @param scholars		The scholars to remove
+	 */
+	public void removeScholars(Scholar[] scholars){
+		for(int i = 0; i < scholars.length; i++){
+			scholarMap.remove(scholars[i].getName());
+		}
+	}
+
+	/**
+	 * Removes papers from the model
+	 * @param papers	The papers to remove
+	 */
+	public void removePapers(Paper[] papers){
+		for(int i = 0; i < papers.length; i++){
+			paperMap.remove(papers[i].getTitle());
+		}
+	}
+
+	/**
+	 * Removes academic outlets from the model
+	 * @param outlets	The academic outlets to remove
+	 */
+	public void removeAcademicOutlets(AcademicOutlet[] outlets){
+		for(int i = 0; i < outlets.length; i++){
+			outletList.remove(outlets[i]);
+		}
 	}
 	
 	public ScholarMap getScholarMap() {
