@@ -337,7 +337,7 @@ public class DisplayView extends JPanel implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		if(e.getActionCommand() == "scholar"){
+		if(e.getActionCommand() == "scholar added"){
 			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
 			if(scholarNameList.size() == 0){
 				scholarNameList.add("none");

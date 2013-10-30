@@ -435,7 +435,7 @@ public class ScholarPubController{
 						}
 					}
 				}
-
+				
 				addScholarDialog.dispatchEvent(new WindowEvent(addScholarDialog, WindowEvent.WINDOW_CLOSING));
 			}
 		});

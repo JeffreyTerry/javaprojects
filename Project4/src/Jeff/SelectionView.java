@@ -127,6 +127,15 @@ public class SelectionView extends JFrame implements ActionListener{
 		removePaperButton.setAlignmentX(CENTER_ALIGNMENT);
 		removeAllPapersButton.setAlignmentX(CENTER_ALIGNMENT);
 		
+		removeScholarButton.setEnabled(false);
+		removeAllScholarsButton.setEnabled(false);
+		addSerialButton.setEnabled(false);
+		removeSerialButton.setEnabled(false);
+		removeAllSerialsButton.setEnabled(false);
+		addPaperButton.setEnabled(false);
+		removePaperButton.setEnabled(false);
+		removeAllPapersButton.setEnabled(false);
+		
 		scholarBox.add(Box.createVerticalStrut(verticalMargin));
 		scholarBox.add(scholarLabel);
 		scholarBox.add(Box.createVerticalStrut(verticalMargin));
@@ -180,29 +189,63 @@ public class SelectionView extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		if(e.getActionCommand() == "scholar"){
+		if(e.getActionCommand() == "scholar added"){
 			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
 			for(int i = 0; i < scholars.size(); i++){
 				if(!scholarListModel.contains(scholars.get(i))){
 					scholarListModel.addElement(scholars.get(i));
 				}
+				//TODO: tell user if it already exists
 			}
+			addSerialButton.setEnabled(true);
+			removeScholarButton.setEnabled(true);
+			removeAllScholarsButton.setEnabled(true);
+		
+			type.setEnabled(true);
+			pubsPerYear.setEnabled(true);
+			confPapsPerYear.setEnabled(true);
+			jourArtsPerYear.setEnabled(true);
+			numOfCoauths.setEnabled(true);
 		}
-		if(e.getActionCommand() == "serial"){
+		if(e.getActionCommand() == "serial added"){
 			ArrayList<AcademicOutlet> serials = model.getOutletList();
 			for(int i = 0; i < serials.size(); i++){
 				if(!serialListModel.contains(serials.get(i))){
 					serialListModel.addElement(serials.get(i));
 				}
+				//TODO: tell user if it already exists
 			}
 		}
-		if(e.getActionCommand() == "paper"){
+		if(e.getActionCommand() == "paper added"){
 			ArrayList<Paper> papers = new ArrayList<Paper>(model.getPaperMap().values());
 			for(int i = 0; i < papers.size(); i++){
 				if(!paperListModel.contains(papers.get(i))){
 					paperListModel.addElement(papers.get(i));
 				}
+				//TODO: tell user if it already exists
 			}
+		}
+		if(e.getActionCommand() == "scholar removed"){
+			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
+			for(int i = 0; i < scholarListModel.size(); i++){
+				if(!scholars.contains(scholarListModel.get(i))){
+					scholarListModel.remove(i);
+					i--;
+				}
+			}
+			if(model.getScholarMap().isEmpty())
+			{
+				addSerialButton.setEnabled(false);
+				removeScholarButton.setEnabled(false);
+				removeAllScholarsButton.setEnabled(false);
+			
+				type.setEnabled(false);
+				pubsPerYear.setEnabled(false);
+				confPapsPerYear.setEnabled(false);
+				jourArtsPerYear.setEnabled(false);
+				numOfCoauths.setEnabled(false);
+			}
+			
 		}
 	}
 

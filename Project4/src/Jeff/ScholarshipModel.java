@@ -15,17 +15,17 @@ public class ScholarshipModel extends ScholarlySystem{
 	
 	public void addScholar(Scholar scholar){
 		super.addScholar(scholar);
-		processEvent(new ActionEvent(this, 0, "scholar"));
+		processEvent(new ActionEvent(this, 0, "scholar added"));
 	}
 	
 	public void addAcademicOutlet(AcademicOutlet outlet){
 		super.addAcademicOutlet(outlet);
-		processEvent(new ActionEvent(this, 1, "serial"));
+		processEvent(new ActionEvent(this, 1, "serial added"));
 	}
 	
 	public void addPaper(Paper paper){
 		super.addPaper(paper);
-		processEvent(new ActionEvent(this, 2, "paper"));
+		processEvent(new ActionEvent(this, 2, "paper added"));
 	}
 	
 	public synchronized void addListener(ActionListener e){
