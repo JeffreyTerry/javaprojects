@@ -1,0 +1,104 @@
+<DOCTYPE !html>
+<html>
+<head>
+    <script src="javascript/jquery-1.10.2.min.js"></script>
+    <script src="javascript/angular.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css"></link>
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/custom.css"></link>
+</head>
+<body>
+    <div ng-app>
+        <div ng-controller="mainCtrl">
+            <hr style="float:top;">
+            <div id="nav" class="navigation" style="float:top;">
+                <ul>
+                    <li class="nav-item btn btn-default btn-lg" ng-class="homeClass" ng-click="changePage('home')"><i class="icon-home"></i>  Home</li>
+                    <li class="nav-item btn btn-default btn-lg" ng-class="awayClass" ng-click="changePage('away')"><i class="icon-external-link-sign"></i>  Away</li>
+                    <li class="nav-item btn btn-default btn-lg" ng-class="playZoneClass" ng-click="changePage('playZone')"><i class="icon-play"></i>  Play Zone</li>
+                    <li class="nav-item btn btn-default btn-lg" ng-class="autoZoneClass" ng-click="changePage('autoZone')"><i class="icon-gear"></i>  Auto Zone</li>
+                </ul>
+            </div>
+            <hr style="float:top;">
+
+            <div ng-show="page == 'playZone'" class="row" style="padding-top:15px;">
+              <div class="col-md-8 col-md-offset-2">
+                <div class="jumbotron">
+                  <div class="container">
+                    <div class="btn-group btn-group-justified">
+                      <a class="btn btn-lg btn-primary" href="applets/Tetris/TetrisApplet.html" style="text-align:center;">
+                        Play Tetris <i class="icon-arrow-right"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div ng-show="page == 'home'">
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                  <!-- Button trigger modal -->
+                  <a data-toggle="modal" href="#myModal" class="btn btn-success btn-lg">Launch Modal</a>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title">Modal title</h4>
+                        </div>
+                        <div class="modal-body">
+                          ...
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                  </div><!-- /.modal -->
+                </div>
+                <div class="col-md-6">
+                  Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text. Text and stuff...yeah text.
+                </div>
+                <div class="col-md-2"></div>
+              </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var mainCtrl = function($scope){
+            $scope.page = "home";
+            $scope.homeClass = "btn-primary";
+            var defaultNavClass = "btn-default";
+            $scope.awayClass = defaultNavClass;
+            $scope.playZoneClass = defaultNavClass;
+            $scope.autoZoneClass = defaultNavClass;
+            $scope.changePage = function(target){
+                $scope.page = target;
+                $scope.homeClass = defaultNavClass;
+                $scope.awayClass = defaultNavClass;
+                $scope.playZoneClass = defaultNavClass;
+                $scope.autoZoneClass = defaultNavClass;
+                if(target == "home"){
+                    $scope.homeClass = "btn-primary";
+                }
+                else if(target == "away"){
+                    $scope.awayClass = "btn-primary";
+                }
+                else if(target == "playZone"){
+                    $scope.playZoneClass = "btn-primary";
+                }
+                else if(target == "autoZone"){
+                    $scope.autoZoneClass = "btn-primary";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
