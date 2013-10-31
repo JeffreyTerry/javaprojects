@@ -38,11 +38,37 @@ public class ScholarlySystem {
 		}
 		paperMap.put(paper.getTitle(), paper);
 		scholarMap.putAll(paper.getAuthors());
-		//TODO there is a problem with papers being added to their authors
 		ArrayList<Scholar> scholarList = new ArrayList<Scholar>(paper.getAuthors().values());
 		for(int i = 0; i < scholarList.size(); i++){
 			scholarList.get(i).addPaper(paper);
 		}
+		if(paper instanceof ConferencePaper){
+			ConferencePaper confPap = (ConferencePaper)paper;
+			ArrayList<Meeting> meetings = confPap.getConference().getMeetings();
+			for(int i = 0; i < meetings.size(); i++){
+				meetings.get(i).addConferencePaper(confPap);
+			}
+		}
+		else if(paper instanceof JournalArticle){
+			JournalArticle journalArticle = (JournalArticle)paper;
+			journalArticle.getIssue().addJournalArticle(journalArticle);
+		}
+	}
+
+	/**
+	 * Adds a paper to the model
+	 * @param paper		The paper to add
+	 */
+	public void removePaper(Paper paper){
+		if(paper == null){
+			return;
+		}
+		ArrayList<Scholar> scholarList = new ArrayList<Scholar>(paper.getAuthors().values());
+		for(int i = 0; i < scholarList.size(); i++){
+			scholarList.get(i).removePaper(paper);
+		}
+		paperMap.remove(paper.getTitle());
+		//TODO make the papers remove themselves from their conferences
 	}
 
 	/**

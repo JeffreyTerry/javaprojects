@@ -16,13 +16,11 @@ public class ConferencePaper extends Paper{
 	public String getYear()
 	{
 		ArrayList<Meeting> meetings = conference.getMeetings();
-		Meeting containsThis = new Meeting();
-		ConferencePaper thisOne = this;
-		for(Meeting m : meetings)
-		{
-			if(m.getConferencePapers().containsKey(thisOne.getTitle()))
-					containsThis=m;
+		for(int i = 0; i < meetings.size(); i++){
+			if(meetings.get(i).getConferencePapers().containsValue(this)){
+				return meetings.get(i).getYear();
+			}
 		}
-		return containsThis.getYear();
+		return null;
 	}
 }

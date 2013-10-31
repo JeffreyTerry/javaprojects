@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -90,7 +91,7 @@ public class DisplayView extends JPanel implements ActionListener{
 			scholarNameList = new ArrayList<String>(this.model.getScholarMap().keySet());
 		}
 		if(scholarNameList.size() == 0){
-			scholarNameList.add("");
+			scholarNameList.add("none");
 		}
 		scholarSpinnerModel = new SpinnerListModel(scholarNameList);
 		scholarSpinner = new JSpinner(scholarSpinnerModel);
@@ -355,16 +356,40 @@ public class DisplayView extends JPanel implements ActionListener{
 			return;
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_ADDED){
+			ArrayList<String> newScholarNameList = new ArrayList<String>(scholarNameList);
+			newScholarNameList.remove("none");
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
-				scholarNameList.add(e.getObjectsChanged()[i].toString());
+				newScholarNameList.add(e.getObjectsChanged()[i].toString());
 			}
-			System.out.println(scholarNameList);
+			scholarSpinnerModel.setList(newScholarNameList);
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
+			ArrayList<String> newScholarNameList = new ArrayList<String>(scholarNameList);
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
-				scholarNameList.remove(e.getObjectsChanged()[i].toString());
+				newScholarNameList.remove(e.getObjectsChanged()[i].toString());
 			}
-			scholarSpinnerModel.setList(scholarNameList);
+			if(newScholarNameList.size() == 0){
+				newScholarNameList.add("none");
+			}
+			scholarSpinnerModel.setList(newScholarNameList);
+		}
+		if(e.getActionCommand() == DataChangeEvent.PAPER_ADDED){
+			ArrayList<String> newScholarNameList = new ArrayList<String>(scholarNameList);
+			ArrayList<String> scholars = new ArrayList<String>(model.getScholarMap().keySet());
+			for(int i = 0; i < scholars.size(); i++){
+				newScholarNameList.add(scholars.get(i));
+				System.out.println(scholars.get(i));
+			}
+			scholarSpinnerModel.setList(newScholarNameList);
+		}
+		if(e.getActionCommand() == DataChangeEvent.PAPER_REMOVED){
+			ArrayList<String> newScholarNameList = new ArrayList<String>(scholarNameList);
+			ArrayList<Scholar> scholars = new ArrayList<Scholar>(model.getScholarMap().values());
+			newScholarNameList.clear();
+			for(int i = 0; i < scholars.size(); i++){
+				newScholarNameList.add(scholars.get(i).toString());
+			}
+			scholarSpinnerModel.setList(newScholarNameList);
 		}
 	}
 	

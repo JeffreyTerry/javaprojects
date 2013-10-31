@@ -107,7 +107,7 @@ public class ScholarPubController{
 		final JList reviewerList = new JList(model.getScholarMap().values().toArray());
 		JLabel paperLabel = new JLabel("Papers");
 		final JList paperList = new JList(model.getPaperMap().values().toArray());
-		JButton saveIssueButton = new JButton("Save Issue");
+		JButton saveIssueButton = new JButton("Create Issue");
 
 		JPanel datePanel = new JPanel();
 		JPanel editorPanel = new JPanel();
@@ -210,7 +210,7 @@ public class ScholarPubController{
 		final JList committeeList = new JList(model.getScholarMap().values().toArray());
 		JLabel paperLabel = new JLabel("Papers");
 		final JList paperList = new JList(model.getPaperMap().values().toArray());
-		JButton saveMeetingButton = new JButton("Save Meeting");
+		JButton saveMeetingButton = new JButton("Create Meeting");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
 		cityField.setPreferredSize(textFieldDimension);
@@ -330,7 +330,7 @@ public class ScholarPubController{
 	 */
 	private Volume openCreateVolumeDialog(){
 		JButton addIssueButton = new JButton("Add Issue");
-		JButton saveVolumeButton = new JButton("Save Volume");
+		JButton saveVolumeButton = new JButton("Create Volume");
 
 		final JPanel issuesPanel = new JPanel();
 		JPanel savePanel = new JPanel();
@@ -393,7 +393,7 @@ public class ScholarPubController{
 		final ArrayList<JTextField> researchAreaFields = new ArrayList<JTextField>();
 		researchAreaFields.add(new JTextField());
 		JButton addResearchAreaButton = new JButton("Add Research Area");
-		JButton saveScholarButton = new JButton("Save Scholar");
+		JButton saveScholarButton = new JButton("Create Scholar");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
 		nameField.setPreferredSize(textFieldDimension);
@@ -509,7 +509,7 @@ public class ScholarPubController{
 		JLabel organizationLabel = new JLabel("Organization");
 		final JTextField organizationField = new JTextField();
 		JButton addMeetingButton = new JButton("Add Meeting");
-		JButton saveConferenceButton = new JButton("Save Conference");
+		JButton saveConferenceButton = new JButton("Create Conference");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
 		organizationField.setPreferredSize(textFieldDimension);
@@ -592,7 +592,7 @@ public class ScholarPubController{
 		JLabel countryLabel = new JLabel("Country");
 		final JTextField countryField = new JTextField();
 		JButton addVolumeButton = new JButton("Add Volume");
-		JButton saveJournalButton = new JButton("Save Journal");
+		JButton saveJournalButton = new JButton("Create Journal");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
 		organizationField.setPreferredSize(textFieldDimension);
@@ -718,7 +718,7 @@ public class ScholarPubController{
 		final JList scholarList = new JList(model.getScholarMap().values().toArray());
 		JLabel diLabel = new JLabel("Digital Identifier (optional)");
 		final JTextField diField = new JTextField();
-		JButton saveConferencePaperButton = new JButton("Save ConferencePaper");
+		JButton saveConferencePaperButton = new JButton("Create Conference Paper");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
 		titleField.setPreferredSize(textFieldDimension);
@@ -815,7 +815,7 @@ public class ScholarPubController{
 			}
 		});
 		
-		addConferencePaperDialog.setTitle("Add ConferencePaper");
+		addConferencePaperDialog.setTitle("Add Conference Paper");
 		addConferencePaperDialog.add(addConferencePaperBox);
 		addConferencePaperDialog.setSize(selectionView.getWidth() - 40, selectionView.getHeight() - 100);
 		addConferencePaperDialog.setLocationRelativeTo(selectionView);
@@ -859,7 +859,7 @@ public class ScholarPubController{
 		final JList scholarList = new JList(model.getScholarMap().values().toArray());
 		JLabel diLabel = new JLabel("Digital Identifier (optional)");
 		final JTextField diField = new JTextField();
-		JButton saveJournalArticleButton = new JButton("Save JournalArticle");
+		JButton saveJournalArticleButton = new JButton("Create Journal Article");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
 		titleField.setPreferredSize(textFieldDimension);
@@ -956,7 +956,7 @@ public class ScholarPubController{
 			}
 		});
 		
-		addJournalArticleDialog.setTitle("Add JournalArticle");
+		addJournalArticleDialog.setTitle("Add Journal Article");
 		addJournalArticleDialog.add(addJournalArticleBox);
 		addJournalArticleDialog.setSize(selectionView.getWidth() - 40, selectionView.getHeight() - 100);
 		addJournalArticleDialog.setLocationRelativeTo(selectionView);

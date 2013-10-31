@@ -47,6 +47,11 @@ public class Scholar {
 	{
 		this.papers.put(p.getTitle(), p);
 	}
+
+	public void removePaper(Paper p)
+	{
+		this.papers.remove(p.getTitle());
+	}
 	
 	public String getName() {
 		return name;
@@ -101,6 +106,7 @@ public class Scholar {
 	public ArrayList<JournalArticle> getJournalArticles()
 	{
 		ArrayList<JournalArticle> journalArticles = new ArrayList<JournalArticle>();
+		ArrayList<Paper> papers = new ArrayList<Paper>(this.papers.values());
 		for(int i = 0; i < papers.size(); i++){
 			if(papers.get(i) instanceof JournalArticle){
 				journalArticles.add((JournalArticle)papers.get(i));
@@ -112,6 +118,7 @@ public class Scholar {
 	public ArrayList<ConferencePaper> getConferencePapers()
 	{
 		ArrayList<ConferencePaper> conferencePapers = new ArrayList<ConferencePaper>();
+		ArrayList<Paper> papers = new ArrayList<Paper>(this.papers.values());
 		for(int i = 0; i < papers.size(); i++){
 			if(papers.get(i) instanceof ConferencePaper){
 				conferencePapers.add((ConferencePaper)papers.get(i));
