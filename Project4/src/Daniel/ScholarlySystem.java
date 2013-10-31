@@ -67,6 +67,19 @@ public class ScholarlySystem {
 		for(int i = 0; i < scholarList.size(); i++){
 			scholarList.get(i).removePaper(paper);
 		}
+		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
+		ArrayList<Issue> issues = new ArrayList<Issue>();
+		if(paper instanceof ConferencePaper){
+			ConferencePaper confPap = (ConferencePaper)paper;
+			meetings = confPap.getConference().getMeetings();
+			for(int i = 0; i < meetings.size(); i++){
+				meetings.get(i).removeConferencePaper(confPap);
+			}
+		}
+		else if(paper instanceof JournalArticle){
+			JournalArticle journalArticle = (JournalArticle)paper;
+			journalArticle.getIssue().removePaper(journalArticle);
+		}
 		paperMap.remove(paper.getTitle());
 		//TODO make the papers remove themselves from their conferences
 	}
@@ -171,6 +184,53 @@ public class ScholarlySystem {
 	 * @param outlets	The academic outlets to remove
 	 */
 	public void removeAcademicOutlets(AcademicOutlet[] outlets){
+		ArrayList<Paper> papers;
+		ArrayList<Meeting> meetings;
+		ArrayList<Issue> issues;
+		ArrayList<Scholar> chairs = new ArrayList<Scholar>();
+		ArrayList<Scholar> committeeMembers = new ArrayList<Scholar>();
+		ArrayList<Scholar> editors = new ArrayList<Scholar>();
+		ArrayList<Scholar> reviewers = new ArrayList<Scholar>();
+		Conference conf;
+		Journal journal;
+		for(int i = 0; i < outlets.length; i++){
+			if(outlets[i] instanceof Conference){
+				conf = (Conference)outlets[i];
+				meetings = conf.getMeetings();
+				for(int j = 0; j < meetings.size(); j++){
+					chairs = new ArrayList<Scholar>(meetings.get(j).getChairs().values());
+					for(int k = 0; k < chairs.size(); k++){
+						chairs.get(k).removeChair(meetings.get(j));
+					}
+					committeeMembers = new ArrayList<Scholar>(meetings.get(j).getCommitteeMembers().values());
+					for(int k = 0; k < committeeMembers.size(); k++){
+						committeeMembers.get(k).removeCommittee(meetings.get(j));
+					}
+					papers = new ArrayList<Paper>(meetings.get(j).getPapers().values());
+					for(int k = 0; k < papers.size(); k++){
+						removePaper(papers.get(i));
+					}
+				}
+			}
+			if(outlets[i] instanceof Journal){
+				journal = (Journal)outlets[i];
+				issues = journal.getIssues();
+				for(int j = 0; j < issues.size(); j++){
+					editors = new ArrayList<Scholar>(issues.get(j).getEditors().values());
+					for(int k = 0; k < editors.size(); k++){
+						editors.get(k).removeEditingPosition(issues.get(j));
+					}
+					reviewers = new ArrayList<Scholar>(issues.get(j).getReviewers().values());
+					for(int k = 0; k < reviewers.size(); k++){
+						reviewers.get(k).removeReviewingPosition(issues.get(j));
+					}
+					papers = new ArrayList<Paper>(issues.get(j).getPapers().values());
+					for(int k = 0; k < papers.size(); k++){
+						removePaper(papers.get(i));
+					}
+				}
+			}
+		}
 		for(int i = 0; i < outlets.length; i++){
 			outletList.remove(outlets[i]);
 		}

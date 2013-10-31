@@ -14,6 +14,13 @@ public class Journal extends AcademicOutlet{
 	public ArrayList<Volume> getVolumes() {
 		return volumes;
 	}
+	public ArrayList<Issue> getIssues(){
+		ArrayList<Issue> issues = new ArrayList<Issue>();
+		for(int i = 0; i < volumes.size(); i++){
+			issues.addAll(volumes.get(i));
+		}
+		return issues;
+	}
 	public void setVolumes(ArrayList<Volume> volumes) {
 		this.volumes = volumes;
 	}

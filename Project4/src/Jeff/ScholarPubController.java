@@ -22,8 +22,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * Project #3
@@ -1122,7 +1124,12 @@ public class ScholarPubController{
 	}
 	private class RemoveSerialsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			Object[] selectedObjects = selectionView.getSerialList().getSelectedValues();
+			AcademicOutlet[] outletList = new AcademicOutlet[selectedObjects.length];
+			for(int i = 0; i < selectedObjects.length; i++){
+				outletList[i] = (AcademicOutlet)selectedObjects[i];
+			}
+			model.removeAcademicOutlets(outletList);
 		}
 	}
 	private class RemovePapersListener implements ActionListener{
@@ -1184,7 +1191,68 @@ public class ScholarPubController{
 					infoItem.addActionListener(new ActionListener(){
 						public void actionPerformed(ActionEvent event){
 							Scholar scholar = (Scholar)selectionView.getScholarList().getModel().getElementAt(selectionView.getScholarList().locationToIndex(e.getPoint()));
-							JDialog infoDialog = new JDialog();
+							String nameText = "<html><div style='text-align:center;'><h3>Name</h3>" + scholar.getName() + "</div></html>";
+							String institutionText = "<html><div style='text-align:center;'><h3>Institutional Affiliations</h3>";
+							String researchAreaText = "<html><div style='text-align:center;'><h3>Research Areas</h3>";
+							String conferencePaperText = "<html><div style='text-align:center;'><h3>Conference Papers</h3>";
+							String journalArticleText = "<html><div style='text-align:center;'><h3>Journal Articles</h3>";
+							String chairText = "<html><div style='text-align:center;'><h3>Committees Chaired</h3>";
+							String committeeText = "<html><div style='text-align:center;'><h3>Committees</h3>";
+							String editorText = "<html><div style='text-align:center;'><h3>Editor Positions</h3>";
+							String reviewerText = "<html><div style='text-align:center;'><h3>Reviewer Positions</h3>";
+
+							for(int i = 0; i < scholar.getInstitutionalAffiliations().size(); i++){
+								institutionText += scholar.getInstitutionalAffiliations().get(i) + "<br />";
+							}
+							institutionText = institutionText.substring(0, institutionText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getResearchAreas().size(); i++){
+								researchAreaText += scholar.getResearchAreas().get(i) + "<br />";
+							}
+							researchAreaText = researchAreaText.substring(0, researchAreaText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getConferencePapers().size(); i++){
+								conferencePaperText += scholar.getConferencePapers().get(i) + "<br />";
+							}
+							conferencePaperText = conferencePaperText.substring(0, conferencePaperText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getJournalArticles().size(); i++){
+								journalArticleText += scholar.getJournalArticles().get(i) + "<br />";
+							}
+							journalArticleText = journalArticleText.substring(0, journalArticleText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getChairs().size(); i++){
+								chairText += scholar.getChairs().get(i) + "<br />";
+							}
+							chairText = chairText.substring(0, chairText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getCommittees().size(); i++){
+								committeeText += scholar.getCommittees().get(i) + "<br />";
+							}
+							committeeText = committeeText.substring(0, committeeText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getEditingPositions().size(); i++){
+								editorText += scholar.getEditingPositions().get(i) + "<br />";
+							}
+							editorText = editorText.substring(0, editorText.length() - 6) + "</div></html>";
+							for(int i = 0; i < scholar.getReviewingPositions().size(); i++){
+								reviewerText += scholar.getReviewingPositions().get(i) + "<br />";
+							}
+							reviewerText = reviewerText.substring(0, reviewerText.length() - 6) + "</div></html>";
+							
+							JLabel nameLabel = new JLabel(nameText);
+							JLabel institutionLabel = new JLabel(institutionText);
+							JLabel researchAreaLabel = new JLabel(researchAreaText);
+							JLabel conferencePaperLabel = new JLabel(conferencePaperText);
+							JLabel journalArticleLabel = new JLabel(journalArticleText);
+							JLabel chairLabel = new JLabel(chairText);
+							JLabel committeeLabel = new JLabel(committeeText);
+							JLabel editorLabel = new JLabel(editorText);
+							JLabel reviewerLabel = new JLabel(reviewerText);
+							nameLabel.setAlignmentX(JLabel.CENTER);
+							institutionLabel.setAlignmentX(JLabel.CENTER);
+							researchAreaLabel.setAlignmentX(JLabel.CENTER);
+							conferencePaperLabel.setAlignmentX(JLabel.CENTER);
+							journalArticleLabel.setAlignmentX(JLabel.CENTER);
+							chairLabel.setAlignmentX(JLabel.CENTER);
+							committeeLabel.setAlignmentX(JLabel.CENTER);
+							editorLabel.setAlignmentX(JLabel.CENTER);
+							reviewerLabel.setAlignmentX(JLabel.CENTER);
+
 							JPanel namePanel = new JPanel();
 							JPanel institutionPanel = new JPanel();
 							JPanel researchAreaPanel = new JPanel();
@@ -1195,40 +1263,16 @@ public class ScholarPubController{
 							JPanel editorPanel = new JPanel();
 							JPanel reviewerPanel = new JPanel();
 							
-							namePanel.add(new JLabel("Name "));
-							institutionPanel.add(new JLabel("Institutional Affiliations "));
-							researchAreaPanel.add(new JLabel("Research Areas "));
-							conferencePaperPanel.add(new JLabel("Conference Papers "));
-							journalArticlePanel.add(new JLabel("Journal Articles "));
-							chairPanel.add(new JLabel("Committees Chaired"));
-							committeePanel.add(new JLabel("Committees"));
-							editorPanel.add(new JLabel("Issues Edited"));
-							reviewerPanel.add(new JLabel("Issues Reviewed"));
-							namePanel.add(new JLabel(scholar.getName()));
-							for(int i = 0; i < scholar.getInstitutionalAffiliations().size(); i++){
-								institutionPanel.add(new JLabel(scholar.getInstitutionalAffiliations().get(i)));
-							}
-							for(int i = 0; i < scholar.getResearchAreas().size(); i++){
-								researchAreaPanel.add(new JLabel(scholar.getResearchAreas().get(i)));
-							}
-							for(int i = 0; i < scholar.getConferencePapers().size(); i++){
-								conferencePaperPanel.add(new JLabel(scholar.getConferencePapers().get(i).toString()));
-							}
-							for(int i = 0; i < scholar.getJournalArticles().size(); i++){
-								journalArticlePanel.add(new JLabel(scholar.getJournalArticles().get(i).toString()));
-							}
-							for(int i = 0; i < scholar.getChairs().size(); i++){
-								chairPanel.add(new JLabel(scholar.getChairs().get(i).toString()));
-							}
-							for(int i = 0; i < scholar.getCommittees().size(); i++){
-								committeePanel.add(new JLabel(scholar.getCommittees().get(i).toString()));
-							}
-							for(int i = 0; i < scholar.getEditingPositions().size(); i++){
-								editorPanel.add(new JLabel(scholar.getEditingPositions().get(i).toString()));
-							}
-							for(int i = 0; i < scholar.getReviewingPositions().size(); i++){
-								reviewerPanel.add(new JLabel(scholar.getReviewingPositions().get(i).toString()));
-							}
+							namePanel.add(nameLabel);
+							institutionPanel.add(institutionLabel);
+							researchAreaPanel.add(researchAreaLabel);
+							conferencePaperPanel.add(conferencePaperLabel);
+							journalArticlePanel.add(journalArticleLabel);
+							chairPanel.add(chairLabel);
+							committeePanel.add(committeeLabel);
+							editorPanel.add(editorLabel);
+							reviewerPanel.add(reviewerLabel);
+
 							Box infoBox = Box.createVerticalBox();
 							infoBox.add(Box.createVerticalGlue());
 							infoBox.add(namePanel);
@@ -1265,8 +1309,12 @@ public class ScholarPubController{
 								infoBox.add(reviewerPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
 							}
-							infoDialog.add(infoBox, BorderLayout.CENTER);
+							infoBox.setPreferredSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
+							JScrollPane scrollPane = new JScrollPane(infoBox);
+							JDialog infoDialog = new JDialog();
+							infoDialog.add(scrollPane, BorderLayout.CENTER);
 							infoDialog.pack();
+							scrollPane.validate();
 							infoDialog.setLocationRelativeTo(selectionView);
 							infoDialog.setModal(true);
 							infoDialog.setVisible(true);

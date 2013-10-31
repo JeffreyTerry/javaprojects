@@ -22,7 +22,7 @@ public class Scholar {
 	{
 		this.researchAreas.add(s);
 	}
-	
+
 	public void addChair(Meeting m)
 	{
 		this.chairs.add(m);
@@ -41,6 +41,26 @@ public class Scholar {
 	public void addReviewingPosition(Issue i)
 	{
 		this.reviewingPositions.add(i);
+	}
+
+	public void removeChair(Meeting m)
+	{
+		this.chairs.remove(m);
+	}
+	
+	public void removeCommittee(Meeting m)
+	{
+		this.committees.remove(m);
+	}
+	
+	public void removeEditingPosition(Issue i)
+	{
+		this.editingPositions.remove(i);
+	}
+
+	public void removeReviewingPosition(Issue i)
+	{
+		this.reviewingPositions.remove(i);
 	}
 
 	public void addPaper(Paper p)

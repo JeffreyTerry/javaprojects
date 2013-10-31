@@ -52,4 +52,8 @@ public class AcademicInstance {
 	{
 		this.papers.put(p.getTitle(), p);
 	}
+	public void removePaper(Paper p)
+	{
+		this.papers.remove(p.getTitle());
+	}
 }

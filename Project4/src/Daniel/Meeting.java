@@ -51,13 +51,21 @@ public class Meeting extends AcademicInstance{
 		else
 			ErrorHandling.showMessage("Not all Paper variables were of type ConferencePaper. setConferencePapers failed to operate.");
 	}
-	
+
 	public void addConferencePaper(Paper p)
 	{
 		if(p instanceof ConferencePaper)
 			super.addPaper(p);
 		else
-			ErrorHandling.showMessage("Not a ConferencePaper. addConferencePaper failed to operate.");
+			ErrorHandling.showMessage("Not a ConferencePaper. removeConferencePaper failed to operate.");
+	}
+
+	public void removeConferencePaper(Paper p)
+	{
+		if(p instanceof ConferencePaper)
+			super.removePaper(p);
+		else
+			ErrorHandling.showMessage("Not a ConferencePaper. removeConferencePaper failed to operate.");
 	}
 	
 	public String toString(){

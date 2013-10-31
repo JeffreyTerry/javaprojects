@@ -45,13 +45,20 @@ public class Issue extends AcademicInstance{
 		else
 			ErrorHandling.showMessage("Not all Paper variables were of type JournalArticle. setJournalArticles failed to operate.");
 	}
-	
+
 	public void addJournalArticle(Paper p)
 	{
 		if(p instanceof JournalArticle)
 			super.addPaper(p);
 		else
-			ErrorHandling.showMessage("Not a JournalArticle. addJournalArticle failed to operate.");
+			ErrorHandling.showMessage("Not a JournalArticle. removeJournalArticle failed to operate.");
+	}
+	public void removeJournalArticle(Paper p)
+	{
+		if(p instanceof JournalArticle)
+			super.removePaper(p);
+		else
+			ErrorHandling.showMessage("Not a JournalArticle. removeJournalArticle failed to operate.");
 	}
 	public String toString(){
 		return getMonth() + " " + getYear();
