@@ -21,6 +21,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * Project #3
@@ -92,6 +94,12 @@ public class DisplayView extends JPanel implements ActionListener{
 		}
 		scholarSpinnerModel = new SpinnerListModel(scholarNameList);
 		scholarSpinner = new JSpinner(scholarSpinnerModel);
+		scholarSpinner.addChangeListener(new ChangeListener(){
+			public void stateChanged(ChangeEvent e){
+				setScholar(getSelectedScholar());
+				repaint();
+			}
+		});
 		Box controlBox = Box.createHorizontalBox();
 		controlBox.add(Box.createGlue());
 		controlBox.add(new JLabel("Scholar"));
@@ -245,28 +253,30 @@ public class DisplayView extends JPanel implements ActionListener{
 				}
 			}
 			ArrayList<Integer> keys = new ArrayList<Integer>(coscholarMap.keySet());
-			int minCoscholars = 9999;
-			int maxCoscholars = -9999;
-			for(int i = 0; i < keys.size(); i++){
-				if(keys.get(i) < minCoscholars){
-					minCoscholars = keys.get(i);
+			if(keys.size() != 0){
+				int minCoscholars = 9999;
+				int maxCoscholars = -9999;
+				for(int i = 0; i < keys.size(); i++){
+					if(keys.get(i) < minCoscholars){
+						minCoscholars = keys.get(i);
+					}
+					if(keys.get(i) > maxCoscholars){
+						maxCoscholars = keys.get(i);
+					}
 				}
-				if(keys.get(i) > maxCoscholars){
-					maxCoscholars = keys.get(i);
+				int[] values = new int[maxCoscholars - minCoscholars + 1];
+				String[] labels = new String[maxCoscholars - minCoscholars + 1];
+				for(int i = minCoscholars; i <= maxCoscholars; i++){
+					if(coscholarMap.get(i) == null){
+						values[i - minCoscholars] = 0;
+					}
+					else{
+						values[i - minCoscholars] = coscholarMap.get(i);
+					}
+					labels[i - minCoscholars] = ""+i;
 				}
+				drawBars(values, labels, g);
 			}
-			int[] values = new int[maxCoscholars - minCoscholars + 1];
-			String[] labels = new String[maxCoscholars - minCoscholars + 1];
-			for(int i = minCoscholars; i <= maxCoscholars; i++){
-				if(coscholarMap.get(i) == null){
-					values[i - minCoscholars] = 0;
-				}
-				else{
-					values[i - minCoscholars] = coscholarMap.get(i);
-				}
-				labels[i - minCoscholars] = ""+i;
-			}
-			drawBars(values, labels, g);
 		}
 		drawDecor(g);
 	}
@@ -369,5 +379,17 @@ public class DisplayView extends JPanel implements ActionListener{
 	public void setGraphType(int graphType){
 		this.graphType = graphType;
 		typeSelector.setSelectedIndex(graphType + 1);
+	}
+	
+	/**
+	 * sets the scholar being examined
+	 * @param scholar	the scholar to look at
+	 */
+	public void setScholar(Scholar scholar){
+		this.scholar = scholar;
+	}
+	
+	public Scholar getSelectedScholar(){
+		return model.getScholarMap().get(scholarSpinner.getValue().toString());
 	}
 }

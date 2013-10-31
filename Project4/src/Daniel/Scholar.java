@@ -100,32 +100,22 @@ public class Scholar {
 	
 	public ArrayList<JournalArticle> getJournalArticles()
 	{
-		Collection<Paper> papers = this.papers.values();
-		for(Paper p: papers)
-		{
-			if(!(p instanceof JournalArticle))
-				papers.remove(p);
-		}
 		ArrayList<JournalArticle> journalArticles = new ArrayList<JournalArticle>();
-		for(Paper p: papers)
-		{
-			journalArticles.add((JournalArticle) p);
+		for(int i = 0; i < papers.size(); i++){
+			if(papers.get(i) instanceof JournalArticle){
+				journalArticles.add((JournalArticle)papers.get(i));
+			}
 		}
 		return journalArticles;
 	}
 	
 	public ArrayList<ConferencePaper> getConferencePapers()
 	{
-		Collection<Paper> papers = this.papers.values();
-		for(Paper p: papers)
-		{
-			if(!(p instanceof ConferencePaper))
-				papers.remove(p);
-		}
 		ArrayList<ConferencePaper> conferencePapers = new ArrayList<ConferencePaper>();
-		for(Paper p: papers)
-		{
-			conferencePapers.add((ConferencePaper) p);
+		for(int i = 0; i < papers.size(); i++){
+			if(papers.get(i) instanceof ConferencePaper){
+				conferencePapers.add((ConferencePaper)papers.get(i));
+			}
 		}
 		return conferencePapers;
 	}

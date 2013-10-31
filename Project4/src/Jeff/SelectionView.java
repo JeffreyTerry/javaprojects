@@ -219,14 +219,13 @@ public class SelectionView extends JFrame implements ActionListener{
 			return;
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_ADDED){
-			System.out.println(e.getObjectsChanged()[0].getClass());
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				scholarListModel.addElement(e.getObjectsChanged()[i]);
 			}
 			addSerialButton.setEnabled(true);
 			removeScholarButton.setEnabled(true);
 			removeAllScholarsButton.setEnabled(true);
-			
+			plotMenu.setEnabled(true);
 			type.setEnabled(true);
 			pubsPerYear.setEnabled(true);
 			confPapsPerYear.setEnabled(true);
@@ -237,11 +236,16 @@ public class SelectionView extends JFrame implements ActionListener{
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				serialListModel.addElement(e.getObjectsChanged()[i]);
 			}
+			addPaperButton.setEnabled(true);
+			removeSerialButton.setEnabled(true);
+			removeAllSerialsButton.setEnabled(true);
 		}
 		if(e.getActionCommand() == DataChangeEvent.PAPER_ADDED){
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				paperListModel.addElement(e.getObjectsChanged()[i]);
 			}
+			removePaperButton.setEnabled(true);
+			removeAllPapersButton.setEnabled(true);
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
@@ -249,10 +253,20 @@ public class SelectionView extends JFrame implements ActionListener{
 			}
 			if(scholarListModel.isEmpty())
 			{
-				addSerialButton.setEnabled(false);
+				model.setOutletList(new OutletList());
+				model.setPaperMap(new PaperMap());
+				serialListModel.clear();
+				paperListModel.clear();
+
 				removeScholarButton.setEnabled(false);
 				removeAllScholarsButton.setEnabled(false);
-			
+				addSerialButton.setEnabled(false);
+				removeSerialButton.setEnabled(false);
+				removeAllSerialsButton.setEnabled(false);
+				addPaperButton.setEnabled(false);
+				removePaperButton.setEnabled(false);
+				removeAllPapersButton.setEnabled(false);
+				plotMenu.setEnabled(false);
 				type.setEnabled(false);
 				pubsPerYear.setEnabled(false);
 				confPapsPerYear.setEnabled(false);
@@ -264,10 +278,26 @@ public class SelectionView extends JFrame implements ActionListener{
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				serialListModel.removeElement(e.getObjectsChanged()[i]);
 			}
+			if(serialListModel.isEmpty())
+			{
+				model.setPaperMap(new PaperMap());
+				paperListModel.clear();
+
+				removeSerialButton.setEnabled(false);
+				removeAllSerialsButton.setEnabled(false);
+				addPaperButton.setEnabled(false);
+				removePaperButton.setEnabled(false);
+				removeAllPapersButton.setEnabled(false);
+			}
 		}
 		if(e.getActionCommand() == DataChangeEvent.PAPER_REMOVED){
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				paperListModel.removeElement(e.getObjectsChanged()[i]);
+			}
+			if(paperListModel.isEmpty())
+			{
+				removePaperButton.setEnabled(false);
+				removeAllPapersButton.setEnabled(false);
 			}
 		}
 	}

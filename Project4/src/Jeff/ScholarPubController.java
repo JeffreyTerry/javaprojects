@@ -180,6 +180,9 @@ public class ScholarPubController{
 		addIssueDialog.setModal(true);
 		addIssueDialog.setVisible(true);
 		
+		if(theNewIssue.getMonth() == null){
+			return null;
+		}
 		return theNewIssue;
 	}
 
@@ -315,6 +318,9 @@ public class ScholarPubController{
 		addMeetingDialog.setModal(true);
 		addMeetingDialog.setVisible(true);
 
+		if(theNewMeeting.getMonth() == null){
+			return null;
+		}
 		return theNewMeeting;
 	}
 
@@ -345,9 +351,11 @@ public class ScholarPubController{
 		addIssueButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				Issue newIssue = openCreateIssueDialog();
-				theNewVolume.add(newIssue);
-				issuesPanel.add(new JLabel(newIssue.toString()), issuesPanel.getComponentCount() - 1);
-				addVolumeDialog.validate();
+				if(newIssue != null){
+					theNewVolume.add(newIssue);
+					issuesPanel.add(new JLabel(newIssue.toString()), issuesPanel.getComponentCount() - 1);
+					addVolumeDialog.validate();
+				}
 			}
 		});
 		
@@ -363,7 +371,10 @@ public class ScholarPubController{
 		addVolumeDialog.setLocationRelativeTo(selectionView);
 		addVolumeDialog.setModal(true);
 		addVolumeDialog.setVisible(true);
-		
+
+		if(theNewVolume.size() == 0){
+			return null;
+		}
 		return theNewVolume;
 	}
 
@@ -483,7 +494,10 @@ public class ScholarPubController{
 		addScholarDialog.setLocationRelativeTo(selectionView);
 		addScholarDialog.setModal(true);
 		addScholarDialog.setVisible(true);
-		
+
+		if(theNewScholar.getName() == null){
+			return null;
+		}
 		return theNewScholar;
 	}
 
@@ -523,9 +537,12 @@ public class ScholarPubController{
 		final ArrayList<Meeting> meetings = new ArrayList<Meeting>();
 		addMeetingButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				meetings.add(openCreateMeetingDialog());
-				addMeetingPanel.add(new JLabel(meetings.get(meetings.size() - 1).getLocation().toString()), addMeetingPanel.getComponentCount() - 1);
-				addConferenceDialog.validate();
+				Meeting newMeeting = openCreateMeetingDialog();
+				if(newMeeting != null){
+					meetings.add(newMeeting);
+					addMeetingPanel.add(new JLabel(meetings.get(meetings.size() - 1).getLocation().toString()), addMeetingPanel.getComponentCount() - 1);
+					addConferenceDialog.validate();
+				}
 			}
 		});
 
@@ -554,7 +571,10 @@ public class ScholarPubController{
 		addConferenceDialog.setLocationRelativeTo(selectionView);
 		addConferenceDialog.setModal(true);
 		addConferenceDialog.setVisible(true);
-		
+
+		if(theNewConference.getOrganizationName() == null){
+			return null;
+		}
 		return theNewConference;
 	}
 
@@ -618,9 +638,12 @@ public class ScholarPubController{
 		final ArrayList<Volume> volumes = new ArrayList<Volume>();
 		addVolumeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				volumes.add(openCreateVolumeDialog());
-				addVolumePanel.add(new JLabel(volumes.get(volumes.size() - 1).toString()), addVolumePanel.getComponentCount() - 1);
-				addJournalDialog.validate();
+				Volume newVolume = openCreateVolumeDialog();
+				if(newVolume != null){
+					volumes.add(newVolume);
+					addVolumePanel.add(new JLabel(volumes.get(volumes.size() - 1).toString()), addVolumePanel.getComponentCount() - 1);
+					addJournalDialog.validate();
+				}
 			}
 		});
 
@@ -664,6 +687,9 @@ public class ScholarPubController{
 		addJournalDialog.setModal(true);
 		addJournalDialog.setVisible(true);
 
+		if(theNewJournal.getOrganizationName() == null){
+			return null;
+		}
 		return theNewJournal;
 	}
 
@@ -795,7 +821,10 @@ public class ScholarPubController{
 		addConferencePaperDialog.setLocationRelativeTo(selectionView);
 		addConferencePaperDialog.setModal(true);
 		addConferencePaperDialog.setVisible(true);
-		
+
+		if(theNewConferencePaper.getTitle() == null){
+			return null;
+		}
 		return theNewConferencePaper;
 	}
 
@@ -933,7 +962,10 @@ public class ScholarPubController{
 		addJournalArticleDialog.setLocationRelativeTo(selectionView);
 		addJournalArticleDialog.setModal(true);
 		addJournalArticleDialog.setVisible(true);
-		
+
+		if(theNewJournalArticle.getTitle() == null){
+			return null;
+		}
 		return theNewJournalArticle;
 	}
 

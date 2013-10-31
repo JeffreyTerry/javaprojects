@@ -21,6 +21,9 @@ public class ScholarlySystem {
 	 * @param scholar		The scholar to add
 	 */
 	public void addScholar(Scholar scholar){
+		if(scholar == null){
+			return;
+		}
 		scholarMap.put(scholar.getName(), scholar);
 		paperMap.putAll(scholar.getPapers());
 	}
@@ -30,8 +33,16 @@ public class ScholarlySystem {
 	 * @param paper		The paper to add
 	 */
 	public void addPaper(Paper paper){
+		if(paper == null){
+			return;
+		}
 		paperMap.put(paper.getTitle(), paper);
 		scholarMap.putAll(paper.getAuthors());
+		//TODO there is a problem with papers being added to their authors
+		ArrayList<Scholar> scholarList = new ArrayList<Scholar>(paper.getAuthors().values());
+		for(int i = 0; i < scholarList.size(); i++){
+			scholarList.get(i).addPaper(paper);
+		}
 	}
 
 	/**
@@ -39,6 +50,9 @@ public class ScholarlySystem {
 	 * @param outlet	The outlet to add
 	 */
 	public void addAcademicOutlet(AcademicOutlet outlet){
+		if(outlet == null){
+			return;
+		}
 		//Add this conference to all authors, chairs, and committee members
 		if(outlet instanceof Conference){
 			Conference conf = (Conference)outlet;
@@ -52,7 +66,7 @@ public class ScholarlySystem {
 				for(int j = 0; j < chairs.size(); j++){
 					chairs.get(j).addChair(conf.getMeetings().get(i));
 				}
-				committeeMembers = new ArrayList<Scholar>(conf.getMeetings().get(i).getChairs().values());
+				committeeMembers = new ArrayList<Scholar>(conf.getMeetings().get(i).getCommitteeMembers().values());
 				for(int j = 0; j < committeeMembers.size(); j++){
 					committeeMembers.get(j).addCommittee(conf.getMeetings().get(i));
 				}
