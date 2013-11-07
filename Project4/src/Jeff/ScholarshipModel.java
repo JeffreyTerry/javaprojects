@@ -71,6 +71,33 @@ public class ScholarshipModel extends ScholarlySystem{
 		super.removePapers(papers);
 		processEvent(new DataChangeEvent(this, 5, DataChangeEvent.PAPER_REMOVED, papers));
 	}
+
+	/**
+	 * Removes all scholars from the model
+	 */
+	public Scholar[] removeAllScholars(){
+		Scholar[] scholarsRemoved = super.removeAllScholars();
+		processEvent(new DataChangeEvent(this, 5, DataChangeEvent.SCHOLAR_REMOVED, scholarsRemoved));
+		return scholarsRemoved;
+	}
+
+	/**
+	 * Removes all serials from the model
+	 */
+	public AcademicOutlet[] removeAllAcademicOutlets(){
+		AcademicOutlet[] outletsRemoved = super.removeAllAcademicOutlets();
+		processEvent(new DataChangeEvent(this, 5, DataChangeEvent.SERIAL_REMOVED, outletsRemoved));
+		return outletsRemoved;
+	}
+
+	/**
+	 * Removes all papers from the model
+	 */
+	public Paper[] removeAllPapers(){
+		Paper[] papersRemoved = super.removeAllPapers();
+		processEvent(new DataChangeEvent(this, 5, DataChangeEvent.PAPER_REMOVED, papersRemoved));
+		return papersRemoved;
+	}
 	
 	/**
 	 * Adds a listener to the model

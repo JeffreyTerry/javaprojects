@@ -2,6 +2,8 @@ package Daniel;
 
 import java.util.ArrayList;
 
+import Jeff.DataChangeEvent;
+
 public class ScholarlySystem {
 	/** A map of the scholars in the system */
 	private ScholarMap scholarMap = new ScholarMap();
@@ -81,9 +83,43 @@ public class ScholarlySystem {
 			journalArticle.getIssue().removePaper(journalArticle);
 		}
 		paperMap.remove(paper.getTitle());
-		//TODO make the papers remove themselves from their conferences
 	}
 
+	/**
+	 * Removes all scholars from the model
+	 */
+	public Scholar[] removeAllScholars(){
+		Object[] objects = scholarMap.values().toArray();
+		Scholar[] scholarsRemoved = new Scholar[objects.length];
+		for(int i = 0; i < objects.length; i++){
+			scholarsRemoved[i] = (Scholar)objects[i];
+		}
+		return scholarsRemoved;
+	}
+
+	/**
+	 * Removes all serials from the model
+	 */
+	public AcademicOutlet[] removeAllAcademicOutlets(){
+		AcademicOutlet[] outletsRemoved = new AcademicOutlet[outletList.size()];
+		for(int i = 0; i < outletList.size(); i++){
+			outletsRemoved[i] = outletList.get(i);
+		}
+		return outletsRemoved;
+	}
+
+	/**
+	 * Removes all papers from the model
+	 */
+	public Paper[] removeAllPapers(){
+		Object[] objects = paperMap.values().toArray();
+		Paper[] papersRemoved = new Paper[objects.length];
+		for(int i = 0; i < objects.length; i++){
+			papersRemoved[i] = (Paper)objects[i];
+		}
+		return papersRemoved;
+	}
+	
 	/**
 	 * Adds an academic outlet to the model
 	 * @param outlet	The outlet to add

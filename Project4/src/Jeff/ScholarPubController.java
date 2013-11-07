@@ -96,13 +96,13 @@ public class ScholarPubController{
 	 * @return	A new Issue created using the user input
 	 */
 	private Issue openCreateIssueDialog(){
-		final JComboBox monthSelector = new JComboBox(new String[]{"January","February","March","April","May","June","July","August","September","October","November","December"});
+		final JComboBox<String> monthSelector = new JComboBox<String>(new String[]{"January","February","March","April","May","June","July","August","September","October","November","December"});
 		String[] years = new String[150];
 		for(int i = 149; i >= 0; i--){
 			years[i] = ""+ (Calendar.getInstance().get(Calendar.YEAR) - i);
 		}
 		JLabel dateLabel = new JLabel("Date");
-		final JComboBox yearSelector = new JComboBox(years);
+		final JComboBox<String> yearSelector = new JComboBox<String>(years);
 		JLabel editorLabel = new JLabel("Editors");
 		final JList editorList = new JList(model.getScholarMap().values().toArray());
 		JLabel reviewerLabel = new JLabel("Reviewers");
@@ -136,8 +136,10 @@ public class ScholarPubController{
 		addIssueBox.add(Box.createVerticalStrut(dialogVerticalMargin));
 		addIssueBox.add(reviewerPanel);
 		addIssueBox.add(Box.createVerticalStrut(dialogVerticalMargin));
-		addIssueBox.add(paperPanel);
-		addIssueBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		if(model.getPaperMap().size() > 0){
+			addIssueBox.add(paperPanel);
+			addIssueBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		}
 		addIssueBox.add(savePanel);
 		addIssueBox.add(Box.createVerticalGlue());
 
@@ -151,21 +153,21 @@ public class ScholarPubController{
 				theNewIssue.setYear(yearSelector.getSelectedItem().toString());
 				//Add editors
 				ScholarMap editors = new ScholarMap();
-				Object[] editorArr = editorList.getSelectedValues();
+				Object[] editorArr = editorList.getSelectedValuesList().toArray();
 				for(int i = 0; i < editorArr.length; i++){
 					editors.put(((Scholar)editorArr[i]).getName(), (Scholar)editorArr[i]);
 				}
 				theNewIssue.setEditors(editors);
 				//Add reviewers
 				ScholarMap reviewers = new ScholarMap();
-				Object[] reviewerArr = reviewerList.getSelectedValues();
+				Object[] reviewerArr = reviewerList.getSelectedValuesList().toArray();
 				for(int i = 0; i < reviewerArr.length; i++){
 					reviewers.put(((Scholar)reviewerArr[i]).getName(), (Scholar)reviewerArr[i]);
 				}
 				theNewIssue.setReviewers(reviewers);
 				//Add papers
 				PaperMap papers = new PaperMap();
-				Object[] paperArr = paperList.getSelectedValues();
+				Object[] paperArr = paperList.getSelectedValuesList().toArray();
 				for(int i = 0; i < paperArr.length; i++){
 					papers.put(((Paper)paperArr[i]).getTitle(), (Paper)paperArr[i]);
 				}
@@ -208,6 +210,7 @@ public class ScholarPubController{
 		final JTextField countryField = new JTextField();
 		JLabel chairLabel = new JLabel("Chair");
 		final JList chairList = new JList(model.getScholarMap().values().toArray());
+		chairList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel committeeLabel = new JLabel("Committee Members");
 		final JList committeeList = new JList(model.getScholarMap().values().toArray());
 		JLabel paperLabel = new JLabel("Papers");
@@ -259,8 +262,10 @@ public class ScholarPubController{
 		addMeetingBox.add(Box.createVerticalStrut(dialogVerticalMargin));
 		addMeetingBox.add(committeePanel);
 		addMeetingBox.add(Box.createVerticalStrut(dialogVerticalMargin));
-		addMeetingBox.add(paperPanel);
-		addMeetingBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		if(model.getPaperMap().size() > 0){
+			addMeetingBox.add(paperPanel);
+			addMeetingBox.add(Box.createVerticalStrut(dialogVerticalMargin));
+		}
 		addMeetingBox.add(savePanel);
 		addMeetingBox.add(Box.createVerticalGlue());
 
@@ -289,21 +294,21 @@ public class ScholarPubController{
 				}
 				//Add chairs
 				ScholarMap chairs = new ScholarMap();
-				Object[] chairArr = chairList.getSelectedValues();
+				Object[] chairArr = chairList.getSelectedValuesList().toArray();
 				for(int i = 0; i < chairArr.length; i++){
 					chairs.put(((Scholar)chairArr[i]).getName(), (Scholar)chairArr[i]);
 				}
 				theNewMeeting.setChairs(chairs);
 				//Add committee members
 				ScholarMap members = new ScholarMap();
-				Object[] memberArr = committeeList.getSelectedValues();
+				Object[] memberArr = committeeList.getSelectedValuesList().toArray();
 				for(int i = 0; i < memberArr.length; i++){
 					members.put(((Scholar)memberArr[i]).getName(), (Scholar)memberArr[i]);
 				}
 				theNewMeeting.setCommitteeMembers(members);
 				//Add papers
 				PaperMap papers = new PaperMap();
-				Object[] paperArr = paperList.getSelectedValues();
+				Object[] paperArr = paperList.getSelectedValuesList().toArray();
 				for(int i = 0; i < paperArr.length; i++){
 					papers.put(((Paper)paperArr[i]).getTitle(), (Paper)paperArr[i]);
 				}
@@ -320,7 +325,7 @@ public class ScholarPubController{
 		addMeetingDialog.setModal(true);
 		addMeetingDialog.setVisible(true);
 
-		if(theNewMeeting.getMonth() == null){
+		if(theNewMeeting.getLocation() == null){
 			return null;
 		}
 		return theNewMeeting;
@@ -799,7 +804,7 @@ public class ScholarPubController{
 				theNewConferencePaper.setConference((Conference)confList.getSelectedValue());
 				//Add scholars
 				ScholarMap scholars = new ScholarMap();
-				Object[] scholarArr = scholarList.getSelectedValues();
+				Object[] scholarArr = scholarList.getSelectedValuesList().toArray();
 				for(int i = 0; i < scholarArr.length; i++){
 					scholars.put(((Scholar)scholarArr[i]).getName(), (Scholar)scholarArr[i]);
 				}
@@ -940,7 +945,7 @@ public class ScholarPubController{
 				theNewJournalArticle.setIssue((Issue)issueList.getSelectedValue());
 				//Add scholars
 				ScholarMap scholars = new ScholarMap();
-				Object[] scholarArr = scholarList.getSelectedValues();
+				Object[] scholarArr = scholarList.getSelectedValuesList().toArray();
 				for(int i = 0; i < scholarArr.length; i++){
 					scholars.put(((Scholar)scholarArr[i]).getName(), (Scholar)scholarArr[i]);
 				}
@@ -1114,7 +1119,7 @@ public class ScholarPubController{
 	}
 	private class RemoveScholarsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			Object[] selectedObjects = selectionView.getScholarList().getSelectedValues();
+			Object[] selectedObjects = selectionView.getScholarList().getSelectedValuesList().toArray();
 			Scholar[] scholarList = new Scholar[selectedObjects.length];
 			for(int i = 0; i < selectedObjects.length; i++){
 				scholarList[i] = (Scholar)selectedObjects[i];
@@ -1124,7 +1129,7 @@ public class ScholarPubController{
 	}
 	private class RemoveSerialsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			Object[] selectedObjects = selectionView.getSerialList().getSelectedValues();
+			Object[] selectedObjects = selectionView.getSerialList().getSelectedValuesList().toArray();
 			AcademicOutlet[] outletList = new AcademicOutlet[selectedObjects.length];
 			for(int i = 0; i < selectedObjects.length; i++){
 				outletList[i] = (AcademicOutlet)selectedObjects[i];
@@ -1134,22 +1139,27 @@ public class ScholarPubController{
 	}
 	private class RemovePapersListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			Object[] selectedObjects = selectionView.getPaperList().getSelectedValuesList().toArray();
+			Paper[] paperList = new Paper[selectedObjects.length];
+			for(int i = 0; i < selectedObjects.length; i++){
+				paperList[i] = (Paper)selectedObjects[i];
+			}
+			model.removePapers(paperList);
 		}
 	}
 	private class RemoveAllScholarsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			model.removeAllScholars();
 		}
 	}
 	private class RemoveAllSerialsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			model.removeAllAcademicOutlets();
 		}
 	}
 	private class RemoveAllPapersListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			model.removeAllPapers();
 		}
 	}
 
@@ -1276,45 +1286,45 @@ public class ScholarPubController{
 							Box infoBox = Box.createVerticalBox();
 							infoBox.add(Box.createVerticalGlue());
 							infoBox.add(namePanel);
-							infoBox.add(Box.createVerticalStrut(verticalMargin));
 							if(scholar.getInstitutionalAffiliations().size() > 0){
-								infoBox.add(institutionPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(institutionPanel);
 							}
 							if(scholar.getResearchAreas().size() > 0){
-								infoBox.add(researchAreaPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(researchAreaPanel);
 							}
 							if(scholar.getConferencePapers().size() > 0){
-								infoBox.add(conferencePaperPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(conferencePaperPanel);
 							}
 							if(scholar.getJournalArticles().size() > 0){
-								infoBox.add(journalArticlePanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(journalArticlePanel);
 							}
 							if(scholar.getChairs().size() > 0){
-								infoBox.add(chairPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(chairPanel);
 							}
 							if(scholar.getCommittees().size() > 0){
-								infoBox.add(committeePanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(committeePanel);
 							}
 							if(scholar.getEditingPositions().size() > 0){
-								infoBox.add(editorPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(editorPanel);
 							}
 							if(scholar.getReviewingPositions().size() > 0){
-								infoBox.add(reviewerPanel);
 								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(reviewerPanel);
 							}
+							infoBox.add(Box.createVerticalGlue());
 							infoBox.setPreferredSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
 							JScrollPane scrollPane = new JScrollPane(infoBox);
+							scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 							JDialog infoDialog = new JDialog();
+							infoDialog.setSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
 							infoDialog.add(scrollPane, BorderLayout.CENTER);
-							infoDialog.pack();
-							scrollPane.validate();
 							infoDialog.setLocationRelativeTo(selectionView);
 							infoDialog.setModal(true);
 							infoDialog.setVisible(true);
@@ -1322,8 +1332,221 @@ public class ScholarPubController{
 					});
 				}
 				else if(e.getSource() == selectionView.getSerialList()){
+					selectionView.getSerialList().setSelectedIndex(selectionView.getSerialList().locationToIndex(e.getPoint()));
+					infoMenu.show(selectionView.getSerialList(), e.getX(), e.getY());
+					infoItem.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent event){
+							AcademicOutlet serial = (AcademicOutlet)selectionView.getSerialList().getModel().getElementAt(selectionView.getSerialList().locationToIndex(e.getPoint()));
+							Box infoBox = Box.createVerticalBox();
+							if(serial instanceof Journal){
+								Journal journal = (Journal)serial;
+								String organizationText = "<html><div style='text-align:center;'><h3>Organization</h3>" + journal.getOrganizationName() + "</div></html>";
+								String locationText = "<html><div style='text-align:center;'><h3>Location</h3>" + journal.getLocation() + "</div></html>";
+								String issuesText = "<html><div style='text-align:center;'><h3>Issues</h3>";
+
+								for(int i = 0; i < journal.getIssues().size(); i++){
+									issuesText += journal.getIssues().get(i) + "<br />";
+								}
+								issuesText = issuesText.substring(0, issuesText.length() - 6) + "</div></html>";
+								
+								JLabel organizationLabel = new JLabel(organizationText);
+								JLabel locationLabel = new JLabel(locationText);
+								JLabel issuesLabel = new JLabel(issuesText);
+								organizationLabel.setAlignmentX(JLabel.CENTER);
+								locationLabel.setAlignmentX(JLabel.CENTER);
+								issuesLabel.setAlignmentX(JLabel.CENTER);
+
+								JPanel organizationPanel = new JPanel();
+								JPanel locationPanel = new JPanel();
+								JPanel issuesPanel = new JPanel();
+								
+								organizationPanel.add(organizationLabel);
+								locationPanel.add(locationLabel);
+								issuesPanel.add(issuesLabel);
+
+								infoBox.add(Box.createVerticalGlue());
+								infoBox.add(organizationPanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(locationPanel);
+								if(journal.getIssues().size() > 0){
+									infoBox.add(Box.createVerticalStrut(verticalMargin));
+									infoBox.add(issuesPanel);
+								}
+								infoBox.add(Box.createVerticalGlue());
+							}
+							if(serial instanceof Conference){
+								Conference conference = (Conference)serial;
+								String organizationText = "<html><div style='text-align:center;'><h3>Organization</h3>" + conference.getOrganizationName() + "</div></html>";
+								String meetingsText = "<html><div style='text-align:center;'><h3>Meetings</h3>";
+
+								for(int i = 0; i < conference.getMeetings().size(); i++){
+									meetingsText += conference.getMeetings().get(i) + "<br />";
+								}
+								meetingsText = meetingsText.substring(0, meetingsText.length() - 6) + "</div></html>";
+								
+								JLabel organizationLabel = new JLabel(organizationText);
+								JLabel meetingsLabel = new JLabel(meetingsText);
+								organizationLabel.setAlignmentX(JLabel.CENTER);
+								meetingsLabel.setAlignmentX(JLabel.CENTER);
+
+								JPanel organizationPanel = new JPanel();
+								JPanel meetingsPanel = new JPanel();
+								
+								organizationPanel.add(organizationLabel);
+								meetingsPanel.add(meetingsLabel);
+
+								infoBox.add(Box.createVerticalGlue());
+								infoBox.add(organizationPanel);
+								if(conference.getMeetings().size() > 0){
+									infoBox.add(Box.createVerticalStrut(verticalMargin));
+									infoBox.add(meetingsPanel);
+								}
+								infoBox.add(Box.createVerticalGlue());
+							}
+							
+							infoBox.setPreferredSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
+							JScrollPane scrollPane = new JScrollPane(infoBox);
+							scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+							JDialog infoDialog = new JDialog();
+							infoDialog.setSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
+							infoDialog.add(scrollPane, BorderLayout.CENTER);
+							infoDialog.setLocationRelativeTo(selectionView);
+							infoDialog.setModal(true);
+							infoDialog.setVisible(true);
+						}
+					});
 				}
 				else if(e.getSource() == selectionView.getPaperList()){
+					selectionView.getPaperList().setSelectedIndex(selectionView.getPaperList().locationToIndex(e.getPoint()));
+					infoMenu.show(selectionView.getPaperList(), e.getX(), e.getY());
+					infoItem.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent event){
+							Paper paper = (Paper)selectionView.getPaperList().getModel().getElementAt(selectionView.getPaperList().locationToIndex(e.getPoint()));
+							Box infoBox = Box.createVerticalBox();
+							if(paper instanceof JournalArticle){
+								JournalArticle journalArticle = (JournalArticle)paper;
+								String titleText = "<html><div style='text-align:center;'><h3>Title</h3>" + journalArticle.getTitle() + "</div></html>";
+								String pagesText = "no pages found";
+								if(journalArticle.getPageNumbers().length >= 2){
+									pagesText = "<html><div style='text-align:center;'><h3>Pages</h3>" + journalArticle.getPageNumbers()[0] + " - " + journalArticle.getPageNumbers()[1] + "</div></html>";
+								}
+								String authorsText = "<html><div style='text-align:center;'><h3>Authors</h3>";
+								String issueText = "<html><div style='text-align:center;'><h3>Journal Issue</h3>" + journalArticle.getIssue() + "</div></html>";
+								String diText = "<html><div style='text-align:center;'><h3>Digital Identifier</h3>" + journalArticle.getDigitalIdentifier() + "</div></html>";
+								
+								ArrayList<Scholar> authorList = new ArrayList<Scholar>(journalArticle.getAuthors().values());
+								for(int i = 0; i < authorList.size(); i++){
+									authorsText += authorList.get(i) + "<br />";
+								}
+								authorsText = authorsText.substring(0, authorsText.length() - 6) + "</div></html>";
+
+								JLabel titleLabel = new JLabel(titleText);
+								JLabel pagesLabel = new JLabel(pagesText);
+								JLabel authorsLabel = new JLabel(authorsText);
+								JLabel issueLabel = new JLabel(issueText);
+								JLabel diLabel = new JLabel(diText);
+								titleLabel.setAlignmentX(JLabel.CENTER);
+								pagesLabel.setAlignmentX(JLabel.CENTER);
+								authorsLabel.setAlignmentX(JLabel.CENTER);
+								issueLabel.setAlignmentX(JLabel.CENTER);
+								diLabel.setAlignmentX(JLabel.CENTER);
+
+								JPanel titlePanel = new JPanel();
+								JPanel pagesPanel = new JPanel();
+								JPanel authorsPanel = new JPanel();
+								JPanel issuePanel = new JPanel();
+								JPanel diPanel = new JPanel();
+
+								titlePanel.add(titleLabel);
+								pagesPanel.add(pagesLabel);
+								authorsPanel.add(authorsLabel);
+								issuePanel.add(issueLabel);
+								diPanel.add(diLabel);
+
+								infoBox.add(Box.createVerticalGlue());
+								infoBox.add(titlePanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(pagesPanel);
+								if(authorList.size() > 0){
+									infoBox.add(Box.createVerticalStrut(verticalMargin));
+									infoBox.add(authorsPanel);
+								}
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(issuePanel);
+								if(!journalArticle.getDigitalIdentifier().equals("")){
+									infoBox.add(Box.createVerticalStrut(verticalMargin));
+									infoBox.add(diPanel);
+								}
+								infoBox.add(Box.createVerticalGlue());
+							}
+							if(paper instanceof ConferencePaper){
+								ConferencePaper conferencePaper = (ConferencePaper)paper;
+								String titleText = "<html><div style='text-align:center;'><h3>Title</h3>" + conferencePaper.getTitle() + "</div></html>";
+								String pagesText = "no pages found";
+								if(conferencePaper.getPageNumbers().length >= 2){
+									pagesText = "<html><div style='text-align:center;'><h3>Pages</h3>" + conferencePaper.getPageNumbers()[0] + " - " + conferencePaper.getPageNumbers()[1] + "</div></html>";
+								}
+								String authorsText = "<html><div style='text-align:center;'><h3>Authors</h3>";
+								String conferenceText = "<html><div style='text-align:center;'><h3>Conference</h3>" + conferencePaper.getConference() + "</div></html>";
+								String diText = "<html><div style='text-align:center;'><h3>Digital Identifier</h3>" + conferencePaper.getDigitalIdentifier() + "</div></html>";
+								
+								ArrayList<Scholar> authorList = new ArrayList<Scholar>(conferencePaper.getAuthors().values());
+								for(int i = 0; i < authorList.size(); i++){
+									authorsText += authorList.get(i) + "<br />";
+								}
+								authorsText = authorsText.substring(0, authorsText.length() - 6) + "</div></html>";
+
+								JLabel titleLabel = new JLabel(titleText);
+								JLabel pagesLabel = new JLabel(pagesText);
+								JLabel authorsLabel = new JLabel(authorsText);
+								JLabel conferenceLabel = new JLabel(conferenceText);
+								JLabel diLabel = new JLabel(diText);
+								titleLabel.setAlignmentX(JLabel.CENTER);
+								pagesLabel.setAlignmentX(JLabel.CENTER);
+								authorsLabel.setAlignmentX(JLabel.CENTER);
+								conferenceLabel.setAlignmentX(JLabel.CENTER);
+								diLabel.setAlignmentX(JLabel.CENTER);
+
+								JPanel titlePanel = new JPanel();
+								JPanel pagesPanel = new JPanel();
+								JPanel authorsPanel = new JPanel();
+								JPanel conferencePanel = new JPanel();
+								JPanel diPanel = new JPanel();
+
+								titlePanel.add(titleLabel);
+								pagesPanel.add(pagesLabel);
+								authorsPanel.add(authorsLabel);
+								conferencePanel.add(conferenceLabel);
+								diPanel.add(diLabel);
+
+								infoBox.add(Box.createVerticalGlue());
+								infoBox.add(titlePanel);
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(pagesPanel);
+								if(authorList.size() > 0){
+									infoBox.add(Box.createVerticalStrut(verticalMargin));
+									infoBox.add(authorsPanel);
+								}
+								infoBox.add(Box.createVerticalStrut(verticalMargin));
+								infoBox.add(conferencePanel);
+								if(!conferencePaper.getDigitalIdentifier().equals("")){
+									infoBox.add(Box.createVerticalStrut(verticalMargin));
+									infoBox.add(diPanel);
+								}
+								infoBox.add(Box.createVerticalGlue());
+							}
+							
+							infoBox.setPreferredSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
+							JScrollPane scrollPane = new JScrollPane(infoBox);
+							scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+							JDialog infoDialog = new JDialog();
+							infoDialog.setSize(new Dimension(selectionView.getWidth() - 80, selectionView.getHeight() - 200));
+							infoDialog.add(scrollPane, BorderLayout.CENTER);
+							infoDialog.setLocationRelativeTo(selectionView);
+							infoDialog.setModal(true);
+							infoDialog.setVisible(true);
+						}
+					});
 				}
 			}
 		}

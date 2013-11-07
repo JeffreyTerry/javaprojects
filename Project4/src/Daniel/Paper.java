@@ -24,6 +24,9 @@ public class Paper {
 		this.pageNumbers = pageNumbers;
 	}
 	public String getDigitalIdentifier() {
+		if(digitalIdentifier == null){
+			return "";
+		}
 		return digitalIdentifier;
 	}
 	public void setDigitalIdentifier(String digitalIdentifier) {
