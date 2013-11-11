@@ -1,6 +1,7 @@
 package Daniel;
 
 public class JournalArticle extends Paper{
+	private static final long serialVersionUID = 1L;
 	private Issue issue;
 
 	public Issue getIssue() {

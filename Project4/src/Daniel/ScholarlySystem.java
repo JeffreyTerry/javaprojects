@@ -1,10 +1,12 @@
 package Daniel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Jeff.DataChangeEvent;
 
-public class ScholarlySystem {
+public class ScholarlySystem implements Serializable{
+	private static final long serialVersionUID = 1L;
 	/** A map of the scholars in the system */
 	private ScholarMap scholarMap = new ScholarMap();
 	/** A map of the papers in the system */

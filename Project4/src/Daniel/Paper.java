@@ -1,6 +1,9 @@
 package Daniel;
 
-public class Paper {
+import java.io.Serializable;
+
+public class Paper implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private ScholarMap authors;
 	private String title;
 	private int[] pageNumbers = new int[2];

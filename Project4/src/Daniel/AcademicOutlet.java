@@ -1,6 +1,9 @@
 package Daniel;
 
-public class AcademicOutlet {
+import java.io.Serializable;
+
+public class AcademicOutlet implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String organizationName;
 
 	public String getOrganizationName() {

@@ -3,6 +3,7 @@ package Daniel;
 import java.util.ArrayList;
 
 public class ConferencePaper extends Paper{
+	private static final long serialVersionUID = 1L;
 	private Conference conference;
 
 	public Conference getConference() {

@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.Box;
-import javax.swing.DefaultListModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -65,7 +64,7 @@ public class DisplayView extends JPanel implements ActionListener{
 	/** the Scholar selector */
 	private JSpinner scholarSpinner;
 	/** the type selector */
-	private JComboBox typeSelector;
+	private JComboBox<String> typeSelector;
 	/** the model */
 	private ScholarshipModel model;
 
@@ -107,7 +106,7 @@ public class DisplayView extends JPanel implements ActionListener{
 		controlBox.add(Box.createHorizontalStrut(10));
 		controlBox.add(scholarSpinner);
 		String[] types = {"Select Graph Parameter", "Publication Type", "Publications Per Year", "Conference Papers Per Year", "Journal Articles Per Year", "Coauthors"};
-		typeSelector = new JComboBox(types);
+		typeSelector = new JComboBox<String>(types);
 		typeSelector.addItemListener(new ItemListener(){
 			public void itemStateChanged(ItemEvent e) {
 				graphType = typeSelector.getSelectedIndex() - 1;

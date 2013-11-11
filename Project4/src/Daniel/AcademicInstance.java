@@ -1,6 +1,9 @@
 package Daniel;
 
-public class AcademicInstance { 
+import java.io.Serializable;
+
+public class AcademicInstance implements Serializable{
+	private static final long serialVersionUID = 1L; 
 	private String month;
 	private String year;
 	private ScholarMap leads = new ScholarMap();

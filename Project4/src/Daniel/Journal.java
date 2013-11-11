@@ -3,6 +3,7 @@ package Daniel;
 import java.util.ArrayList;
 
 public class Journal extends AcademicOutlet{
+	private static final long serialVersionUID = 1L;
 	private Location location;
 	private ArrayList<Volume> volumes = new ArrayList<Volume>();
 	public Location getLocation() {

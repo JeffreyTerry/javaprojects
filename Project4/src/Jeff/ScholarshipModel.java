@@ -16,7 +16,7 @@ public class ScholarshipModel extends ScholarlySystem{
 	private static final long serialVersionUID = 1L;
 	
 	/** A list of ActionListeners listening to changes in this model */
-	private ArrayList<ActionListener> listenerList = new ArrayList<ActionListener>();
+	transient private ArrayList<ActionListener> listenerList = new ArrayList<ActionListener>();
 
 	/**
 	 * Adds a scholar to the model
@@ -97,6 +97,14 @@ public class ScholarshipModel extends ScholarlySystem{
 		Paper[] papersRemoved = super.removeAllPapers();
 		processEvent(new DataChangeEvent(this, 5, DataChangeEvent.PAPER_REMOVED, papersRemoved));
 		return papersRemoved;
+	}
+	
+	public ScholarlySystem getSystem(){
+		ScholarlySystem system = new ScholarlySystem();
+		system.setOutletList(getOutletList());
+		system.setPaperMap(getPaperMap());
+		system.setScholarMap(getScholarMap());
+		return system;
 	}
 	
 	/**

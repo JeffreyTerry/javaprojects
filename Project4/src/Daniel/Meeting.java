@@ -3,6 +3,7 @@ package Daniel;
 import java.util.ArrayList;
 
 public class Meeting extends AcademicInstance{
+	private static final long serialVersionUID = 1L;
 	private Location location;
 
 	public Location getLocation() {

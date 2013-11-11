@@ -9,6 +9,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -16,6 +25,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuItem;
@@ -26,6 +36,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.plaf.FileChooserUI;
 
 /**
  * Project #3
@@ -1165,12 +1177,61 @@ public class ScholarPubController{
 
 	private class SaveListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			JFileChooser chooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Scholarly System Files", "schsys");
+			chooser.setAcceptAllFileFilterUsed(false);
+			chooser.setFileFilter(filter);
+			if(chooser.showSaveDialog(selectionView) == JFileChooser.APPROVE_OPTION){
+				File file = chooser.getSelectedFile();
+				if(file.getName().lastIndexOf('.') == -1){
+					file = new File(file.toString() + ".schsys");
+				}
+				try{
+					ObjectOutputStream writer = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(file)));
+					writer.writeObject(model.getSystem());
+					writer.close();
+				}
+				catch(IOException ex){
+					JOptionPane.showMessageDialog(selectionView, "Error", "Error", JOptionPane.ERROR_MESSAGE);
+					ex.printStackTrace();
+				}
+			}
 		}
 	}
 	private class LoadListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO
+			JFileChooser chooser = new JFileChooser();
+			FileNameExtensionFilter filter = new FileNameExtensionFilter("Scholarly System Files", "schsys");
+			chooser.setFileFilter(filter);
+			if(chooser.showOpenDialog(selectionView) == JFileChooser.APPROVE_OPTION){
+				File file = chooser.getSelectedFile();
+				try{
+					ObjectInputStream reader = new ObjectInputStream(new BufferedInputStream(new FileInputStream(file)));
+					ScholarlySystem system = (ScholarlySystem)reader.readObject();
+					model.removeAllScholars();
+					ArrayList<Paper> papers = new ArrayList<Paper>(system.getPaperMap().values());
+					for(int i = 0; i < papers.size(); i++){
+						model.addPaper(papers.get(i));
+					}
+					ArrayList<Scholar> scholars = new ArrayList<Scholar>(system.getScholarMap().values());
+					for(int i = 0; i < scholars.size(); i++){
+						model.addScholar(scholars.get(i));
+					}
+					for(int i = 0; i < system.getOutletList().size(); i++){
+						model.addAcademicOutlet(system.getOutletList().get(i));
+					}
+					reader.close();
+				}
+				catch(IOException ex){
+					if(ex instanceof FileNotFoundException){
+						JOptionPane.showMessageDialog(selectionView, "File not found", "", JOptionPane.WARNING_MESSAGE);
+						actionPerformed(e);
+					}
+				}
+				catch(ClassNotFoundException ex){
+					JOptionPane.showMessageDialog(selectionView, "Internal Error", "", JOptionPane.ERROR_MESSAGE);
+				}
+			}
 		}
 	}
 	private class ImportListener implements ActionListener{

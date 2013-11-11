@@ -3,6 +3,7 @@ package Daniel;
 import java.util.ArrayList;
 
 public class Conference extends AcademicOutlet{
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Meeting> meetings = new ArrayList<Meeting>();
 
 	public ArrayList<Meeting> getMeetings() {
