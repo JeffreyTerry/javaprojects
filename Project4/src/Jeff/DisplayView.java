@@ -155,7 +155,7 @@ public class DisplayView extends JPanel implements ActionListener{
 			if(graphType != JOURNAL_ARTICLES_PER_YEAR){
 				for(int i = 0; i < conPaps.size(); i++){
 					nextYear = conPaps.get(i).getYear();
-					if(nextYear.split(" ").length > 1){
+					if(nextYear != null && nextYear.split(" ").length > 1){
 						nextYear = nextYear.split(" ")[1];
 					}
 					if(!dateMap.containsKey(nextYear)){
@@ -170,7 +170,7 @@ public class DisplayView extends JPanel implements ActionListener{
 			if(graphType != CONFERENCE_PAPERS_PER_YEAR){
 				for(int i = 0; i < jourArts.size(); i++){
 					nextYear = jourArts.get(i).getYear();
-					if(nextYear.split(" ").length > 1){
+					if(nextYear != null && nextYear.split(" ").length > 1){
 						nextYear = nextYear.split(" ")[1];
 					}
 					if(!dateMap.containsKey(nextYear)){

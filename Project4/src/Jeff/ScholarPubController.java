@@ -1,10 +1,3 @@
-//TODO: Ensure all needed data is present before adding a serial
-//TODO: Force the user to add an issue before creating a volume
-//TODO: Force the user to add a volume before creating a journal
-//TODO: Force the user to add a meeting before creating a conference
-//TODO: Force the user to add all information (except papers) to a meeting before creating it.
-
-
 package Jeff;
 
 import Daniel.*;
@@ -18,12 +11,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -387,6 +378,10 @@ public class ScholarPubController{
 		
 		saveVolumeButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				if(theNewVolume.size() == 0){
+					JOptionPane.showMessageDialog(addVolumeDialog, "Please add an issue", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				addVolumeDialog.dispatchEvent(new WindowEvent(addVolumeDialog, WindowEvent.WINDOW_CLOSING));
 			}
 		});
@@ -585,6 +580,10 @@ public class ScholarPubController{
 				}
 				
 				//Add meetings
+				if(meetings.size() == 0){
+					JOptionPane.showMessageDialog(addConferenceDialog, "Please enter a meeting", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				theNewConference.setMeetings(meetings);
 
 				addConferenceDialog.dispatchEvent(new WindowEvent(addConferenceDialog, WindowEvent.WINDOW_CLOSING));
@@ -700,6 +699,10 @@ public class ScholarPubController{
 					theNewJournal.setLocation(new Location(cityField.getText(), countryField.getText()));
 				}
 				//Add volumes
+				if(volumes.size() == 0){
+					JOptionPane.showMessageDialog(addJournalDialog, "Please add a volume", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				theNewJournal.setVolumes(volumes);
 
 				addJournalDialog.dispatchEvent(new WindowEvent(addJournalDialog, WindowEvent.WINDOW_CLOSING));
@@ -737,6 +740,10 @@ public class ScholarPubController{
 			if(outletList.get(i) instanceof Conference){
 				conferences.add((Conference)outletList.get(i));
 			}
+		}
+		if(conferences.size() == 0){
+			JOptionPane.showMessageDialog(null, "Must Add Conferences First!", "", JOptionPane.WARNING_MESSAGE);
+			return null;
 		}
 		final JList confList = new JList(conferences.toArray());
 		confList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -878,6 +885,10 @@ public class ScholarPubController{
 			for(int j = 0; j < journals.get(i).getVolumes().size(); j++){
 				issues.addAll(journals.get(i).getVolumes().get(j));
 			}
+		}
+		if(issues.size() == 0){
+			JOptionPane.showMessageDialog(null, "Must Add Journal Issues First!", "", JOptionPane.WARNING_MESSAGE);
+			return null;
 		}
 		final JList issueList = new JList(issues.toArray());
 		issueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
