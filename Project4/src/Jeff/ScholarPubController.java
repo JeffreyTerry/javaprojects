@@ -1,6 +1,9 @@
 //TODO: Warn user when they are about to delete a serial or paper
 //TODO: Don't warn user if their isn't anything to warn them about. (ie overwrited nonexistant data)
 //TODO: Make add chairs/committee members in meetings
+//TODO: Make add reviewer/editors
+//TODO: Don't allow conference papers to be passes to journals
+//TODO: Don't allow journal articles to be passes to conferences
 
 
 package Jeff;
