@@ -1,3 +1,8 @@
+//TODO: Warn user when they are about to delete a serial or paper
+//TODO: Don't warn user if their isn't anything to warn them about. (ie overwrited nonexistant data)
+
+
+
 package Jeff;
 
 import Daniel.*;
@@ -1302,15 +1307,14 @@ public class ScholarPubController{
 		}
 	}
 	
+
 	private class InformationListener implements ActionListener {
 		public void actionPerformed(ActionEvent e)
 		{
-			//TODO: do this
 			JDialog displayDialog = new JDialog();
 			displayDialog.add(informationView, BorderLayout.CENTER);
 			displayDialog.setSize(selectionView.getWidth(), selectionView.getHeight());
 			displayDialog.setLocationRelativeTo(selectionView);
-			displayDialog.setModal(true);
 			displayDialog.setVisible(true);
 		}
 	}
@@ -1325,7 +1329,9 @@ public class ScholarPubController{
 				final int verticalMargin = 10;
 				JPopupMenu infoMenu = new JPopupMenu();
 				JMenuItem infoItem = new JMenuItem("Get Info");
+				JMenuItem deleteSelected = new JMenuItem("Delete");
 				infoMenu.add(infoItem);
+				infoMenu.add(deleteSelected);
 				if(e.getSource() == selectionView.getScholarList()){
 					selectionView.getScholarList().setSelectedIndex(selectionView.getScholarList().locationToIndex(e.getPoint()));
 					infoMenu.show(selectionView.getScholarList(), e.getX(), e.getY());
@@ -1461,6 +1467,11 @@ public class ScholarPubController{
 							infoDialog.setVisible(true);
 						}
 					});
+					deleteSelected.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectionView.getRemoveScholarsButton().doClick();
+						}	
+					});
 				}
 				else if(e.getSource() == selectionView.getSerialList()){
 					selectionView.getSerialList().setSelectedIndex(selectionView.getSerialList().locationToIndex(e.getPoint()));
@@ -1545,6 +1556,11 @@ public class ScholarPubController{
 							infoDialog.setModal(true);
 							infoDialog.setVisible(true);
 						}
+					});
+					deleteSelected.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectionView.getRemoveSerialsButton().doClick();
+						}	
 					});
 				}
 				else if(e.getSource() == selectionView.getPaperList()){
@@ -1677,6 +1693,11 @@ public class ScholarPubController{
 							infoDialog.setModal(true);
 							infoDialog.setVisible(true);
 						}
+					});
+					deleteSelected.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectionView.getRemovePapersButton().doClick();
+						}	
 					});
 				}
 			}
