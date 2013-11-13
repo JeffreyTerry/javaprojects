@@ -19,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -40,8 +41,6 @@ public class SelectionView extends JFrame implements ActionListener{
 	/* Menu Items */
 	private JMenuItem save = new JMenuItem("Save Scholarship");
 	private JMenuItem load = new JMenuItem("Load Scholarship");
-	private JMenuItem importItem = new JMenuItem("Import Scholarship");
-	private JMenuItem export = new JMenuItem("Export Scholarship");
 	private JMenu fileMenu = new JMenu("File");
 	private JMenuItem type = new JMenuItem("Types of Publication");
 	private JMenuItem pubsPerYear = new JMenuItem("Publications Per Year");
@@ -100,8 +99,6 @@ public class SelectionView extends JFrame implements ActionListener{
 	private void createMenu(){
 		fileMenu.add(save);
 		fileMenu.add(load);
-		fileMenu.add(importItem);
-		fileMenu.add(export);
 		
 		plotMenu.add(type);
 		plotMenu.add(pubsPerYear);
@@ -248,30 +245,35 @@ public class SelectionView extends JFrame implements ActionListener{
 			removeAllPapersButton.setEnabled(true);
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
-			for(int i = 0; i < e.getObjectsChanged().length; i++){
-				scholarListModel.removeElement(e.getObjectsChanged()[i]);
-			}
-			if(scholarListModel.isEmpty())
+			int choice=JOptionPane.showConfirmDialog(null,"WARNING! You are about to delete one or more Scholars. This will delete their information from any Serial or Paper they are involved in, deleting the item if relevent. Are you sure you want to delete?");
+			if(choice==JOptionPane.YES_OPTION)
 			{
-				model.setOutletList(new OutletList());
-				model.setPaperMap(new PaperMap());
-				serialListModel.clear();
-				paperListModel.clear();
+				for(int i = 0; i < e.getObjectsChanged().length; i++){
+					scholarListModel.removeElement(e.getObjectsChanged()[i]);
+				}
+				if(scholarListModel.isEmpty())
+				{
+					model.setOutletList(new OutletList());
+					model.setPaperMap(new PaperMap());
+					model.setScholarMap(new ScholarMap());
+					serialListModel.clear();
+					paperListModel.clear();
 
-				removeScholarButton.setEnabled(false);
-				removeAllScholarsButton.setEnabled(false);
-				addSerialButton.setEnabled(false);
-				removeSerialButton.setEnabled(false);
-				removeAllSerialsButton.setEnabled(false);
-				addPaperButton.setEnabled(false);
-				removePaperButton.setEnabled(false);
-				removeAllPapersButton.setEnabled(false);
-				plotMenu.setEnabled(false);
-				type.setEnabled(false);
-				pubsPerYear.setEnabled(false);
-				confPapsPerYear.setEnabled(false);
-				jourArtsPerYear.setEnabled(false);
-				numOfCoauths.setEnabled(false);
+					removeScholarButton.setEnabled(false);
+					removeAllScholarsButton.setEnabled(false);
+					addSerialButton.setEnabled(false);
+					removeSerialButton.setEnabled(false);
+					removeAllSerialsButton.setEnabled(false);
+					addPaperButton.setEnabled(false);
+					removePaperButton.setEnabled(false);
+					removeAllPapersButton.setEnabled(false);
+					plotMenu.setEnabled(false);
+					type.setEnabled(false);
+					pubsPerYear.setEnabled(false);
+					confPapsPerYear.setEnabled(false);
+					jourArtsPerYear.setEnabled(false);
+					numOfCoauths.setEnabled(false);
+				}
 			}
 		}
 		if(e.getActionCommand() == DataChangeEvent.SERIAL_REMOVED){
@@ -310,14 +312,6 @@ public class SelectionView extends JFrame implements ActionListener{
 
 	public JMenuItem getLoadMenuItem() {
 		return load;
-	}
-
-	public JMenuItem getImportMenuItem() {
-		return importItem;
-	}
-
-	public JMenuItem getExportMenuItem() {
-		return export;
 	}
 
 	public JMenuItem getTypeMenuItem() {

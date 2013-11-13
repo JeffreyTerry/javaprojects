@@ -1,3 +1,10 @@
+//TODO: Ensure all needed data is present before adding a serial
+//TODO: Force the user to add an issue before creating a volume
+//TODO: Force the user to add a volume before creating a journal
+//TODO: Force the user to add a meeting before creating a conference
+//TODO: Force the user to add all information (except papers) to a meeting before creating it.
+
+
 package Jeff;
 
 import Daniel.*;
@@ -11,10 +18,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -84,8 +93,6 @@ public class ScholarPubController{
 
 		selectionView.getSaveMenuItem().addActionListener(new SaveListener());
 		selectionView.getLoadMenuItem().addActionListener(new LoadListener());
-		selectionView.getImportMenuItem().addActionListener(new ImportListener());
-		selectionView.getExportMenuItem().addActionListener(new ExportListener());
 		
 		DisplayViewListener odvl = new DisplayViewListener();
 		selectionView.getTypeMenuItem().addActionListener(odvl);
@@ -1091,6 +1098,7 @@ public class ScholarPubController{
 	}
 	private class AddSerialsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			//TODO: track openCreateDialiogs to make sure they can actually do stuff
 			if(model.getScholarMap().isEmpty()){
 				return;
 			}
@@ -1116,15 +1124,41 @@ public class ScholarPubController{
 			}
 			int choice = JOptionPane.showOptionDialog(selectionView, "What type of paper would you like to create?", "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, new String[]{"Journal Article","Conference Paper"}, null);
 			if(choice == 0){
-				Paper newPaper = openCreateJournalArticleDialog();
-				if(newPaper != null){
-					model.addPaper(newPaper);
+				boolean hasJournal=false;
+				for(AcademicOutlet a: model.getOutletList())
+				{
+					if(a instanceof Journal)
+						hasJournal=true;
+				}
+				if(hasJournal)
+				{
+					Paper newPaper = openCreateJournalArticleDialog();
+					if(newPaper != null){
+						model.addPaper(newPaper);
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "You have no Journal to publish a paper. Please create a new Serial of type Journal.");
 				}
 			}
 			else if(choice == 1){
-				Paper newPaper = openCreateConferencePaperDialog();
-				if(newPaper != null){
-					model.addPaper(newPaper);
+				boolean hasJournal=false;
+				for(AcademicOutlet a: model.getOutletList())
+				{
+					if(a instanceof Conference)
+						hasJournal=true;
+				}
+				if(hasJournal)
+				{
+					Paper newPaper = openCreateConferencePaperDialog();
+					if(newPaper != null){
+						model.addPaper(newPaper);
+					}
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "You have no Conference to publish a paper. Please create a new Serial of type Conference.");
 				}
 			}
 		}
@@ -1200,6 +1234,16 @@ public class ScholarPubController{
 	}
 	private class LoadListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+			if(!model.getScholarMap().isEmpty())
+			{
+				int choice = JOptionPane.showConfirmDialog(null, "WARNING! You may have unsaved data you are about to overwrite. Would you like to save it before loading the new data?");
+				if(choice==JOptionPane.YES_OPTION)
+					selectionView.getSaveMenuItem().doClick();
+				else if(choice==JOptionPane.CANCEL_OPTION)
+					return;
+				else if(choice==JOptionPane.CLOSED_OPTION)
+					return;
+			}
 			JFileChooser chooser = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("Scholarly System Files", "schsys");
 			chooser.setFileFilter(filter);
@@ -1232,16 +1276,6 @@ public class ScholarPubController{
 					JOptionPane.showMessageDialog(selectionView, "Internal Error", "", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		}
-	}
-	private class ImportListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			//TODO
-		}
-	}
-	private class ExportListener implements ActionListener{
-		public void actionPerformed(ActionEvent e){
-			//TODO
 		}
 	}
 	

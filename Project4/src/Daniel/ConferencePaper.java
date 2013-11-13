@@ -24,4 +24,13 @@ public class ConferencePaper extends Paper{
 		}
 		return null;
 	}
+	
+	public String toString()
+	{
+		String toReturn=conference.toString();
+		toReturn+=super.toString();
+		
+		
+		return toReturn;
+	}
 }

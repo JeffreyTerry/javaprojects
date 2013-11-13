@@ -3,6 +3,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import Daniel.*;
 
 /**
@@ -50,8 +52,8 @@ public class ScholarshipModel extends ScholarlySystem{
 	 * @param scholars		The scholars to remove
 	 */
 	public void removeScholars(Scholar[] scholars){
-		super.removeScholars(scholars);
-		processEvent(new DataChangeEvent(this, 3, DataChangeEvent.SCHOLAR_REMOVED, scholars));
+			super.removeScholars(scholars);
+			processEvent(new DataChangeEvent(this, 3, DataChangeEvent.SCHOLAR_REMOVED, scholars));
 	}
 
 	/**
