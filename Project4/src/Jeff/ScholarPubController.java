@@ -1,6 +1,6 @@
 //TODO: Warn user when they are about to delete a serial or paper
 //TODO: Don't warn user if their isn't anything to warn them about. (ie overwrited nonexistant data)
-
+//TODO: Make add chairs/committee members in meetings
 
 
 package Jeff;
@@ -130,11 +130,11 @@ public class ScholarPubController{
 		JLabel dateLabel = new JLabel("Date");
 		final JComboBox<String> yearSelector = new JComboBox<String>(years);
 		JLabel editorLabel = new JLabel("Editors");
-		final JList<Scholar> editorList = new JList<Scholar>((Scholar[]) model.getScholarMap().values().toArray());
+		final JList<Scholar> editorList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel reviewerLabel = new JLabel("Reviewers");
-		final JList<Scholar> reviewerList = new JList<Scholar>((Scholar[]) model.getScholarMap().values().toArray());
+		final JList<Scholar> reviewerList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel paperLabel = new JLabel("Papers");
-		final JList<Paper> paperList = new JList<Paper>((Paper[]) model.getPaperMap().values().toArray());
+		final JList<Paper> paperList = new JList<Paper>(model.getPaperMap().values().toArray(new Paper[model.getPaperMap().values().size()]));
 		JButton saveIssueButton = new JButton("Create Issue");
 
 		JPanel datePanel = new JPanel();
@@ -235,12 +235,12 @@ public class ScholarPubController{
 		JLabel countryLabel = new JLabel("Country");
 		final JTextField countryField = new JTextField();
 		JLabel chairLabel = new JLabel("Chair");
-		final JList<Scholar> chairList = new JList<Scholar>((Scholar[]) model.getScholarMap().values().toArray());
+		final JList<Scholar> chairList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		chairList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel committeeLabel = new JLabel("Committee Members");
-		final JList<Scholar> committeeList = new JList<Scholar>((Scholar[]) model.getScholarMap().values().toArray());
+		final JList<Scholar> committeeList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel paperLabel = new JLabel("Papers");
-		final JList<Paper> paperList = new JList<Paper>((Paper[]) model.getPaperMap().values().toArray());
+		final JList<Paper> paperList = new JList<Paper>( model.getPaperMap().values().toArray(new Paper[model.getPaperMap().values().size()]));
 		JButton saveMeetingButton = new JButton("Create Meeting");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
@@ -761,10 +761,10 @@ public class ScholarPubController{
 			JOptionPane.showMessageDialog(null, "Must Add Conferences First!", "", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
-		final JList<Conference> confList = new JList<Conference>((Conference[]) conferences.toArray());
+		final JList<Conference> confList = new JList<Conference>((conferences.toArray(new Conference[conferences.size()])));
 		confList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel scholarLabel = new JLabel("Authors");
-		final JList<Scholar> scholarList = new JList<Scholar>((Scholar[]) model.getScholarMap().values().toArray());
+		final JList<Scholar> scholarList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel diLabel = new JLabel("Digital Identifier (optional)");
 		final JTextField diField = new JTextField();
 		JButton saveConferencePaperButton = new JButton("Create Conference Paper");
@@ -906,10 +906,10 @@ public class ScholarPubController{
 			JOptionPane.showMessageDialog(null, "Must Add Journal Issues First!", "", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
-		final JList<Issue> issueList = new JList<Issue>((Issue[]) issues.toArray());
+		final JList<Issue> issueList = new JList<Issue>(issues.toArray(new Issue[issues.size()]));
 		issueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel scholarLabel = new JLabel("Authors");
-		final JList<Scholar> scholarList = new JList<Scholar>((Scholar[]) model.getScholarMap().values().toArray());
+		final JList<Scholar> scholarList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel diLabel = new JLabel("Digital Identifier (optional)");
 		final JTextField diField = new JTextField();
 		JButton saveJournalArticleButton = new JButton("Create Journal Article");
