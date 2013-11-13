@@ -1,5 +1,7 @@
 package Jeff;
 
+import Daniel.*;
+
 /**
  * Project #3
  * CS 2334, Section 011
@@ -14,8 +16,10 @@ public class PublicationSystemDriver
 		ScholarshipModel model = new ScholarshipModel();
 		DisplayView displayView = new DisplayView(model);
 		SelectionView selectionView = new SelectionView(model);
+		InformationView informationView = new InformationView();
 		ScholarPubController controller = new ScholarPubController(model);
 		controller.setSelectionView(selectionView);
 		controller.setDisplayView(displayView);
+		controller.setInformationView(informationView);
 	}
 }

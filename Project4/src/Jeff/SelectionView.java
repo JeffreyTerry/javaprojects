@@ -48,6 +48,8 @@ public class SelectionView extends JFrame implements ActionListener{
 	private JMenuItem jourArtsPerYear = new JMenuItem("Journal Articles Per Year");
 	private JMenuItem numOfCoauths = new JMenuItem("Number of Co-authors Per Publication");
 	private JMenu plotMenu = new JMenu("Plot");
+	private JMenuItem information = new JMenuItem("Information");
+	private JMenu helpMenu = new JMenu("Help");
 	private JMenuBar menuBar = new JMenuBar();
 	
 	/* GUI Items */
@@ -106,8 +108,11 @@ public class SelectionView extends JFrame implements ActionListener{
 		plotMenu.add(jourArtsPerYear);
 		plotMenu.add(numOfCoauths);
 		
+		helpMenu.add(information);
+		
 		menuBar.add(fileMenu);
 		menuBar.add(plotMenu);
+		menuBar.add(helpMenu);
 		plotMenu.setEnabled(false);
 
 		setJMenuBar(menuBar);		
@@ -332,6 +337,10 @@ public class SelectionView extends JFrame implements ActionListener{
 
 	public JMenuItem getNumOfCoauthsMenuItem() {
 		return numOfCoauths;
+	}
+	
+	public JMenuItem getInformationItem() {
+		return information;
 	}
 
 	public JList getScholarList() {

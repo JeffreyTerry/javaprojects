@@ -62,6 +62,8 @@ public class ScholarPubController{
 	private SelectionView selectionView;
 	/** The display view */
 	private DisplayView displayView;
+	/** The information view */
+	private InformationView informationView;
 	
 	/** The default constructor
 	 * 
@@ -100,6 +102,8 @@ public class ScholarPubController{
 		selectionView.getConfPapsPerYearMenuItem().addActionListener(odvl);
 		selectionView.getJourArtsPerYearMenuItem().addActionListener(odvl);
 		selectionView.getNumOfCoauthsMenuItem().addActionListener(odvl);
+		
+		selectionView.getInformationItem().addActionListener(new InformationListener());
 	}
 
 	/**
@@ -108,6 +112,14 @@ public class ScholarPubController{
 	 */
 	public void setDisplayView(DisplayView view){
 		displayView = view;
+	}
+	
+	/**
+	 * Sets the information view to the given view
+	 * @param view		The new information view
+	 */
+	public void setInformationView(InformationView view){
+		informationView = view;
 	}
 
 	/**
@@ -1276,6 +1288,19 @@ public class ScholarPubController{
 					JOptionPane.showMessageDialog(selectionView, "Internal Error", "", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+		}
+	}
+	
+	private class InformationListener implements ActionListener {
+		public void actionPerformed(ActionEvent e)
+		{
+			//TODO: do this
+			JDialog displayDialog = new JDialog();
+			displayDialog.add(informationView, BorderLayout.CENTER);
+			displayDialog.setSize(selectionView.getWidth(), selectionView.getHeight());
+			displayDialog.setLocationRelativeTo(selectionView);
+			displayDialog.setModal(true);
+			displayDialog.setVisible(true);
 		}
 	}
 	
