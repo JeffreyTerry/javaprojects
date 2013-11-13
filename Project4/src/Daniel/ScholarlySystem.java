@@ -3,8 +3,6 @@ package Daniel;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import Jeff.DataChangeEvent;
-
 public class ScholarlySystem implements Serializable{
 	private static final long serialVersionUID = 1L;
 	/** A map of the scholars in the system */
@@ -72,7 +70,6 @@ public class ScholarlySystem implements Serializable{
 			scholarList.get(i).removePaper(paper);
 		}
 		ArrayList<Meeting> meetings = new ArrayList<Meeting>();
-		ArrayList<Issue> issues = new ArrayList<Issue>();
 		if(paper instanceof ConferencePaper){
 			ConferencePaper confPap = (ConferencePaper)paper;
 			meetings = confPap.getConference().getMeetings();

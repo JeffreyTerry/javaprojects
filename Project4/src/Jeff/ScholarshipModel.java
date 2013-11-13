@@ -3,8 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import Daniel.*;
 
 /**
@@ -129,6 +127,7 @@ public class ScholarshipModel extends ScholarlySystem{
 	 * Fires an event at all of the registered listeners of the model
 	 * @param e		The event to fire
 	 */
+	@SuppressWarnings("unchecked")
 	public void processEvent(ActionEvent e){
 		ArrayList<ActionListener> theList;
 		synchronized(this){
