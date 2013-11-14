@@ -249,38 +249,48 @@ public class SelectionView extends JFrame implements ActionListener{
 			removeAllPapersButton.setEnabled(true);
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
-			int choice=JOptionPane.showConfirmDialog(null,"WARNING! You are about to delete one or more Scholars. This will delete their information from any Serial or Paper they are involved in, deleting the item if relevent. Are you sure you want to delete?");
-			if(choice==JOptionPane.YES_OPTION)
+			if(!paperListModel.isEmpty() && e.getObjectsChanged().length!=0)
 			{
-				for(int i = 0; i < e.getObjectsChanged().length; i++){
-					scholarListModel.removeElement(e.getObjectsChanged()[i]);
-				}
-				if(scholarListModel.isEmpty())
+				int choice=JOptionPane.showConfirmDialog(null,"WARNING! You are about to delete one or more Scholars. This will delete their information from any Serial or Paper they are involved in, deleting the item if relevent. Are you sure you want to delete?");
+				if(choice==JOptionPane.YES_OPTION)
 				{
-					model.setOutletList(new OutletList());
-					model.setPaperMap(new PaperMap());
-					model.setScholarMap(new ScholarMap());
-					serialListModel.clear();
-					paperListModel.clear();
+					for(int i = 0; i < e.getObjectsChanged().length; i++){
+						scholarListModel.removeElement(e.getObjectsChanged()[i]);
+					}
+					if(scholarListModel.isEmpty())
+					{
+						model.setOutletList(new OutletList());
+						model.setPaperMap(new PaperMap());
+						model.setScholarMap(new ScholarMap());
+						serialListModel.clear();
+						paperListModel.clear();
 
-					removeScholarButton.setEnabled(false);
-					removeAllScholarsButton.setEnabled(false);
-					addSerialButton.setEnabled(false);
-					removeSerialButton.setEnabled(false);
-					removeAllSerialsButton.setEnabled(false);
-					addPaperButton.setEnabled(false);
-					removePaperButton.setEnabled(false);
-					removeAllPapersButton.setEnabled(false);
-					plotMenu.setEnabled(false);
-					type.setEnabled(false);
-					pubsPerYear.setEnabled(false);
-					confPapsPerYear.setEnabled(false);
-					jourArtsPerYear.setEnabled(false);
-					numOfCoauths.setEnabled(false);
+						removeScholarButton.setEnabled(false);
+						removeAllScholarsButton.setEnabled(false);
+						addSerialButton.setEnabled(false);
+						removeSerialButton.setEnabled(false);
+						removeAllSerialsButton.setEnabled(false);
+						addPaperButton.setEnabled(false);
+						removePaperButton.setEnabled(false);
+						removeAllPapersButton.setEnabled(false);
+						plotMenu.setEnabled(false);
+						type.setEnabled(false);
+						pubsPerYear.setEnabled(false);
+						confPapsPerYear.setEnabled(false);
+						jourArtsPerYear.setEnabled(false);
+						numOfCoauths.setEnabled(false);
+					}
 				}
 			}
+			
 		}
 		if(e.getActionCommand() == DataChangeEvent.SERIAL_REMOVED){
+			if(e.getObjectsChanged().length!=0)
+			{
+				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?");
+				if(choice!=JOptionPane.YES_OPTION)
+					return;
+			}
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				serialListModel.removeElement(e.getObjectsChanged()[i]);
 			}
@@ -297,6 +307,12 @@ public class SelectionView extends JFrame implements ActionListener{
 			}
 		}
 		if(e.getActionCommand() == DataChangeEvent.PAPER_REMOVED){
+			if(e.getObjectsChanged().length!=0)
+			{
+				int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete?");
+				if(choice!=JOptionPane.YES_OPTION)
+					return;
+			}
 			for(int i = 0; i < e.getObjectsChanged().length; i++){
 				paperListModel.removeElement(e.getObjectsChanged()[i]);
 			}

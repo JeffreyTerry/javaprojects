@@ -2,7 +2,13 @@ package Daniel;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
+/**
+ * Project #3
+ * CS 2334, Section 011
+ * 11/13/2013
+ * This class represents the information view
+ * @version 1.0
+ */
 public class InformationView extends JPanel{
 
 	private static final long serialVersionUID = -4977512579106035474L;

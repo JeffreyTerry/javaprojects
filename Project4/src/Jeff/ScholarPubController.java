@@ -1,11 +1,3 @@
-//TODO: Warn user when they are about to delete a serial or paper
-//TODO: Don't warn user if their isn't anything to warn them about. (ie overwrited nonexistant data)
-//TODO: Make add chairs/committee members in meetings
-//TODO: Make add reviewer/editors
-//TODO: Don't allow conference papers to be passes to journals
-//TODO: Don't allow journal articles to be passes to conferences
-
-
 package Jeff;
 
 import Daniel.*;
@@ -137,7 +129,7 @@ public class ScholarPubController{
 		JLabel reviewerLabel = new JLabel("Reviewers");
 		final JList<Scholar> reviewerList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel paperLabel = new JLabel("Papers");
-		final JList<Paper> paperList = new JList<Paper>(model.getPaperMap().values().toArray(new Paper[model.getPaperMap().values().size()]));
+		final JList<JournalArticle> paperList = new JList<JournalArticle>(model.getPaperMap().getJournalArticles().toArray(new JournalArticle[model.getPaperMap().getJournalArticles().size()]));
 		JButton saveIssueButton = new JButton("Create Issue");
 
 		JPanel datePanel = new JPanel();
@@ -177,6 +169,16 @@ public class ScholarPubController{
 		final Issue theNewIssue = new Issue();
 		saveIssueButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				if(editorList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addIssueDialog, "Please enter an editor", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(reviewerList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addIssueDialog, "Please enter a reviewer", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				//Add date
 				theNewIssue.setMonth(monthSelector.getSelectedItem().toString());
 				theNewIssue.setYear(yearSelector.getSelectedItem().toString());
@@ -243,7 +245,7 @@ public class ScholarPubController{
 		JLabel committeeLabel = new JLabel("Committee Members");
 		final JList<Scholar> committeeList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel paperLabel = new JLabel("Papers");
-		final JList<Paper> paperList = new JList<Paper>( model.getPaperMap().values().toArray(new Paper[model.getPaperMap().values().size()]));
+		final JList<ConferencePaper> paperList = new JList<ConferencePaper>( model.getPaperMap().getConferencePapers().toArray(new ConferencePaper[model.getPaperMap().getConferencePapers().size()]));
 		JButton saveMeetingButton = new JButton("Create Meeting");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
@@ -313,6 +315,16 @@ public class ScholarPubController{
 				}
 				if(countryField.getText().length() == 0){
 					JOptionPane.showMessageDialog(addMeetingDialog, "Please enter a country", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(chairList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addMeetingDialog, "Please enter a chair", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(committeeList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addMeetingDialog, "Please enter a committee member", "", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				if(stateField.getText().length() != 0){
@@ -1038,7 +1050,6 @@ public class ScholarPubController{
 	}
 	private class AddSerialsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO: track openCreateDialiogs to make sure they can actually do stuff
 			if(model.getScholarMap().isEmpty()){
 				return;
 			}
