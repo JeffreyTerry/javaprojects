@@ -1,7 +1,6 @@
 package Daniel;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
 public class ScholarMap extends HashMap<String, Scholar>{

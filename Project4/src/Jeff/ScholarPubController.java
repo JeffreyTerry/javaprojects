@@ -37,7 +37,6 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.plaf.FileChooserUI;
 
 /**
  * Project #3
@@ -126,11 +125,11 @@ public class ScholarPubController{
 		JLabel dateLabel = new JLabel("Date");
 		final JComboBox<String> yearSelector = new JComboBox<String>(years);
 		JLabel editorLabel = new JLabel("Editors");
-		final JList editorList = new JList(model.getScholarMap().values().toArray());
+		final JList<Scholar> editorList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel reviewerLabel = new JLabel("Reviewers");
-		final JList reviewerList = new JList(model.getScholarMap().values().toArray());
+		final JList<Scholar> reviewerList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel paperLabel = new JLabel("Papers");
-		final JList paperList = new JList(model.getPaperMap().values().toArray());
+		final JList<JournalArticle> paperList = new JList<JournalArticle>(model.getPaperMap().getJournalArticles().toArray(new JournalArticle[model.getPaperMap().getJournalArticles().size()]));
 		JButton saveIssueButton = new JButton("Create Issue");
 
 		JPanel datePanel = new JPanel();
@@ -170,6 +169,16 @@ public class ScholarPubController{
 		final Issue theNewIssue = new Issue();
 		saveIssueButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				if(editorList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addIssueDialog, "Please enter an editor", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(reviewerList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addIssueDialog, "Please enter a reviewer", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
 				//Add date
 				theNewIssue.setMonth(monthSelector.getSelectedItem().toString());
 				theNewIssue.setYear(yearSelector.getSelectedItem().toString());
@@ -217,13 +226,13 @@ public class ScholarPubController{
 	 * @return	A new Meeting created using the user input
 	 */
 	private Meeting openCreateMeetingDialog(){
-		final JComboBox monthSelector = new JComboBox(new String[]{"January","February","March","April","May","June","July","August","September","October","November","December"});
+		final JComboBox<String> monthSelector = new JComboBox<String>(new String[]{"January","February","March","April","May","June","July","August","September","October","November","December"});
 		String[] years = new String[150];
 		for(int i = 149; i >= 0; i--){
 			years[i] = ""+ (Calendar.getInstance().get(Calendar.YEAR) - i);
 		}
 		JLabel dateLabel = new JLabel("Date");
-		final JComboBox yearSelector = new JComboBox(years);
+		final JComboBox<String> yearSelector = new JComboBox<String>(years);
 		JLabel cityLabel = new JLabel("City");
 		final JTextField cityField = new JTextField();
 		JLabel stateLabel = new JLabel("State/Province");
@@ -231,12 +240,12 @@ public class ScholarPubController{
 		JLabel countryLabel = new JLabel("Country");
 		final JTextField countryField = new JTextField();
 		JLabel chairLabel = new JLabel("Chair");
-		final JList chairList = new JList(model.getScholarMap().values().toArray());
+		final JList<Scholar> chairList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		chairList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel committeeLabel = new JLabel("Committee Members");
-		final JList committeeList = new JList(model.getScholarMap().values().toArray());
+		final JList<Scholar> committeeList = new JList<Scholar>( model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel paperLabel = new JLabel("Papers");
-		final JList paperList = new JList(model.getPaperMap().values().toArray());
+		final JList<ConferencePaper> paperList = new JList<ConferencePaper>( model.getPaperMap().getConferencePapers().toArray(new ConferencePaper[model.getPaperMap().getConferencePapers().size()]));
 		JButton saveMeetingButton = new JButton("Create Meeting");
 		
 		final Dimension textFieldDimension = new Dimension(160, 30);
@@ -306,6 +315,16 @@ public class ScholarPubController{
 				}
 				if(countryField.getText().length() == 0){
 					JOptionPane.showMessageDialog(addMeetingDialog, "Please enter a country", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(chairList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addMeetingDialog, "Please enter a chair", "", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				if(committeeList.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(addMeetingDialog, "Please enter a committee member", "", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 				if(stateField.getText().length() != 0){
@@ -757,10 +776,10 @@ public class ScholarPubController{
 			JOptionPane.showMessageDialog(null, "Must Add Conferences First!", "", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
-		final JList confList = new JList(conferences.toArray());
+		final JList<Conference> confList = new JList<Conference>((conferences.toArray(new Conference[conferences.size()])));
 		confList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel scholarLabel = new JLabel("Authors");
-		final JList scholarList = new JList(model.getScholarMap().values().toArray());
+		final JList<Scholar> scholarList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel diLabel = new JLabel("Digital Identifier (optional)");
 		final JTextField diField = new JTextField();
 		JButton saveConferencePaperButton = new JButton("Create Conference Paper");
@@ -902,10 +921,10 @@ public class ScholarPubController{
 			JOptionPane.showMessageDialog(null, "Must Add Journal Issues First!", "", JOptionPane.WARNING_MESSAGE);
 			return null;
 		}
-		final JList issueList = new JList(issues.toArray());
+		final JList<Issue> issueList = new JList<Issue>(issues.toArray(new Issue[issues.size()]));
 		issueList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		JLabel scholarLabel = new JLabel("Authors");
-		final JList scholarList = new JList(model.getScholarMap().values().toArray());
+		final JList<Scholar> scholarList = new JList<Scholar>(model.getScholarMap().values().toArray(new Scholar[model.getScholarMap().values().size()]));
 		JLabel diLabel = new JLabel("Digital Identifier (optional)");
 		final JTextField diField = new JTextField();
 		JButton saveJournalArticleButton = new JButton("Create Journal Article");
@@ -1018,96 +1037,6 @@ public class ScholarPubController{
 		return theNewJournalArticle;
 	}
 
-	/**
-	 * Opens a dialog that allows the user to select from a list of existing conferences
-	 * @return	The selected conference
-	 */
-	private Conference openAddConferenceDialog(){
-		ArrayList<Conference> confList = new ArrayList<Conference>();
-		for(int i = 0; i < model.getOutletList().size(); i++){
-			if(model.getOutletList().get(i) instanceof Conference){
-				confList.add((Conference)model.getOutletList().get(i));
-			}
-		}
-		final JComboBox selector = new JComboBox(confList.toArray());
-		JButton saveButton = new JButton("Add Conference");
-
-		JPanel selectorPanel = new JPanel();
-		JPanel savePanel = new JPanel();
-		
-		selectorPanel.add(selector);
-		savePanel.add(saveButton);
-
-		Box addConferenceBox = Box.createVerticalBox();
-		addConferenceBox.add(Box.createVerticalGlue());
-		addConferenceBox.add(selectorPanel);
-		addConferenceBox.add(Box.createVerticalStrut(dialogVerticalMargin));
-		addConferenceBox.add(savePanel);
-		addConferenceBox.add(Box.createVerticalGlue());
-		
-		final JDialog addConferenceDialog = new JDialog();
-
-		saveButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				addConferenceDialog.dispatchEvent(new WindowEvent(addConferenceDialog, WindowEvent.WINDOW_CLOSING));
-			}
-		});
-		
-		addConferenceDialog.setTitle("Add Conference");
-		addConferenceDialog.add(addConferenceBox);
-		addConferenceDialog.setSize(selectionView.getWidth() - 80, selectionView.getHeight() - 200);
-		addConferenceDialog.setLocationRelativeTo(selectionView);
-		addConferenceDialog.setModal(true);
-		addConferenceDialog.setVisible(true);
-		
-		return ((Conference)selector.getSelectedItem());
-	}
-
-	/**
-	 * Opens a dialog allows the user to select from a list of existing journals
-	 * @return	The selected journal
-	 */
-	private Journal openAddJournalDialog(){
-		ArrayList<Journal> journList = new ArrayList<Journal>();
-		for(int i = 0; i < model.getOutletList().size(); i++){
-			if(model.getOutletList().get(i) instanceof Journal){
-				journList.add((Journal)model.getOutletList().get(i));
-			}
-		}
-		final JComboBox selector = new JComboBox(journList.toArray());
-		JButton saveButton = new JButton("Add Journal");
-
-		JPanel selectorPanel = new JPanel();
-		JPanel savePanel = new JPanel();
-		
-		selectorPanel.add(selector);
-		savePanel.add(saveButton);
-
-		Box addJournalBox = Box.createVerticalBox();
-		addJournalBox.add(Box.createVerticalGlue());
-		addJournalBox.add(selectorPanel);
-		addJournalBox.add(Box.createVerticalStrut(dialogVerticalMargin));
-		addJournalBox.add(savePanel);
-		addJournalBox.add(Box.createVerticalGlue());
-		
-		final JDialog addJournalDialog = new JDialog();
-
-		saveButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				addJournalDialog.dispatchEvent(new WindowEvent(addJournalDialog, WindowEvent.WINDOW_CLOSING));
-			}
-		});
-		
-		addJournalDialog.setTitle("Add Journal");
-		addJournalDialog.add(addJournalBox);
-		addJournalDialog.setSize(selectionView.getWidth() - 80, selectionView.getHeight() - 200);
-		addJournalDialog.setLocationRelativeTo(selectionView);
-		addJournalDialog.setModal(true);
-		addJournalDialog.setVisible(true);
-		
-		return ((Journal)selector.getSelectedItem());
-	}
-
 	/** The height of the vertical margins between panels in the information dialogs */
 	private final int dialogVerticalMargin = 5;
 	
@@ -1121,7 +1050,6 @@ public class ScholarPubController{
 	}
 	private class AddSerialsListener implements ActionListener{
 		public void actionPerformed(ActionEvent e){
-			//TODO: track openCreateDialiogs to make sure they can actually do stuff
 			if(model.getScholarMap().isEmpty()){
 				return;
 			}
@@ -1302,15 +1230,14 @@ public class ScholarPubController{
 		}
 	}
 	
+
 	private class InformationListener implements ActionListener {
 		public void actionPerformed(ActionEvent e)
 		{
-			//TODO: do this
 			JDialog displayDialog = new JDialog();
 			displayDialog.add(informationView, BorderLayout.CENTER);
 			displayDialog.setSize(selectionView.getWidth(), selectionView.getHeight());
 			displayDialog.setLocationRelativeTo(selectionView);
-			displayDialog.setModal(true);
 			displayDialog.setVisible(true);
 		}
 	}
@@ -1325,7 +1252,9 @@ public class ScholarPubController{
 				final int verticalMargin = 10;
 				JPopupMenu infoMenu = new JPopupMenu();
 				JMenuItem infoItem = new JMenuItem("Get Info");
+				JMenuItem deleteSelected = new JMenuItem("Delete");
 				infoMenu.add(infoItem);
+				infoMenu.add(deleteSelected);
 				if(e.getSource() == selectionView.getScholarList()){
 					selectionView.getScholarList().setSelectedIndex(selectionView.getScholarList().locationToIndex(e.getPoint()));
 					infoMenu.show(selectionView.getScholarList(), e.getX(), e.getY());
@@ -1461,6 +1390,11 @@ public class ScholarPubController{
 							infoDialog.setVisible(true);
 						}
 					});
+					deleteSelected.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectionView.getRemoveScholarsButton().doClick();
+						}	
+					});
 				}
 				else if(e.getSource() == selectionView.getSerialList()){
 					selectionView.getSerialList().setSelectedIndex(selectionView.getSerialList().locationToIndex(e.getPoint()));
@@ -1545,6 +1479,11 @@ public class ScholarPubController{
 							infoDialog.setModal(true);
 							infoDialog.setVisible(true);
 						}
+					});
+					deleteSelected.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectionView.getRemoveSerialsButton().doClick();
+						}	
 					});
 				}
 				else if(e.getSource() == selectionView.getPaperList()){
@@ -1677,6 +1616,11 @@ public class ScholarPubController{
 							infoDialog.setModal(true);
 							infoDialog.setVisible(true);
 						}
+					});
+					deleteSelected.addActionListener(new ActionListener(){
+						public void actionPerformed(ActionEvent e) {
+							selectionView.getRemovePapersButton().doClick();
+						}	
 					});
 				}
 			}

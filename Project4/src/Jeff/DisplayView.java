@@ -71,9 +71,7 @@ public class DisplayView extends JPanel implements ActionListener{
 
 	/**
      * Initializes all of the variables specific to a publication date grapher excepting the Scholar
-     * @param             width					width of the panel
-     * @param             height				height of the panel
-     * @param			  scholarSelector		the selector for the scholars
+     * @param             model					the model that will be displayed
      */
 	public DisplayView(ScholarshipModel model){
 		this.model = model;
