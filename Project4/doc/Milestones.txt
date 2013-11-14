@@ -1,0 +1,16 @@
+﻿1. Create appropriate classes, complete with data fields and methods, to handle 
+application data on scholars and their publications as described below under Model:
+    The ScholarshipModel inherits from ScholarlySystem, which has a HashMap of Papers, a HashMap of Scholars, and a list of Serials (AcademicOutlets). ConferencePapers and JournalArticles are Papers, and Conferences and Journals are AcademicOutlets. All of these classes have a set of distinguishing properties and methods.
+2. Add a class, complete with data fields and methods, to the model to allow the model 
+to correctly interact with the controller and the views:
+    The actionListenerList object declared in ScholarshipModel allows for all interaction between the model and the views. When the controller changes information in the model, each ActionListener in actionListenerList is notified of the change.
+3. Create appropriate classes, complete with data fields and methods, for the views 
+described below:
+    Objects of the SelectionView class allow users to input scholarship data into the model while showing them the current data in the model, and objects of the DisplayView class present the user with multiple graphs that allow them to analyze certain aspects of the data.
+4. Create an appropriate class, complete with data fields and methods, for the controller 
+as described below:
+    The ScholarPubController contains a number of ActionListeners that are linked to objects in the views. These listeners take all input and change the model accordingly.
+
+
+Extra Credit Features:
+In the SelectionView, the user can right-click on a Paper, Scholar, or Serial to get information on or delete that object. There is also a help menu at the top of the SelectionView which gives the user information about the program.

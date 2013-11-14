@@ -249,7 +249,7 @@ public class SelectionView extends JFrame implements ActionListener{
 			removeAllPapersButton.setEnabled(true);
 		}
 		if(e.getActionCommand() == DataChangeEvent.SCHOLAR_REMOVED){
-			if(!paperListModel.isEmpty() && e.getObjectsChanged().length!=0)
+			if(!paperListModel.isEmpty())
 			{
 				int choice=JOptionPane.showConfirmDialog(null,"WARNING! You are about to delete one or more Scholars. This will delete their information from any Serial or Paper they are involved in, deleting the item if relevent. Are you sure you want to delete?");
 				if(choice==JOptionPane.YES_OPTION)
